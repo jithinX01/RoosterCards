@@ -19,7 +19,7 @@ message GameMessageClient {
     oneof pay_load {
         InitStart initStart = 2;
         Join join = 3;
-        GameProgress gameProgress = 4;
+        ClientGameStat clientGameStat = 4;
         TournamentProgress tournamentProgress = 5;
     }
 }
@@ -48,18 +48,25 @@ message Join {
     int32 tournamentId = 2;
 }
 
-enum GPAction {
+enum CRAction {
     DRAW = 0;
     DISCARD = 1;
 }
 
-message GameProgress {
+message ClientRummyAction
+{
+    CRAction action = 1;
+    int32 newCard = 2;
+    int32 oldCard = 3;
+}
+
+message ClientGameStat {
     
-    GPAction action = 1;
+    oneof stat {
+        ClientRummyAction clientRummyAction = 1;
+    }
     int32 playerId = 2;
-    int32 newCard = 3;
-    int32 oldCard = 4;
-    int32 tournamentId = 5;
+    int32 tournamentId = 3;
 }
 
 enum TPAction
@@ -90,6 +97,7 @@ message GameMessageServer {
         JoinStat joinStat = 3;
         JoinProgress joinProgress = 4;
         StartTournament startTournament = 5;
+        GameServerUpdate gameServerUpdate = 6;
     }
 }
 
@@ -110,4 +118,36 @@ message StartTournament {
     map<int32,string> playerMap = 1;
     repeated int32 cards = 2;
     bool youStart = 3;
+    int32 activePlayerId = 4;
+    int32 round = 5;
+}
+
+message GameServerUpdate
+{
+    oneof update {
+        RummyPlayerStat rummyPlayerStat = 1;
+    }
+
+}
+
+message RummyPlayerStat
+{
+    oneof stat {
+        ActiveRummyPlayerStat activeRPS = 1;
+        InActiveRummyPlaterStat inactiveRPS = 2; 
+    }
+}
+
+enum ARPAction {
+    DRAW_CARD = 0;
+    DROP_CARD = 1;
+}
+
+message ActiveRummyPlayerStat {
+    ARPAction arpAction = 1;
+    int32 nextCard = 2;
+}
+
+message InActiveRummyPlaterStat {
+    int32 activePlayerId = 1;
 }
