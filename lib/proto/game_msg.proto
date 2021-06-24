@@ -1,0 +1,113 @@
+syntax = "proto3";
+package game_message;
+
+//import "google/protobuf/timestamp.proto";
+
+/*
+enum TournamentClientStat {
+    INIT_START = 0;
+    JOIN = 1;
+    GAME_PROGRESS = 2;
+    TOURNAMENT_PROGRESS = 3;
+}
+*/
+
+
+message GameMessageClient {
+    
+    //TournamentClientStat tournamentClientStat = 1;
+    oneof pay_load {
+        InitStart initStart = 2;
+        Join join = 3;
+        GameProgress gameProgress = 4;
+        TournamentProgress tournamentProgress = 5;
+    }
+}
+
+enum GameType {
+    RUMMY = 0;
+    ACE_FLUSH = 1;
+    POKER = 2;
+    MEMORY_GAME = 3;
+}
+
+message InitStart {
+    
+    GameType gameType = 1;
+    string playerName = 2;
+    string tournamentName  = 3;
+    int32 noOfDeck = 4;
+    int32 noOfPlayers = 5;
+    int32 noOfRounds = 6;
+    int32 trophyId = 7;
+
+}
+
+message Join {
+    string playerName = 1;
+    int32 tournamentId = 2;
+}
+
+enum GPAction {
+    DRAW = 0;
+    DISCARD = 1;
+}
+
+message GameProgress {
+    
+    GPAction action = 1;
+    int32 playerId = 2;
+    int32 newCard = 3;
+    int32 oldCard = 4;
+    int32 tournamentId = 5;
+}
+
+enum TPAction
+    {
+        TAKE_BREAK = 0;
+        NEXT_GAME = 1;
+    }
+message TournamentProgress {
+    TPAction action = 1;
+    int32 breakTime = 2;
+}
+/*
+enum TournamentServerStat
+{
+    INIT_START_STAT = 0;
+    JOIN_STAT = 1;
+    JOIN_PROGRESS = 2;
+    START_TOURNAMENT = 3;
+    GAME_END = 4;
+    TOURNAMENT_END = 5;
+}
+*/
+
+message GameMessageServer {
+    //TournamentServerStat tournamentServerStat = 1;
+    oneof pay_load {
+        InitStartStat initStartStat = 2;
+        JoinStat joinStat = 3;
+        JoinProgress joinProgress = 4;
+        StartTournament startTournament = 5;
+    }
+}
+
+message InitStartStat {
+    int32 playerId = 1;
+    int32 tournamentId = 2;
+}
+
+message JoinStat {
+    int32 playerId = 1;
+}
+
+message JoinProgress {
+    repeated string players = 1;
+}
+
+message StartTournament {
+    map<int32,string> playerMap = 1;
+    repeated int32 cards = 2;
+    bool youStart = 3;
+}
