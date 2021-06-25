@@ -1,0 +1,36 @@
+
+syntax = "proto3";
+package rummy_data;
+
+enum RummyState {
+    INIT = 0;
+    IN_PROGRESS =1;
+    BREAK = 2;
+    END = 3;
+}
+
+message TournamentData 
+{
+    int32 noOfPlayers = 1;
+    int32 noOfRounds = 2;
+    int32 noOfDeck = 3;
+    repeated string players = 4;
+    repeated int32 cardStack = 5;
+    map<int32,PlayerCard> playerCards = 6;
+    int32 currentPlayerId = 7;
+    string tournamentName = 8;
+    int32 trophyId = 9;
+    oneof type {
+        RummyTournamentData rummy_data = 10;
+    }
+
+}
+
+message RummyTournamentData {
+    
+    RummyState state = 1;
+}
+
+message PlayerCard {
+    repeated int32 cards = 1;
+}

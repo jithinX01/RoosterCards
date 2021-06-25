@@ -16,7 +16,7 @@ export 'game_msg.pbenum.dart';
 enum GameMessageClient_PayLoad {
   initStart, 
   join, 
-  gameProgress, 
+  clientGameStat, 
   tournamentProgress, 
   notSet
 }
@@ -25,7 +25,7 @@ class GameMessageClient extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, GameMessageClient_PayLoad> _GameMessageClient_PayLoadByTag = {
     2 : GameMessageClient_PayLoad.initStart,
     3 : GameMessageClient_PayLoad.join,
-    4 : GameMessageClient_PayLoad.gameProgress,
+    4 : GameMessageClient_PayLoad.clientGameStat,
     5 : GameMessageClient_PayLoad.tournamentProgress,
     0 : GameMessageClient_PayLoad.notSet
   };
@@ -33,7 +33,7 @@ class GameMessageClient extends $pb.GeneratedMessage {
     ..oo(0, [2, 3, 4, 5])
     ..aOM<InitStart>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initStart', protoName: 'initStart', subBuilder: InitStart.create)
     ..aOM<Join>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'join', subBuilder: Join.create)
-    ..aOM<GameProgress>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gameProgress', protoName: 'gameProgress', subBuilder: GameProgress.create)
+    ..aOM<ClientGameStat>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clientGameStat', protoName: 'clientGameStat', subBuilder: ClientGameStat.create)
     ..aOM<TournamentProgress>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentProgress', protoName: 'tournamentProgress', subBuilder: TournamentProgress.create)
     ..hasRequiredFields = false
   ;
@@ -42,7 +42,7 @@ class GameMessageClient extends $pb.GeneratedMessage {
   factory GameMessageClient({
     InitStart? initStart,
     Join? join,
-    GameProgress? gameProgress,
+    ClientGameStat? clientGameStat,
     TournamentProgress? tournamentProgress,
   }) {
     final _result = create();
@@ -52,8 +52,8 @@ class GameMessageClient extends $pb.GeneratedMessage {
     if (join != null) {
       _result.join = join;
     }
-    if (gameProgress != null) {
-      _result.gameProgress = gameProgress;
+    if (clientGameStat != null) {
+      _result.clientGameStat = clientGameStat;
     }
     if (tournamentProgress != null) {
       _result.tournamentProgress = tournamentProgress;
@@ -107,15 +107,15 @@ class GameMessageClient extends $pb.GeneratedMessage {
   Join ensureJoin() => $_ensure(1);
 
   @$pb.TagNumber(4)
-  GameProgress get gameProgress => $_getN(2);
+  ClientGameStat get clientGameStat => $_getN(2);
   @$pb.TagNumber(4)
-  set gameProgress(GameProgress v) { setField(4, v); }
+  set clientGameStat(ClientGameStat v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasGameProgress() => $_has(2);
+  $core.bool hasClientGameStat() => $_has(2);
   @$pb.TagNumber(4)
-  void clearGameProgress() => clearField(4);
+  void clearClientGameStat() => clearField(4);
   @$pb.TagNumber(4)
-  GameProgress ensureGameProgress() => $_ensure(2);
+  ClientGameStat ensureClientGameStat() => $_ensure(2);
 
   @$pb.TagNumber(5)
   TournamentProgress get tournamentProgress => $_getN(3);
@@ -321,30 +321,23 @@ class Join extends $pb.GeneratedMessage {
   void clearTournamentId() => clearField(2);
 }
 
-class GameProgress extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GameProgress', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..e<GPAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'action', $pb.PbFieldType.OE, defaultOrMaker: GPAction.DRAW, valueOf: GPAction.valueOf, enumValues: GPAction.values)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerId', $pb.PbFieldType.O3, protoName: 'playerId')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newCard', $pb.PbFieldType.O3, protoName: 'newCard')
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldCard', $pb.PbFieldType.O3, protoName: 'oldCard')
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentId', $pb.PbFieldType.O3, protoName: 'tournamentId')
+class ClientRummyAction extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClientRummyAction', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..e<CRAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'action', $pb.PbFieldType.OE, defaultOrMaker: CRAction.DRAW, valueOf: CRAction.valueOf, enumValues: CRAction.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newCard', $pb.PbFieldType.O3, protoName: 'newCard')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldCard', $pb.PbFieldType.O3, protoName: 'oldCard')
     ..hasRequiredFields = false
   ;
 
-  GameProgress._() : super();
-  factory GameProgress({
-    GPAction? action,
-    $core.int? playerId,
+  ClientRummyAction._() : super();
+  factory ClientRummyAction({
+    CRAction? action,
     $core.int? newCard,
     $core.int? oldCard,
-    $core.int? tournamentId,
   }) {
     final _result = create();
     if (action != null) {
       _result.action = action;
-    }
-    if (playerId != null) {
-      _result.playerId = playerId;
     }
     if (newCard != null) {
       _result.newCard = newCard;
@@ -352,40 +345,127 @@ class GameProgress extends $pb.GeneratedMessage {
     if (oldCard != null) {
       _result.oldCard = oldCard;
     }
+    return _result;
+  }
+  factory ClientRummyAction.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ClientRummyAction.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ClientRummyAction clone() => ClientRummyAction()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ClientRummyAction copyWith(void Function(ClientRummyAction) updates) => super.copyWith((message) => updates(message as ClientRummyAction)) as ClientRummyAction; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ClientRummyAction create() => ClientRummyAction._();
+  ClientRummyAction createEmptyInstance() => create();
+  static $pb.PbList<ClientRummyAction> createRepeated() => $pb.PbList<ClientRummyAction>();
+  @$core.pragma('dart2js:noInline')
+  static ClientRummyAction getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClientRummyAction>(create);
+  static ClientRummyAction? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  CRAction get action => $_getN(0);
+  @$pb.TagNumber(1)
+  set action(CRAction v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAction() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAction() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get newCard => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set newCard($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNewCard() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNewCard() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get oldCard => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set oldCard($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasOldCard() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearOldCard() => clearField(3);
+}
+
+enum ClientGameStat_Stat {
+  clientRummyAction, 
+  notSet
+}
+
+class ClientGameStat extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, ClientGameStat_Stat> _ClientGameStat_StatByTag = {
+    1 : ClientGameStat_Stat.clientRummyAction,
+    0 : ClientGameStat_Stat.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClientGameStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..oo(0, [1])
+    ..aOM<ClientRummyAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clientRummyAction', protoName: 'clientRummyAction', subBuilder: ClientRummyAction.create)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerId', $pb.PbFieldType.O3, protoName: 'playerId')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentId', $pb.PbFieldType.O3, protoName: 'tournamentId')
+    ..hasRequiredFields = false
+  ;
+
+  ClientGameStat._() : super();
+  factory ClientGameStat({
+    ClientRummyAction? clientRummyAction,
+    $core.int? playerId,
+    $core.int? tournamentId,
+  }) {
+    final _result = create();
+    if (clientRummyAction != null) {
+      _result.clientRummyAction = clientRummyAction;
+    }
+    if (playerId != null) {
+      _result.playerId = playerId;
+    }
     if (tournamentId != null) {
       _result.tournamentId = tournamentId;
     }
     return _result;
   }
-  factory GameProgress.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GameProgress.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ClientGameStat.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ClientGameStat.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  GameProgress clone() => GameProgress()..mergeFromMessage(this);
+  ClientGameStat clone() => ClientGameStat()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GameProgress copyWith(void Function(GameProgress) updates) => super.copyWith((message) => updates(message as GameProgress)) as GameProgress; // ignore: deprecated_member_use
+  ClientGameStat copyWith(void Function(ClientGameStat) updates) => super.copyWith((message) => updates(message as ClientGameStat)) as ClientGameStat; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static GameProgress create() => GameProgress._();
-  GameProgress createEmptyInstance() => create();
-  static $pb.PbList<GameProgress> createRepeated() => $pb.PbList<GameProgress>();
+  static ClientGameStat create() => ClientGameStat._();
+  ClientGameStat createEmptyInstance() => create();
+  static $pb.PbList<ClientGameStat> createRepeated() => $pb.PbList<ClientGameStat>();
   @$core.pragma('dart2js:noInline')
-  static GameProgress getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GameProgress>(create);
-  static GameProgress? _defaultInstance;
+  static ClientGameStat getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClientGameStat>(create);
+  static ClientGameStat? _defaultInstance;
+
+  ClientGameStat_Stat whichStat() => _ClientGameStat_StatByTag[$_whichOneof(0)]!;
+  void clearStat() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  GPAction get action => $_getN(0);
+  ClientRummyAction get clientRummyAction => $_getN(0);
   @$pb.TagNumber(1)
-  set action(GPAction v) { setField(1, v); }
+  set clientRummyAction(ClientRummyAction v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasAction() => $_has(0);
+  $core.bool hasClientRummyAction() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAction() => clearField(1);
+  void clearClientRummyAction() => clearField(1);
+  @$pb.TagNumber(1)
+  ClientRummyAction ensureClientRummyAction() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.int get playerId => $_getIZ(1);
@@ -397,31 +477,13 @@ class GameProgress extends $pb.GeneratedMessage {
   void clearPlayerId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get newCard => $_getIZ(2);
+  $core.int get tournamentId => $_getIZ(2);
   @$pb.TagNumber(3)
-  set newCard($core.int v) { $_setSignedInt32(2, v); }
+  set tournamentId($core.int v) { $_setSignedInt32(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasNewCard() => $_has(2);
+  $core.bool hasTournamentId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearNewCard() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.int get oldCard => $_getIZ(3);
-  @$pb.TagNumber(4)
-  set oldCard($core.int v) { $_setSignedInt32(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasOldCard() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearOldCard() => clearField(4);
-
-  @$pb.TagNumber(5)
-  $core.int get tournamentId => $_getIZ(4);
-  @$pb.TagNumber(5)
-  set tournamentId($core.int v) { $_setSignedInt32(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasTournamentId() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearTournamentId() => clearField(5);
+  void clearTournamentId() => clearField(3);
 }
 
 class TournamentProgress extends $pb.GeneratedMessage {
@@ -490,6 +552,7 @@ enum GameMessageServer_PayLoad {
   joinStat, 
   joinProgress, 
   startTournament, 
+  gameServerUpdate, 
   notSet
 }
 
@@ -499,14 +562,16 @@ class GameMessageServer extends $pb.GeneratedMessage {
     3 : GameMessageServer_PayLoad.joinStat,
     4 : GameMessageServer_PayLoad.joinProgress,
     5 : GameMessageServer_PayLoad.startTournament,
+    6 : GameMessageServer_PayLoad.gameServerUpdate,
     0 : GameMessageServer_PayLoad.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GameMessageServer', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5])
+    ..oo(0, [2, 3, 4, 5, 6])
     ..aOM<InitStartStat>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initStartStat', protoName: 'initStartStat', subBuilder: InitStartStat.create)
     ..aOM<JoinStat>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'joinStat', protoName: 'joinStat', subBuilder: JoinStat.create)
     ..aOM<JoinProgress>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'joinProgress', protoName: 'joinProgress', subBuilder: JoinProgress.create)
     ..aOM<StartTournament>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startTournament', protoName: 'startTournament', subBuilder: StartTournament.create)
+    ..aOM<GameServerUpdate>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gameServerUpdate', protoName: 'gameServerUpdate', subBuilder: GameServerUpdate.create)
     ..hasRequiredFields = false
   ;
 
@@ -516,6 +581,7 @@ class GameMessageServer extends $pb.GeneratedMessage {
     JoinStat? joinStat,
     JoinProgress? joinProgress,
     StartTournament? startTournament,
+    GameServerUpdate? gameServerUpdate,
   }) {
     final _result = create();
     if (initStartStat != null) {
@@ -529,6 +595,9 @@ class GameMessageServer extends $pb.GeneratedMessage {
     }
     if (startTournament != null) {
       _result.startTournament = startTournament;
+    }
+    if (gameServerUpdate != null) {
+      _result.gameServerUpdate = gameServerUpdate;
     }
     return _result;
   }
@@ -599,6 +668,17 @@ class GameMessageServer extends $pb.GeneratedMessage {
   void clearStartTournament() => clearField(5);
   @$pb.TagNumber(5)
   StartTournament ensureStartTournament() => $_ensure(3);
+
+  @$pb.TagNumber(6)
+  GameServerUpdate get gameServerUpdate => $_getN(4);
+  @$pb.TagNumber(6)
+  set gameServerUpdate(GameServerUpdate v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasGameServerUpdate() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearGameServerUpdate() => clearField(6);
+  @$pb.TagNumber(6)
+  GameServerUpdate ensureGameServerUpdate() => $_ensure(4);
 }
 
 class InitStartStat extends $pb.GeneratedMessage {
@@ -755,6 +835,8 @@ class StartTournament extends $pb.GeneratedMessage {
     ..m<$core.int, $core.String>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerMap', protoName: 'playerMap', entryClassName: 'StartTournament.PlayerMapEntry', keyFieldType: $pb.PbFieldType.O3, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('game_message'))
     ..p<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cards', $pb.PbFieldType.P3)
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'youStart', protoName: 'youStart')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activePlayerId', $pb.PbFieldType.O3, protoName: 'activePlayerId')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'round', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -763,6 +845,8 @@ class StartTournament extends $pb.GeneratedMessage {
     $core.Map<$core.int, $core.String>? playerMap,
     $core.Iterable<$core.int>? cards,
     $core.bool? youStart,
+    $core.int? activePlayerId,
+    $core.int? round,
   }) {
     final _result = create();
     if (playerMap != null) {
@@ -773,6 +857,12 @@ class StartTournament extends $pb.GeneratedMessage {
     }
     if (youStart != null) {
       _result.youStart = youStart;
+    }
+    if (activePlayerId != null) {
+      _result.activePlayerId = activePlayerId;
+    }
+    if (round != null) {
+      _result.round = round;
     }
     return _result;
   }
@@ -811,5 +901,273 @@ class StartTournament extends $pb.GeneratedMessage {
   $core.bool hasYouStart() => $_has(2);
   @$pb.TagNumber(3)
   void clearYouStart() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get activePlayerId => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set activePlayerId($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasActivePlayerId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearActivePlayerId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get round => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set round($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRound() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRound() => clearField(5);
+}
+
+enum GameServerUpdate_Update {
+  rummyPlayerStat, 
+  notSet
+}
+
+class GameServerUpdate extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, GameServerUpdate_Update> _GameServerUpdate_UpdateByTag = {
+    1 : GameServerUpdate_Update.rummyPlayerStat,
+    0 : GameServerUpdate_Update.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GameServerUpdate', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..oo(0, [1])
+    ..aOM<RummyPlayerStat>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rummyPlayerStat', protoName: 'rummyPlayerStat', subBuilder: RummyPlayerStat.create)
+    ..hasRequiredFields = false
+  ;
+
+  GameServerUpdate._() : super();
+  factory GameServerUpdate({
+    RummyPlayerStat? rummyPlayerStat,
+  }) {
+    final _result = create();
+    if (rummyPlayerStat != null) {
+      _result.rummyPlayerStat = rummyPlayerStat;
+    }
+    return _result;
+  }
+  factory GameServerUpdate.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GameServerUpdate.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GameServerUpdate clone() => GameServerUpdate()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GameServerUpdate copyWith(void Function(GameServerUpdate) updates) => super.copyWith((message) => updates(message as GameServerUpdate)) as GameServerUpdate; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GameServerUpdate create() => GameServerUpdate._();
+  GameServerUpdate createEmptyInstance() => create();
+  static $pb.PbList<GameServerUpdate> createRepeated() => $pb.PbList<GameServerUpdate>();
+  @$core.pragma('dart2js:noInline')
+  static GameServerUpdate getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GameServerUpdate>(create);
+  static GameServerUpdate? _defaultInstance;
+
+  GameServerUpdate_Update whichUpdate() => _GameServerUpdate_UpdateByTag[$_whichOneof(0)]!;
+  void clearUpdate() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  RummyPlayerStat get rummyPlayerStat => $_getN(0);
+  @$pb.TagNumber(1)
+  set rummyPlayerStat(RummyPlayerStat v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRummyPlayerStat() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRummyPlayerStat() => clearField(1);
+  @$pb.TagNumber(1)
+  RummyPlayerStat ensureRummyPlayerStat() => $_ensure(0);
+}
+
+enum RummyPlayerStat_Stat {
+  activeRPS, 
+  inactiveRPS, 
+  notSet
+}
+
+class RummyPlayerStat extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, RummyPlayerStat_Stat> _RummyPlayerStat_StatByTag = {
+    1 : RummyPlayerStat_Stat.activeRPS,
+    2 : RummyPlayerStat_Stat.inactiveRPS,
+    0 : RummyPlayerStat_Stat.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RummyPlayerStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..aOM<ActiveRummyPlayerStat>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeRPS', protoName: 'activeRPS', subBuilder: ActiveRummyPlayerStat.create)
+    ..aOM<InActiveRummyPlaterStat>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inactiveRPS', protoName: 'inactiveRPS', subBuilder: InActiveRummyPlaterStat.create)
+    ..hasRequiredFields = false
+  ;
+
+  RummyPlayerStat._() : super();
+  factory RummyPlayerStat({
+    ActiveRummyPlayerStat? activeRPS,
+    InActiveRummyPlaterStat? inactiveRPS,
+  }) {
+    final _result = create();
+    if (activeRPS != null) {
+      _result.activeRPS = activeRPS;
+    }
+    if (inactiveRPS != null) {
+      _result.inactiveRPS = inactiveRPS;
+    }
+    return _result;
+  }
+  factory RummyPlayerStat.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RummyPlayerStat.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RummyPlayerStat clone() => RummyPlayerStat()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RummyPlayerStat copyWith(void Function(RummyPlayerStat) updates) => super.copyWith((message) => updates(message as RummyPlayerStat)) as RummyPlayerStat; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RummyPlayerStat create() => RummyPlayerStat._();
+  RummyPlayerStat createEmptyInstance() => create();
+  static $pb.PbList<RummyPlayerStat> createRepeated() => $pb.PbList<RummyPlayerStat>();
+  @$core.pragma('dart2js:noInline')
+  static RummyPlayerStat getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RummyPlayerStat>(create);
+  static RummyPlayerStat? _defaultInstance;
+
+  RummyPlayerStat_Stat whichStat() => _RummyPlayerStat_StatByTag[$_whichOneof(0)]!;
+  void clearStat() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  ActiveRummyPlayerStat get activeRPS => $_getN(0);
+  @$pb.TagNumber(1)
+  set activeRPS(ActiveRummyPlayerStat v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasActiveRPS() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearActiveRPS() => clearField(1);
+  @$pb.TagNumber(1)
+  ActiveRummyPlayerStat ensureActiveRPS() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  InActiveRummyPlaterStat get inactiveRPS => $_getN(1);
+  @$pb.TagNumber(2)
+  set inactiveRPS(InActiveRummyPlaterStat v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasInactiveRPS() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearInactiveRPS() => clearField(2);
+  @$pb.TagNumber(2)
+  InActiveRummyPlaterStat ensureInactiveRPS() => $_ensure(1);
+}
+
+class ActiveRummyPlayerStat extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ActiveRummyPlayerStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..e<ARPAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arpAction', $pb.PbFieldType.OE, protoName: 'arpAction', defaultOrMaker: ARPAction.DRAW_CARD, valueOf: ARPAction.valueOf, enumValues: ARPAction.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextCard', $pb.PbFieldType.O3, protoName: 'nextCard')
+    ..hasRequiredFields = false
+  ;
+
+  ActiveRummyPlayerStat._() : super();
+  factory ActiveRummyPlayerStat({
+    ARPAction? arpAction,
+    $core.int? nextCard,
+  }) {
+    final _result = create();
+    if (arpAction != null) {
+      _result.arpAction = arpAction;
+    }
+    if (nextCard != null) {
+      _result.nextCard = nextCard;
+    }
+    return _result;
+  }
+  factory ActiveRummyPlayerStat.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ActiveRummyPlayerStat.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ActiveRummyPlayerStat clone() => ActiveRummyPlayerStat()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ActiveRummyPlayerStat copyWith(void Function(ActiveRummyPlayerStat) updates) => super.copyWith((message) => updates(message as ActiveRummyPlayerStat)) as ActiveRummyPlayerStat; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ActiveRummyPlayerStat create() => ActiveRummyPlayerStat._();
+  ActiveRummyPlayerStat createEmptyInstance() => create();
+  static $pb.PbList<ActiveRummyPlayerStat> createRepeated() => $pb.PbList<ActiveRummyPlayerStat>();
+  @$core.pragma('dart2js:noInline')
+  static ActiveRummyPlayerStat getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ActiveRummyPlayerStat>(create);
+  static ActiveRummyPlayerStat? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ARPAction get arpAction => $_getN(0);
+  @$pb.TagNumber(1)
+  set arpAction(ARPAction v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasArpAction() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearArpAction() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get nextCard => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set nextCard($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNextCard() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNextCard() => clearField(2);
+}
+
+class InActiveRummyPlaterStat extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'InActiveRummyPlaterStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activePlayerId', $pb.PbFieldType.O3, protoName: 'activePlayerId')
+    ..hasRequiredFields = false
+  ;
+
+  InActiveRummyPlaterStat._() : super();
+  factory InActiveRummyPlaterStat({
+    $core.int? activePlayerId,
+  }) {
+    final _result = create();
+    if (activePlayerId != null) {
+      _result.activePlayerId = activePlayerId;
+    }
+    return _result;
+  }
+  factory InActiveRummyPlaterStat.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory InActiveRummyPlaterStat.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  InActiveRummyPlaterStat clone() => InActiveRummyPlaterStat()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  InActiveRummyPlaterStat copyWith(void Function(InActiveRummyPlaterStat) updates) => super.copyWith((message) => updates(message as InActiveRummyPlaterStat)) as InActiveRummyPlaterStat; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static InActiveRummyPlaterStat create() => InActiveRummyPlaterStat._();
+  InActiveRummyPlaterStat createEmptyInstance() => create();
+  static $pb.PbList<InActiveRummyPlaterStat> createRepeated() => $pb.PbList<InActiveRummyPlaterStat>();
+  @$core.pragma('dart2js:noInline')
+  static InActiveRummyPlaterStat getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InActiveRummyPlaterStat>(create);
+  static InActiveRummyPlaterStat? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get activePlayerId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set activePlayerId($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasActivePlayerId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearActivePlayerId() => clearField(1);
 }
 
