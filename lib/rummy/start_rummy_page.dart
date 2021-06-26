@@ -56,16 +56,18 @@ class _StartRummyPageState extends State<StartRummyPage> {
           //print("count $val");
           _ts = val;
           _ts.logInfo();
-          _rummyState = RummyState.WAITING;
+
           _initLocalServer();
           _rummyLocalClient = RummyLocalClient(onConnected: (val) {
+            _rummyState = RummyState.WAITING;
+            setState(() {});
             _rummyLocalClient
                 .sendMessage(_getGameInitMessage().writeToBuffer());
           });
-          setState(() {});
         });
       case RummyState.WAITING:
-        return WaitingScreen();
+        return WaitingScreen(
+            onGameStart: (val) {}, channel: _rummyLocalClient.channel);
     }
     return Container();
   }

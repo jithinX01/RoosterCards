@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rooster_cards/rummy/waiting_screen.dart';
+//import 'package:rooster_cards/rummy/waiting_screen.dart';
 
 class RummyPlay extends StatefulWidget {
   RummyPlay({Key? key}) : super(key: key);
@@ -21,6 +21,7 @@ class _RummyPlayState extends State<RummyPlay> {
   String l = "Cancel";
   @override
   Widget build(BuildContext context) {
-    return WaitingScreen();
+    //return WaitingScreen();
+    return Container();
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 //import 'package:rooster_cards/rummy/tournament_settings.dart';
-import 'package:rooster_cards/proto/game_msg.pbserver.dart';
+import 'package:rooster_cards/game_handler/game_handler.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -16,6 +16,7 @@ class RummyLocalServer {
     _ts = ts;
   }
   */
+  GameHandler _gameHandler = GameHandler();
 
   BonsoirService _service = BonsoirService(
     name: 'RoosterService', // Put your service name here.
@@ -53,8 +54,7 @@ class RummyLocalServer {
       print(_clients.length);
       webSocket.stream.listen((dynamic message) {
         print(message);
-        GameMessageClient gmc = GameMessageClient.fromBuffer(message);
-        print(gmc.initStart.tournamentName);
+        _gameHandler.handleMessage(message, webSocket);
         //webSocket.sink.add("echo $message");
       }, onDone: () {
         print("ws channel closed");

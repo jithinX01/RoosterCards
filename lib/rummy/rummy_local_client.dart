@@ -5,12 +5,6 @@ import 'package:flutter/material.dart';
 class RummyLocalClient {
   late WebSocketChannel _channel;
   final ValueChanged<bool> onConnected;
-  /*
-  WebSocketChannel.connect(
-    Uri.parse('ws://localhost:8080'),
-  );
-  */
-
   String _type = '_rooster-service._tcp';
   late BonsoirDiscovery _discovery;
 
