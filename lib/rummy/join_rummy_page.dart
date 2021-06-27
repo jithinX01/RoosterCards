@@ -3,7 +3,6 @@ import 'package:rooster_cards/proto/game_msg.pb.dart';
 
 import 'package:rooster_cards/rummy/rummy_join.dart';
 import 'package:rooster_cards/rummy/rummy_local_client.dart';
-import 'package:rooster_cards/rummy/init_tournament_settings.dart';
 import 'package:rooster_cards/rummy/waiting_screen.dart';
 
 enum RummyState {
@@ -60,7 +59,7 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
             _rummyState = RummyState.WAITING;
             setState(() {});
             _rummyLocalClient
-                .sendMessage(_getGameInitMessage().writeToBuffer());
+                .sendMessage(_getGameJoinMessage().writeToBuffer());
           });
         });
       case RummyState.WAITING:
@@ -70,8 +69,10 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
     return Container();
   }
 
-  GameMessageClient _getGameInitMessage() {
+  GameMessageClient _getGameJoinMessage() {
     GameMessageClient gmc = GameMessageClient();
+
+    gmc.join = Join(playerName: "JoinPlayer", tournamentId: _code);
 
     return gmc;
   }

@@ -19,6 +19,8 @@ class GameHandler {
       case GameMessageClient_PayLoad.initStart:
         handlInitStart(gmc.initStart, wc);
         break;
+      case GameMessageClient_PayLoad.join:
+        break;
       default:
     }
   }
@@ -31,5 +33,9 @@ class GameHandler {
     }
     tournamentMap[tournamentId] = Tournament(initStart, wc, tournamentId);
     connectionMap[wc] = tournamentId;
+  }
+
+  void handleJoin(Join join, WebSocketChannel wc) {
+    if (tournamentMap.containsKey(join.tournamentId)) {}
   }
 }

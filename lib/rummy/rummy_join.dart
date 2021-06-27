@@ -18,7 +18,7 @@ class RummyJoin extends StatefulWidget {
 }
 
 class _RummyJoinState extends State<RummyJoin> {
-  late int code;
+  int code = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
