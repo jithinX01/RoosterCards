@@ -98,9 +98,14 @@ message GameMessageServer {
         JoinProgress joinProgress = 4;
         StartTournament startTournament = 5;
         GameServerUpdate gameServerUpdate = 6;
+        ErrorStat errorStat = 7;
     }
 }
 
+message ErrorStat {
+    int32 errorCode = 1;
+    string errorMessage = 2;
+}
 message InitStartStat {
     int32 playerId = 1;
     int32 tournamentId = 2;

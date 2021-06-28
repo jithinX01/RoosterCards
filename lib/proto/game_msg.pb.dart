@@ -553,6 +553,7 @@ enum GameMessageServer_PayLoad {
   joinProgress, 
   startTournament, 
   gameServerUpdate, 
+  errorStat, 
   notSet
 }
 
@@ -563,15 +564,17 @@ class GameMessageServer extends $pb.GeneratedMessage {
     4 : GameMessageServer_PayLoad.joinProgress,
     5 : GameMessageServer_PayLoad.startTournament,
     6 : GameMessageServer_PayLoad.gameServerUpdate,
+    7 : GameMessageServer_PayLoad.errorStat,
     0 : GameMessageServer_PayLoad.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GameMessageServer', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6])
+    ..oo(0, [2, 3, 4, 5, 6, 7])
     ..aOM<InitStartStat>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initStartStat', protoName: 'initStartStat', subBuilder: InitStartStat.create)
     ..aOM<JoinStat>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'joinStat', protoName: 'joinStat', subBuilder: JoinStat.create)
     ..aOM<JoinProgress>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'joinProgress', protoName: 'joinProgress', subBuilder: JoinProgress.create)
     ..aOM<StartTournament>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startTournament', protoName: 'startTournament', subBuilder: StartTournament.create)
     ..aOM<GameServerUpdate>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gameServerUpdate', protoName: 'gameServerUpdate', subBuilder: GameServerUpdate.create)
+    ..aOM<ErrorStat>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'errorStat', protoName: 'errorStat', subBuilder: ErrorStat.create)
     ..hasRequiredFields = false
   ;
 
@@ -582,6 +585,7 @@ class GameMessageServer extends $pb.GeneratedMessage {
     JoinProgress? joinProgress,
     StartTournament? startTournament,
     GameServerUpdate? gameServerUpdate,
+    ErrorStat? errorStat,
   }) {
     final _result = create();
     if (initStartStat != null) {
@@ -598,6 +602,9 @@ class GameMessageServer extends $pb.GeneratedMessage {
     }
     if (gameServerUpdate != null) {
       _result.gameServerUpdate = gameServerUpdate;
+    }
+    if (errorStat != null) {
+      _result.errorStat = errorStat;
     }
     return _result;
   }
@@ -679,6 +686,78 @@ class GameMessageServer extends $pb.GeneratedMessage {
   void clearGameServerUpdate() => clearField(6);
   @$pb.TagNumber(6)
   GameServerUpdate ensureGameServerUpdate() => $_ensure(4);
+
+  @$pb.TagNumber(7)
+  ErrorStat get errorStat => $_getN(5);
+  @$pb.TagNumber(7)
+  set errorStat(ErrorStat v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasErrorStat() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearErrorStat() => clearField(7);
+  @$pb.TagNumber(7)
+  ErrorStat ensureErrorStat() => $_ensure(5);
+}
+
+class ErrorStat extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ErrorStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'errorCode', $pb.PbFieldType.O3, protoName: 'errorCode')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'errorMessage', protoName: 'errorMessage')
+    ..hasRequiredFields = false
+  ;
+
+  ErrorStat._() : super();
+  factory ErrorStat({
+    $core.int? errorCode,
+    $core.String? errorMessage,
+  }) {
+    final _result = create();
+    if (errorCode != null) {
+      _result.errorCode = errorCode;
+    }
+    if (errorMessage != null) {
+      _result.errorMessage = errorMessage;
+    }
+    return _result;
+  }
+  factory ErrorStat.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ErrorStat.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ErrorStat clone() => ErrorStat()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ErrorStat copyWith(void Function(ErrorStat) updates) => super.copyWith((message) => updates(message as ErrorStat)) as ErrorStat; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ErrorStat create() => ErrorStat._();
+  ErrorStat createEmptyInstance() => create();
+  static $pb.PbList<ErrorStat> createRepeated() => $pb.PbList<ErrorStat>();
+  @$core.pragma('dart2js:noInline')
+  static ErrorStat getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ErrorStat>(create);
+  static ErrorStat? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get errorCode => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set errorCode($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasErrorCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearErrorCode() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get errorMessage => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set errorMessage($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasErrorMessage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearErrorMessage() => clearField(2);
 }
 
 class InitStartStat extends $pb.GeneratedMessage {

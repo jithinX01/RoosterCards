@@ -2,6 +2,9 @@ import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/proto/tournament_data.pbserver.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+const NO_OF_CARDS = 53;
+const NO_OF_RUMMY_CARDS = 13;
+
 class Tournament {
   late TournamentData _data;
   late int _tournamentId;
@@ -35,6 +38,7 @@ class Tournament {
 
   //overrided in derived class
   void _gameTypeInit(InitStart initStart) {}
+  void _startTournament() {}
 
   void handleJoin(Join join, WebSocketChannel wc) {
     _data.players.add(join.playerName);
@@ -44,7 +48,9 @@ class Tournament {
     _sendJoinStat(wc, connectedPlayerId);
     if (_joinedPlayers == _data.noOfPlayers) {
       //Start Tournament.
+      _startTournament();
       //Send status to all players.
+      _sendStartTournament();
     } else {
       //Send Join Progress
       _sendJoinProgress(connectedPlayerId);
@@ -66,6 +72,20 @@ class Tournament {
         GameMessageServer(joinStat: JoinStat(playerId: connectedPlayerId));
     wc.sink.add(gms.writeToBuffer());
   }
+
+  void _sendStartTournament() {
+    playerConnections.forEach((key, value) {
+      //value.sink.add(gms.writeToBuffer());
+      GameMessageServer gms = GameMessageServer(
+          startTournament: StartTournament(
+              playerMap: _data.players.asMap(),
+              cards: _data.playerCards[key]?.cards,
+              youStart: _data.currentPlayerId == key,
+              activePlayerId: _data.currentPlayerId,
+              round: _data.currentRound));
+      value.sink.add(gms.writeToBuffer());
+    });
+  }
 }
 
 class RummyTournament extends Tournament {
@@ -75,5 +95,44 @@ class RummyTournament extends Tournament {
   @override
   void _gameTypeInit(InitStart initStart) {
     _data.rummyData = RummyTournamentData(state: RummyState.INIT);
+  }
+
+  @override
+  void _startTournament() {
+    _data.currentRound = 1;
+    _shuffleDeckAndDeal();
+  }
+
+  void _shuffleDeckAndDeal() {
+    //no  of  stacked cards =  53* noOfDeck
+    var stack = List<int>.generate(
+        _data.noOfDeck * NO_OF_CARDS, (int index) => index % NO_OF_CARDS);
+    //shuffle
+    stack.shuffle();
+
+    //deal cards
+
+    //var playerCards = Map<int, List<int>>();
+    for (var i = 0; i < NO_OF_RUMMY_CARDS * _data.noOfPlayers; i++) {
+      //if (!playerCards.containsKey(i % _data.noOfPlayers)) {
+      if (!_data.playerCards.containsKey(i % _data.noOfPlayers)) {
+        List<int> a = List.empty(growable: true);
+        a.add(stack[i]);
+
+        _data.playerCards[i % _data.noOfPlayers] = PlayerCard(cards: a);
+
+        //playerCards[i % _data.noOfPlayers] = a;
+
+      } else {
+        _data.playerCards[i % _data.noOfPlayers]?.cards.add(stack[i]);
+
+        //playerCards[i % _data.noOfPlayers]?.add(stack[i]);
+      }
+    }
+    //remove the dealed cards from stack.
+
+    stack.removeRange(0, NO_OF_RUMMY_CARDS * _data.noOfPlayers);
+
+    _data.cardStack.addAll(stack);
   }
 }

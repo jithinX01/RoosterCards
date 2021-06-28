@@ -20,6 +20,7 @@ class GameHandler {
         handlInitStart(gmc.initStart, wc);
         break;
       case GameMessageClient_PayLoad.join:
+        handleJoin(gmc.join, wc);
         break;
       default:
     }
@@ -36,6 +37,17 @@ class GameHandler {
   }
 
   void handleJoin(Join join, WebSocketChannel wc) {
-    if (tournamentMap.containsKey(join.tournamentId)) {}
+    if (tournamentMap.containsKey(join.tournamentId)) {
+      tournamentMap[join.tournamentId]?.handleJoin(join, wc);
+    } else {
+      //error case
+      handleError(wc, 101, "No Tournament Found");
+    }
+  }
+
+  void handleError(WebSocketChannel wc, int errorCode, String errorMessage) {
+    GameMessageServer gms = GameMessageServer(
+        errorStat: ErrorStat(errorCode: errorCode, errorMessage: errorMessage));
+    wc.sink.add(gms.writeToBuffer());
   }
 }

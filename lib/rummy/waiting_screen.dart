@@ -5,8 +5,13 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class WaitingScreen extends StatefulWidget {
   final ValueChanged<bool> onGameStart;
   final WebSocketChannel channel;
+  final bool initedPlayer;
 
-  WaitingScreen({Key? key, required this.onGameStart, required this.channel})
+  WaitingScreen(
+      {Key? key,
+      required this.onGameStart,
+      required this.channel,
+      required this.initedPlayer})
       : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -24,6 +29,8 @@ class WaitingScreen extends StatefulWidget {
 
 class _WaitingScreenState extends State<WaitingScreen> {
   String l = "Cancel";
+  int _tournamentId = 0;
+  int _playerId = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,34 +72,55 @@ class _WaitingScreenState extends State<WaitingScreen> {
     switch (gms.whichPayLoad()) {
       case GameMessageServer_PayLoad.initStartStat:
         return _handleInitStartStat(gms.initStartStat);
+      case GameMessageServer_PayLoad.joinStat:
+        return _handleJoinStat(gms.joinStat);
       case GameMessageServer_PayLoad.joinProgress:
         return _handleJoinProgress(gms.joinProgress);
+      default:
     }
     return _initWidget();
   }
 
+  //message replied from server when player start tournament.
   Widget _handleInitStartStat(InitStartStat initStartStat) {
+    _tournamentId = initStartStat.tournamentId;
+    _playerId = initStartStat.playerId;
     List<Widget> wList = List.empty(growable: true);
-    wList.add(Container(
-        padding: const EdgeInsets.only(top: 64),
-        child: Text(
-          "TOURNMENT CODE",
-          textAlign: TextAlign.center,
-        )));
-    wList.add(Container(
-        padding: const EdgeInsets.only(top: 32),
-        child: Text(
-          initStartStat.tournamentId.toString(),
-          textAlign: TextAlign.center,
-        )));
+    wList.addAll(_tournamentCodeWidgets());
     wList.addAll(_initListWidgets());
     return Column(
       children: wList,
     );
   }
 
+  //Server update the list of joined players
   Widget _handleJoinProgress(JoinProgress joinProgress) {
-    return Column();
+    List<Widget> wList = List.empty(growable: true);
+    if (widget.initedPlayer) wList.addAll(_tournamentCodeWidgets());
+    wList.addAll(_joinedPlayersWidget(joinProgress.players));
+    wList.addAll(_initListWidgets());
+    return Column(
+      children: wList,
+    );
+  }
+
+  List<Widget> _joinedPlayersWidget(List<String> players) {
+    List<Widget> wList = List.empty(growable: true);
+
+    players.forEach((player) {
+      wList.add(Container(
+          padding: const EdgeInsets.only(top: 32),
+          child: Text(
+            player + " Joined",
+            textAlign: TextAlign.center,
+          )));
+    });
+    return wList;
+  }
+
+  Widget _handleJoinStat(JoinStat joinStat) {
+    _playerId = joinStat.playerId;
+    return _initWidget();
   }
 
   Widget _initWidget() {
@@ -115,6 +143,23 @@ class _WaitingScreenState extends State<WaitingScreen> {
         padding: const EdgeInsets.only(top: 64),
         child: CircularProgressIndicator(),
       )
+    ];
+  }
+
+  List<Widget> _tournamentCodeWidgets() {
+    return <Widget>[
+      Container(
+          padding: const EdgeInsets.only(top: 32),
+          child: Text(
+            _tournamentId.toString(),
+            textAlign: TextAlign.center,
+          )),
+      Container(
+          padding: const EdgeInsets.only(top: 32),
+          child: Text(
+            _tournamentId.toString(),
+            textAlign: TextAlign.center,
+          ))
     ];
   }
 }

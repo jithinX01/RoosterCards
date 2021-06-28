@@ -23,7 +23,8 @@ message TournamentData
     oneof type {
         RummyTournamentData rummy_data = 10;
     }
-
+    repeated int32 discardedCards = 11;
+    int32 currentRound = 12;
 }
 
 message RummyTournamentData {

@@ -7,10 +7,17 @@ class RummyLocalClient {
   final ValueChanged<bool> onConnected;
   String _type = '_rooster-service._tcp';
   late BonsoirDiscovery _discovery;
+  bool initDiscovery = true;
 
   WebSocketChannel get channel => _channel;
-  RummyLocalClient({required this.onConnected}) {
-    _initDiscovery();
+  RummyLocalClient({required this.onConnected, this.initDiscovery = true}) {
+    if (initDiscovery) {
+      _initDiscovery();
+    } else {
+      //to test locally
+      connectToServer("10.0.2.2", "8080");
+      onConnected(true);
+    }
   }
   void _initDiscovery() async {
     _discovery = BonsoirDiscovery(type: _type);
@@ -47,7 +54,7 @@ class RummyLocalClient {
   }
 
   void dispose() async {
-    await _discovery.stop();
+    if (initDiscovery) await _discovery.stop();
     await _channel.sink.close();
   }
 

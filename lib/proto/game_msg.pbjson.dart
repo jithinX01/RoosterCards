@@ -144,6 +144,7 @@ const GameMessageServer$json = const {
     const {'1': 'joinProgress', '3': 4, '4': 1, '5': 11, '6': '.game_message.JoinProgress', '9': 0, '10': 'joinProgress'},
     const {'1': 'startTournament', '3': 5, '4': 1, '5': 11, '6': '.game_message.StartTournament', '9': 0, '10': 'startTournament'},
     const {'1': 'gameServerUpdate', '3': 6, '4': 1, '5': 11, '6': '.game_message.GameServerUpdate', '9': 0, '10': 'gameServerUpdate'},
+    const {'1': 'errorStat', '3': 7, '4': 1, '5': 11, '6': '.game_message.ErrorStat', '9': 0, '10': 'errorStat'},
   ],
   '8': const [
     const {'1': 'pay_load'},
@@ -151,7 +152,18 @@ const GameMessageServer$json = const {
 };
 
 /// Descriptor for `GameMessageServer`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List gameMessageServerDescriptor = $convert.base64Decode('ChFHYW1lTWVzc2FnZVNlcnZlchJDCg1pbml0U3RhcnRTdGF0GAIgASgLMhsuZ2FtZV9tZXNzYWdlLkluaXRTdGFydFN0YXRIAFINaW5pdFN0YXJ0U3RhdBI0Cghqb2luU3RhdBgDIAEoCzIWLmdhbWVfbWVzc2FnZS5Kb2luU3RhdEgAUghqb2luU3RhdBJACgxqb2luUHJvZ3Jlc3MYBCABKAsyGi5nYW1lX21lc3NhZ2UuSm9pblByb2dyZXNzSABSDGpvaW5Qcm9ncmVzcxJJCg9zdGFydFRvdXJuYW1lbnQYBSABKAsyHS5nYW1lX21lc3NhZ2UuU3RhcnRUb3VybmFtZW50SABSD3N0YXJ0VG91cm5hbWVudBJMChBnYW1lU2VydmVyVXBkYXRlGAYgASgLMh4uZ2FtZV9tZXNzYWdlLkdhbWVTZXJ2ZXJVcGRhdGVIAFIQZ2FtZVNlcnZlclVwZGF0ZUIKCghwYXlfbG9hZA==');
+final $typed_data.Uint8List gameMessageServerDescriptor = $convert.base64Decode('ChFHYW1lTWVzc2FnZVNlcnZlchJDCg1pbml0U3RhcnRTdGF0GAIgASgLMhsuZ2FtZV9tZXNzYWdlLkluaXRTdGFydFN0YXRIAFINaW5pdFN0YXJ0U3RhdBI0Cghqb2luU3RhdBgDIAEoCzIWLmdhbWVfbWVzc2FnZS5Kb2luU3RhdEgAUghqb2luU3RhdBJACgxqb2luUHJvZ3Jlc3MYBCABKAsyGi5nYW1lX21lc3NhZ2UuSm9pblByb2dyZXNzSABSDGpvaW5Qcm9ncmVzcxJJCg9zdGFydFRvdXJuYW1lbnQYBSABKAsyHS5nYW1lX21lc3NhZ2UuU3RhcnRUb3VybmFtZW50SABSD3N0YXJ0VG91cm5hbWVudBJMChBnYW1lU2VydmVyVXBkYXRlGAYgASgLMh4uZ2FtZV9tZXNzYWdlLkdhbWVTZXJ2ZXJVcGRhdGVIAFIQZ2FtZVNlcnZlclVwZGF0ZRI3CgllcnJvclN0YXQYByABKAsyFy5nYW1lX21lc3NhZ2UuRXJyb3JTdGF0SABSCWVycm9yU3RhdEIKCghwYXlfbG9hZA==');
+@$core.Deprecated('Use errorStatDescriptor instead')
+const ErrorStat$json = const {
+  '1': 'ErrorStat',
+  '2': const [
+    const {'1': 'errorCode', '3': 1, '4': 1, '5': 5, '10': 'errorCode'},
+    const {'1': 'errorMessage', '3': 2, '4': 1, '5': 9, '10': 'errorMessage'},
+  ],
+};
+
+/// Descriptor for `ErrorStat`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List errorStatDescriptor = $convert.base64Decode('CglFcnJvclN0YXQSHAoJZXJyb3JDb2RlGAEgASgFUgllcnJvckNvZGUSIgoMZXJyb3JNZXNzYWdlGAIgASgJUgxlcnJvck1lc3NhZ2U=');
 @$core.Deprecated('Use initStartStatDescriptor instead')
 const InitStartStat$json = const {
   '1': 'InitStartStat',

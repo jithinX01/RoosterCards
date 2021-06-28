@@ -67,7 +67,10 @@ class _StartRummyPageState extends State<StartRummyPage> {
         });
       case RummyState.WAITING:
         return WaitingScreen(
-            onGameStart: (val) {}, channel: _rummyLocalClient.channel);
+          onGameStart: (val) {},
+          channel: _rummyLocalClient.channel,
+          initedPlayer: true,
+        );
     }
     return Container();
   }
