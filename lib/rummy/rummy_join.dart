@@ -30,17 +30,20 @@ class _RummyJoinState extends State<RummyJoin> {
             //Text("Name of Tournament"),
             TextFormField(
               keyboardType: TextInputType.number,
-              decoration: new InputDecoration(labelText: "Tournament Code"),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              /*
               validator: (value) {
                 int l = value?.length ?? 0;
                 if (l != 4) {
                   return "Wrong Code";
                 }
               },
+              */
+
               textAlign: TextAlign.center,
-              onSaved: (String? value) {
+              onChanged: (String? value) {
                 //ts.tournamentName = value ?? ts.tournamentName;
+                print(value);
                 code = int.parse(value ?? "0");
               },
             ),

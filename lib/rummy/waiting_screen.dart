@@ -3,7 +3,7 @@ import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WaitingScreen extends StatefulWidget {
-  final ValueChanged<bool> onGameStart;
+  final ValueChanged<StartTournament> onGameStart;
   final WebSocketChannel channel;
   final bool initedPlayer;
 
@@ -76,6 +76,10 @@ class _WaitingScreenState extends State<WaitingScreen> {
         return _handleJoinStat(gms.joinStat);
       case GameMessageServer_PayLoad.joinProgress:
         return _handleJoinProgress(gms.joinProgress);
+      case GameMessageServer_PayLoad.startTournament:
+        widget.onGameStart(gms.startTournament);
+        print(gms.startTournament.playerMap);
+        return _initWidget(msg: "Starting");
       default:
     }
     return _initWidget();
@@ -123,20 +127,20 @@ class _WaitingScreenState extends State<WaitingScreen> {
     return _initWidget();
   }
 
-  Widget _initWidget() {
+  Widget _initWidget({String msg = "WAITING FOR PLAYERS"}) {
     return Column(
       //mainAxisAlignment: MainAxisAlignment.center,
       //crossAxisAlignment: CrossAxisAlignment.center,
-      children: _initListWidgets(),
+      children: _initListWidgets(msg: msg),
     );
   }
 
-  List<Widget> _initListWidgets() {
+  List<Widget> _initListWidgets({String msg = "WAITING FOR PLAYERS"}) {
     return <Widget>[
       Container(
           padding: const EdgeInsets.only(top: 32),
           child: Text(
-            "WAITING FOR PLAYERS",
+            msg,
             textAlign: TextAlign.center,
           )),
       Container(
@@ -149,17 +153,11 @@ class _WaitingScreenState extends State<WaitingScreen> {
   List<Widget> _tournamentCodeWidgets() {
     return <Widget>[
       Container(
-          padding: const EdgeInsets.only(top: 32),
+          padding: const EdgeInsets.only(top: 64),
           child: Text(
             _tournamentId.toString(),
             textAlign: TextAlign.center,
           )),
-      Container(
-          padding: const EdgeInsets.only(top: 32),
-          child: Text(
-            _tournamentId.toString(),
-            textAlign: TextAlign.center,
-          ))
     ];
   }
 }

@@ -916,6 +916,9 @@ class StartTournament extends $pb.GeneratedMessage {
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'youStart', protoName: 'youStart')
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activePlayerId', $pb.PbFieldType.O3, protoName: 'activePlayerId')
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'round', $pb.PbFieldType.O3)
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentName', protoName: 'tournamentName')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyId', $pb.PbFieldType.O3, protoName: 'trophyId')
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'yourId', $pb.PbFieldType.O3, protoName: 'yourId')
     ..hasRequiredFields = false
   ;
 
@@ -926,6 +929,9 @@ class StartTournament extends $pb.GeneratedMessage {
     $core.bool? youStart,
     $core.int? activePlayerId,
     $core.int? round,
+    $core.String? tournamentName,
+    $core.int? trophyId,
+    $core.int? yourId,
   }) {
     final _result = create();
     if (playerMap != null) {
@@ -942,6 +948,15 @@ class StartTournament extends $pb.GeneratedMessage {
     }
     if (round != null) {
       _result.round = round;
+    }
+    if (tournamentName != null) {
+      _result.tournamentName = tournamentName;
+    }
+    if (trophyId != null) {
+      _result.trophyId = trophyId;
+    }
+    if (yourId != null) {
+      _result.yourId = yourId;
     }
     return _result;
   }
@@ -998,6 +1013,33 @@ class StartTournament extends $pb.GeneratedMessage {
   $core.bool hasRound() => $_has(4);
   @$pb.TagNumber(5)
   void clearRound() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get tournamentName => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set tournamentName($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasTournamentName() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearTournamentName() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get trophyId => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set trophyId($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasTrophyId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearTrophyId() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get yourId => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set yourId($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasYourId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearYourId() => clearField(8);
 }
 
 enum GameServerUpdate_Update {

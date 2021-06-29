@@ -52,19 +52,27 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
     switch (state) {
       case RummyState.INIT_JOIN:
         return RummyJoin(onChanged: (val) {
-          //print("count $val");
+          print("count $val");
           _code = val;
 
-          _rummyLocalClient = RummyLocalClient(onConnected: (val) {
-            _rummyState = RummyState.WAITING;
-            setState(() {});
-            _rummyLocalClient
-                .sendMessage(_getGameJoinMessage().writeToBuffer());
-          });
+          _rummyLocalClient = RummyLocalClient(
+              initDiscovery: false,
+              onConnected: (val) {
+                print(val);
+                print(_rummyLocalClient);
+                _rummyState = RummyState.WAITING;
+
+                //_rummyLocalClient
+                //    .sendMessage(_getGameJoinMessage().writeToBuffer());
+                setState(() {});
+              });
         });
       case RummyState.WAITING:
+        _rummyLocalClient.sendMessage(_getGameJoinMessage().writeToBuffer());
         return WaitingScreen(
-          onGameStart: (val) {},
+          onGameStart: (val) {
+            print("Game is ready to start");
+          },
           channel: _rummyLocalClient.channel,
           initedPlayer: false,
         );

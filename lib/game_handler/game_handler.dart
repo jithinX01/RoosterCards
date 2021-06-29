@@ -15,6 +15,7 @@ class GameHandler {
 
   void handleMessage(var message, WebSocketChannel wc) {
     GameMessageClient gmc = GameMessageClient.fromBuffer(message);
+    print(gmc.whichPayLoad());
     switch (gmc.whichPayLoad()) {
       case GameMessageClient_PayLoad.initStart:
         handlInitStart(gmc.initStart, wc);
@@ -37,6 +38,7 @@ class GameHandler {
   }
 
   void handleJoin(Join join, WebSocketChannel wc) {
+    print(join.tournamentId);
     if (tournamentMap.containsKey(join.tournamentId)) {
       tournamentMap[join.tournamentId]?.handleJoin(join, wc);
     } else {

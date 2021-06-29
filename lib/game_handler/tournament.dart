@@ -82,7 +82,10 @@ class Tournament {
               cards: _data.playerCards[key]?.cards,
               youStart: _data.currentPlayerId == key,
               activePlayerId: _data.currentPlayerId,
-              round: _data.currentRound));
+              round: _data.currentRound,
+              tournamentName: _data.tournamentName,
+              trophyId: _data.trophyId,
+              yourId: key));
       value.sink.add(gms.writeToBuffer());
     });
   }

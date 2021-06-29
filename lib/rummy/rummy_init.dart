@@ -46,7 +46,7 @@ class _RummyInitState extends State<RummyInit> {
             TextFormField(
               initialValue: ts.tournamentName,
               textAlign: TextAlign.center,
-              onSaved: (String? value) {
+              onChanged: (String? value) {
                 ts.tournamentName = value ?? ts.tournamentName;
               },
             ),

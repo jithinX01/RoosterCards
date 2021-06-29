@@ -16,7 +16,8 @@ class RummyLocalClient {
     } else {
       //to test locally
       connectToServer("10.0.2.2", "8080");
-      onConnected(true);
+
+      //onConnected(true);
     }
   }
   void _initDiscovery() async {
@@ -50,7 +51,8 @@ class RummyLocalClient {
       //Uri.parse('ws://localhost:8080'),
     );
 
-    //print(_channel.stream);
+    print(_channel);
+    onConnected(true);
   }
 
   void dispose() async {
