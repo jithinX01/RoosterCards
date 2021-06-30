@@ -3,6 +3,7 @@ import 'package:rooster_cards/proto/game_msg.pb.dart';
 
 import 'package:rooster_cards/rummy/rummy_join.dart';
 import 'package:rooster_cards/rummy/rummy_local_client.dart';
+import 'package:rooster_cards/rummy/rummy_play.dart';
 import 'package:rooster_cards/rummy/waiting_screen.dart';
 
 enum RummyState {
@@ -32,7 +33,7 @@ class JoinRummyPage extends StatefulWidget {
 
 class _JoinRummyPageState extends State<JoinRummyPage> {
   var _rummyState = RummyState.INIT_JOIN;
-
+  late StartTournament _startTournament;
   dynamic _rummyLocalClient;
   int _code = 0;
   @override
@@ -71,11 +72,18 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
         _rummyLocalClient.sendMessage(_getGameJoinMessage().writeToBuffer());
         return WaitingScreen(
           onGameStart: (val) {
+            _startTournament = val;
             print("Game is ready to start");
+            _rummyState = RummyState.PROGRESS;
+            //setState(() {});
           },
           channel: _rummyLocalClient.channel,
           initedPlayer: false,
         );
+      case RummyState.PROGRESS:
+        return RummyPlay(
+            channel: _rummyLocalClient.channel,
+            startTournament: _startTournament);
     }
     return Container();
   }
