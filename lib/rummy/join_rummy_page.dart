@@ -73,9 +73,10 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
         return WaitingScreen(
           onGameStart: (val) {
             _startTournament = val;
-            print("Game is ready to start");
+            //print("Game is ready to start");
+            print(_startTournament.cards);
             _rummyState = RummyState.PROGRESS;
-            //setState(() {});
+            setState(() {});
           },
           channel: _rummyLocalClient.channel,
           initedPlayer: false,

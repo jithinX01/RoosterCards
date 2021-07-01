@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:rooster_cards/cards/playing_card.dart';
 
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class PCardInfo {
 }
 
 class BoxOfCards {
-  static const _box = <PCardInfo>[
+  final _box = <PCardInfo>[
     PCardInfo("A", Suit.CLUB),
     PCardInfo("2", Suit.CLUB),
     PCardInfo("3", Suit.CLUB),
@@ -96,38 +97,63 @@ class BoxOfCards {
     PCardInfo("joker", Suit.JOKER)
   ];
 
-  static PlayingCard getAt(int index) {
+  PlayingCard getAt(int index) {
     return PlayingCard(_box[index]);
   }
 
-  static List<Widget> cardsFromList(List<int> l) {
+  Widget _getVerticalContainer(List<int> l) {
+    return Container(
+      height: l.length * 100.0 + 500,
+      //width: l.length * 100.0 + 300,
+      child: Stack(
+        alignment: Alignment.center,
+        children: cardsFromList(l, vertical: true),
+      ),
+    );
+  }
+
+  Widget _getHorizontalContainer(List<int> l) {
+    return Container(
+      //height: l.length * 100.0 + 600,
+      width: l.length * 100.0 + 300,
+      child: Stack(
+        alignment: Alignment.center,
+        children: cardsFromList(l, vertical: false),
+      ),
+    );
+  }
+
+  List<Widget> cardsFromList(List<int> l, {bool vertical = true}) {
     double start = 50;
     List<Widget> wl = List<Widget>.generate(l.length, (int index) {
-      return Positioned(
-        top: (index * 100) + start,
-        child: getAt(l[index]),
-      );
+      if (!vertical) {
+        return Positioned(
+          //top: (index * 100) + start,
+          left: (index * 100) + start,
+          child: getAt(l[index]),
+        );
+      } else {
+        return Positioned(
+          top: (index * 100) + start,
+          //left: (index * 100) + start,
+          child: getAt(l[index]),
+        );
+      }
     });
     return wl;
   }
 
-  static Widget createScrollableStack(List<int> l) {
+  Widget createScrollableStack(List<int> l, {bool vertical = true}) {
     return Container(
       alignment: Alignment.centerRight,
       child: ListView(
-        //padding: EdgeInsets.all(50.0),
-        //shrinkWrap: true,
-        //controller: sc,
-        children: [
-          Container(
-            height: l.length * 100.0 + 600,
-            child: Stack(
-              alignment: Alignment.center,
-              children: cardsFromList(l),
-            ),
-          ),
-        ],
-      ),
+          //padding: EdgeInsets.all(50.0),
+          //shrinkWrap: true,
+          //controller: sc,
+          scrollDirection: vertical ? Axis.vertical : Axis.horizontal,
+          children: [
+            vertical ? _getVerticalContainer(l) : _getHorizontalContainer(l),
+          ]),
     );
   }
 }

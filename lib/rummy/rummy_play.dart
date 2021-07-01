@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:auto_orientation/auto_orientation.dart';
 
 //import 'package:rooster_cards/rummy/waiting_screen.dart';
 
@@ -29,9 +30,11 @@ class _RummyPlayState extends State<RummyPlay> {
   @override
   Widget build(BuildContext context) {
     //return WaitingScreen();
-
-    return Container(
-      child: BoxOfCards.createScrollableStack(widget.startTournament.cards),
-    );
+    //AutoOrientation.landscapeAutoMode();
+    return Scaffold(
+        body: Container(
+      child: BoxOfCards()
+          .createScrollableStack(widget.startTournament.cards, vertical: false),
+    ));
   }
 }

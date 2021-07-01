@@ -18,38 +18,48 @@ class GameHandler {
     print(gmc.whichPayLoad());
     switch (gmc.whichPayLoad()) {
       case GameMessageClient_PayLoad.initStart:
-        handlInitStart(gmc.initStart, wc);
+        _handlInitStart(gmc.initStart, wc);
         break;
       case GameMessageClient_PayLoad.join:
-        handleJoin(gmc.join, wc);
+        _handleJoin(gmc.join, wc);
         break;
       default:
     }
   }
 
-  void handlInitStart(InitStart initStart, WebSocketChannel wc) {
+  void _handlInitStart(InitStart initStart, WebSocketChannel wc) {
     print(initStart.gameType);
     var tournamentId = random(1000, 9999);
     while (tournamentMap.containsKey(tournamentId)) {
       tournamentId = random(1000, 9999);
     }
-    tournamentMap[tournamentId] = Tournament(initStart, wc, tournamentId);
+    tournamentMap[tournamentId] = _getTournament(initStart, wc, tournamentId);
     connectionMap[wc] = tournamentId;
   }
 
-  void handleJoin(Join join, WebSocketChannel wc) {
+  void _handleJoin(Join join, WebSocketChannel wc) {
     print(join.tournamentId);
     if (tournamentMap.containsKey(join.tournamentId)) {
       tournamentMap[join.tournamentId]?.handleJoin(join, wc);
     } else {
       //error case
-      handleError(wc, 101, "No Tournament Found");
+      _handleError(wc, 101, "No Tournament Found");
     }
   }
 
-  void handleError(WebSocketChannel wc, int errorCode, String errorMessage) {
+  void _handleError(WebSocketChannel wc, int errorCode, String errorMessage) {
     GameMessageServer gms = GameMessageServer(
         errorStat: ErrorStat(errorCode: errorCode, errorMessage: errorMessage));
     wc.sink.add(gms.writeToBuffer());
+  }
+
+  Tournament _getTournament(
+      InitStart initStart, WebSocketChannel wc, int tournamentId) {
+    switch (initStart.gameType) {
+      case GameType.RUMMY:
+        return RummyTournament(initStart, wc, tournamentId);
+      default:
+        return Tournament(initStart, wc, tournamentId);
+    }
   }
 }

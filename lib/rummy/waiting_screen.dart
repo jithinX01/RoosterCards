@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -31,6 +33,8 @@ class _WaitingScreenState extends State<WaitingScreen> {
   String l = "Cancel";
   int _tournamentId = 0;
   int _playerId = -1;
+  //var _startTournament;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,12 +81,19 @@ class _WaitingScreenState extends State<WaitingScreen> {
       case GameMessageServer_PayLoad.joinProgress:
         return _handleJoinProgress(gms.joinProgress);
       case GameMessageServer_PayLoad.startTournament:
-        widget.onGameStart(gms.startTournament);
-        print(gms.startTournament.playerMap);
-        return _initWidget(msg: "Starting");
+        return _handleStartTournament(gms.startTournament);
       default:
     }
     return _initWidget();
+  }
+
+  Widget _handleStartTournament(StartTournament startTournament) {
+    //_startTournament = startTournament;
+    Timer(Duration(seconds: 1), () {
+      widget.onGameStart(startTournament);
+    });
+    print(startTournament.playerMap);
+    return _initWidget(msg: "Starting");
   }
 
   //message replied from server when player start tournament.

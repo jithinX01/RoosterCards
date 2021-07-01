@@ -32,6 +32,7 @@ dependencies:
   shelf_web_socket: ^1.0.1
   bonsoir: ^1.0.0+1
   protobuf: ^2.0.0
+  auto_orientation: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +48,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - images/club.png
+    - images/diamond.png
+    - images/heart.png
+    - images/spade.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
