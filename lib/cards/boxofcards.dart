@@ -97,8 +97,13 @@ class BoxOfCards {
     PCardInfo("joker", Suit.JOKER)
   ];
 
-  PlayingCard getAt(int index) {
-    return PlayingCard(_box[index]);
+  Widget getAt(int card, int index) {
+    return InkWell(
+        onTap: () {
+          print(card);
+          print(index);
+        },
+        child: PlayingCard(_box[card]));
   }
 
   Widget _getVerticalContainer(List<int> l) {
@@ -115,6 +120,7 @@ class BoxOfCards {
   Widget _getHorizontalContainer(List<int> l) {
     return Container(
       //height: l.length * 100.0 + 600,
+      //padding: const EdgeInsets.only(top: 32),
       width: l.length * 100.0 + 300,
       child: Stack(
         alignment: Alignment.center,
@@ -129,14 +135,15 @@ class BoxOfCards {
       if (!vertical) {
         return Positioned(
           //top: (index * 100) + start,
+          top: 100,
           left: (index * 100) + start,
-          child: getAt(l[index]),
+          child: getAt(l[index], index),
         );
       } else {
         return Positioned(
           top: (index * 100) + start,
           //left: (index * 100) + start,
-          child: getAt(l[index]),
+          child: getAt(l[index], index),
         );
       }
     });
@@ -144,16 +151,21 @@ class BoxOfCards {
   }
 
   Widget createScrollableStack(List<int> l, {bool vertical = true}) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: ListView(
-          //padding: EdgeInsets.all(50.0),
-          //shrinkWrap: true,
-          //controller: sc,
-          scrollDirection: vertical ? Axis.vertical : Axis.horizontal,
-          children: [
-            vertical ? _getVerticalContainer(l) : _getHorizontalContainer(l),
-          ]),
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      //alignment: Alignment.centerRight,
+      child: Container(
+        height: 650,
+        child: ListView(
+            //shrinkWrap: true,
+            //padding: EdgeInsets.all(50.0),
+            //shrinkWrap: true,
+            //controller: sc,
+            scrollDirection: vertical ? Axis.vertical : Axis.horizontal,
+            children: [
+              vertical ? _getVerticalContainer(l) : _getHorizontalContainer(l),
+            ]),
+      ),
     );
   }
 }
