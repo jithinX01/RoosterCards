@@ -52,8 +52,12 @@ class _RummyPlayState extends State<RummyPlay> {
   Widget _getPlayingCards() {
     return Container(
         //padding: const EdgeInsets.only(top: 32),
+        /*
         child: BoxOfCards().createScrollableStack(widget.startTournament.cards,
             vertical: false));
+        */
+        child: PlayerCardStack(
+            cards: widget.startTournament.cards, vertical: false));
   }
 
   Widget _getStatusButton() {
@@ -86,7 +90,8 @@ class _RummyPlayState extends State<RummyPlay> {
       child: Align(
         alignment: Alignment.bottomLeft,
         child: FloatingActionButton.extended(
-          icon: Icon(Icons.router_rounded),
+          /*
+          icon: Icon(Icons.swap_horiz),
           label: Text(
             widget.startTournament.round.toString(),
             style: TextStyle(
@@ -94,7 +99,9 @@ class _RummyPlayState extends State<RummyPlay> {
               fontSize: 20,
             ),
           ),
-          backgroundColor: Colors.green,
+          */
+          label: Icon(Icons.swap_horiz),
+          backgroundColor: Colors.blue,
           foregroundColor: Colors.black,
           heroTag: "ggbb",
           onPressed: () {
@@ -113,13 +120,22 @@ class _RummyPlayState extends State<RummyPlay> {
           children: [
             PlayingCard(PCardInfo("K", Suit.SPADE)),
             Positioned(
-                right: 55,
-                bottom: 170,
-                child: FloatingActionButton(onPressed: () {})),
+              right: 55,
+              bottom: 170,
+              child: FloatingActionButton.extended(
+                onPressed: () {},
+                label: Icon(Icons.check),
+                backgroundColor: Colors.green,
+              ),
+            ),
             Positioned(
                 left: 10,
                 bottom: 170,
-                child: FloatingActionButton(onPressed: () {})),
+                child: FloatingActionButton.extended(
+                  onPressed: () {},
+                  label: Icon(Icons.close),
+                  backgroundColor: Colors.red,
+                )),
           ],
         ));
   }

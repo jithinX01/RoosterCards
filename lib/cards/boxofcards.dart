@@ -40,70 +40,125 @@ class PCardInfo {
   const PCardInfo(this.val, this.suit);
 }
 
-class BoxOfCards {
-  final _box = <PCardInfo>[
-    PCardInfo("A", Suit.CLUB),
-    PCardInfo("2", Suit.CLUB),
-    PCardInfo("3", Suit.CLUB),
-    PCardInfo("4", Suit.CLUB),
-    PCardInfo("5", Suit.CLUB),
-    PCardInfo("6", Suit.CLUB),
-    PCardInfo("7", Suit.CLUB),
-    PCardInfo("8", Suit.CLUB),
-    PCardInfo("9", Suit.CLUB),
-    PCardInfo("10", Suit.CLUB),
-    PCardInfo("J", Suit.CLUB),
-    PCardInfo("Q", Suit.CLUB),
-    PCardInfo("K", Suit.CLUB),
-    PCardInfo("A", Suit.DIAMOND),
-    PCardInfo("2", Suit.DIAMOND),
-    PCardInfo("3", Suit.DIAMOND),
-    PCardInfo("4", Suit.DIAMOND),
-    PCardInfo("5", Suit.DIAMOND),
-    PCardInfo("6", Suit.DIAMOND),
-    PCardInfo("7", Suit.DIAMOND),
-    PCardInfo("8", Suit.DIAMOND),
-    PCardInfo("9", Suit.DIAMOND),
-    PCardInfo("10", Suit.DIAMOND),
-    PCardInfo("J", Suit.DIAMOND),
-    PCardInfo("Q", Suit.DIAMOND),
-    PCardInfo("K", Suit.DIAMOND),
-    PCardInfo("A", Suit.HEART),
-    PCardInfo("2", Suit.HEART),
-    PCardInfo("3", Suit.HEART),
-    PCardInfo("4", Suit.HEART),
-    PCardInfo("5", Suit.HEART),
-    PCardInfo("6", Suit.HEART),
-    PCardInfo("7", Suit.HEART),
-    PCardInfo("8", Suit.HEART),
-    PCardInfo("9", Suit.HEART),
-    PCardInfo("10", Suit.HEART),
-    PCardInfo("J", Suit.HEART),
-    PCardInfo("Q", Suit.HEART),
-    PCardInfo("K", Suit.HEART),
-    PCardInfo("A", Suit.SPADE),
-    PCardInfo("2", Suit.SPADE),
-    PCardInfo("3", Suit.SPADE),
-    PCardInfo("4", Suit.SPADE),
-    PCardInfo("5", Suit.SPADE),
-    PCardInfo("6", Suit.SPADE),
-    PCardInfo("7", Suit.SPADE),
-    PCardInfo("8", Suit.SPADE),
-    PCardInfo("9", Suit.SPADE),
-    PCardInfo("10", Suit.SPADE),
-    PCardInfo("J", Suit.SPADE),
-    PCardInfo("Q", Suit.SPADE),
-    PCardInfo("K", Suit.SPADE),
-    PCardInfo("joker", Suit.JOKER)
-  ];
+const PACK = <PCardInfo>[
+  PCardInfo("A", Suit.CLUB),
+  PCardInfo("2", Suit.CLUB),
+  PCardInfo("3", Suit.CLUB),
+  PCardInfo("4", Suit.CLUB),
+  PCardInfo("5", Suit.CLUB),
+  PCardInfo("6", Suit.CLUB),
+  PCardInfo("7", Suit.CLUB),
+  PCardInfo("8", Suit.CLUB),
+  PCardInfo("9", Suit.CLUB),
+  PCardInfo("10", Suit.CLUB),
+  PCardInfo("J", Suit.CLUB),
+  PCardInfo("Q", Suit.CLUB),
+  PCardInfo("K", Suit.CLUB),
+  PCardInfo("A", Suit.DIAMOND),
+  PCardInfo("2", Suit.DIAMOND),
+  PCardInfo("3", Suit.DIAMOND),
+  PCardInfo("4", Suit.DIAMOND),
+  PCardInfo("5", Suit.DIAMOND),
+  PCardInfo("6", Suit.DIAMOND),
+  PCardInfo("7", Suit.DIAMOND),
+  PCardInfo("8", Suit.DIAMOND),
+  PCardInfo("9", Suit.DIAMOND),
+  PCardInfo("10", Suit.DIAMOND),
+  PCardInfo("J", Suit.DIAMOND),
+  PCardInfo("Q", Suit.DIAMOND),
+  PCardInfo("K", Suit.DIAMOND),
+  PCardInfo("A", Suit.HEART),
+  PCardInfo("2", Suit.HEART),
+  PCardInfo("3", Suit.HEART),
+  PCardInfo("4", Suit.HEART),
+  PCardInfo("5", Suit.HEART),
+  PCardInfo("6", Suit.HEART),
+  PCardInfo("7", Suit.HEART),
+  PCardInfo("8", Suit.HEART),
+  PCardInfo("9", Suit.HEART),
+  PCardInfo("10", Suit.HEART),
+  PCardInfo("J", Suit.HEART),
+  PCardInfo("Q", Suit.HEART),
+  PCardInfo("K", Suit.HEART),
+  PCardInfo("A", Suit.SPADE),
+  PCardInfo("2", Suit.SPADE),
+  PCardInfo("3", Suit.SPADE),
+  PCardInfo("4", Suit.SPADE),
+  PCardInfo("5", Suit.SPADE),
+  PCardInfo("6", Suit.SPADE),
+  PCardInfo("7", Suit.SPADE),
+  PCardInfo("8", Suit.SPADE),
+  PCardInfo("9", Suit.SPADE),
+  PCardInfo("10", Suit.SPADE),
+  PCardInfo("J", Suit.SPADE),
+  PCardInfo("Q", Suit.SPADE),
+  PCardInfo("K", Suit.SPADE),
+  PCardInfo("joker", Suit.JOKER)
+];
+
+enum StackMode {
+  SWAP_MODE,
+  REPLACE_MODE,
+}
+
+class PlayerCardStack extends StatefulWidget {
+  final List<int> cards;
+  final bool vertical;
+  final StackMode mode;
+  PlayerCardStack(
+      {Key? key,
+      required this.cards,
+      required this.vertical,
+      this.mode = StackMode.SWAP_MODE})
+      : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  @override
+  _PlayerCardStackState createState() => _PlayerCardStackState();
+}
+
+class _PlayerCardStackState extends State<PlayerCardStack> {
+  late List<int> _clickList = List.empty(growable: true);
+  @override
+  Widget build(BuildContext context) {
+    return createScrollableStack(widget.cards, vertical: widget.vertical);
+  }
 
   Widget getAt(int card, int index) {
     return InkWell(
         onTap: () {
           print(card);
           print(index);
+          if (widget.mode == StackMode.SWAP_MODE) {
+            if (!_clickList.contains(index)) {
+              _clickList.add(index);
+            } else {
+              _clickList.remove(index);
+            }
+
+            if (_clickList.length > 2) {
+              _clickList.removeAt(0);
+              print(_clickList);
+            }
+          } else if (widget.mode == StackMode.REPLACE_MODE) {
+            if (!_clickList.contains(index)) _clickList.add(index);
+            if (_clickList.length > 1) {
+              _clickList.removeAt(0);
+              print(_clickList);
+            }
+          }
+
+          setState(() {});
         },
-        child: PlayingCard(_box[card]));
+        child: PlayingCard(PACK[card]));
   }
 
   Widget _getVerticalContainer(List<int> l) {
@@ -129,13 +184,19 @@ class BoxOfCards {
     );
   }
 
+  double _getCardTopPos(int index) {
+    if (_clickList.contains(index)) return 80;
+    return 100;
+  }
+
   List<Widget> cardsFromList(List<int> l, {bool vertical = true}) {
     double start = 50;
     List<Widget> wl = List<Widget>.generate(l.length, (int index) {
       if (!vertical) {
         return Positioned(
           //top: (index * 100) + start,
-          top: 100,
+          //top: 100,
+          top: _getCardTopPos(index),
           left: (index * 100) + start,
           child: getAt(l[index], index),
         );
