@@ -44,7 +44,6 @@ class _RummyPlayState extends State<RummyPlay> {
     return Stack(children: <Widget>[
       _getPlayingCards(),
       _getStatusButton(),
-      _getControlButton(),
       _getPopCard(),
     ]);
   }
@@ -79,35 +78,6 @@ class _RummyPlayState extends State<RummyPlay> {
         onPressed: () {
           print("pressed");
         },
-      ),
-    );
-  }
-
-  Widget _getControlButton() {
-    return Positioned.fill(
-      bottom: 10,
-      left: 100,
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: FloatingActionButton.extended(
-          /*
-          icon: Icon(Icons.swap_horiz),
-          label: Text(
-            widget.startTournament.round.toString(),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          */
-          label: Icon(Icons.swap_horiz),
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.black,
-          heroTag: "ggbb",
-          onPressed: () {
-            print("pressed");
-          },
-        ),
       ),
     );
   }

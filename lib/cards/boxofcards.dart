@@ -127,9 +127,65 @@ class PlayerCardStack extends StatefulWidget {
 
 class _PlayerCardStackState extends State<PlayerCardStack> {
   late List<int> _clickList = List.empty(growable: true);
+  bool _showSwapButton = false;
   @override
   Widget build(BuildContext context) {
-    return createScrollableStack(widget.cards, vertical: widget.vertical);
+    return _getScreen();
+  }
+
+  Widget _getScreen() {
+    List<Widget> wList = List.empty(growable: true);
+    wList.add(createScrollableStack(widget.cards, vertical: widget.vertical));
+    if (_showSwapButton) wList.add(_getControlButton());
+    return Stack(children: wList);
+  }
+
+  Widget createScrollableStack(List<int> l, {bool vertical = true}) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      //alignment: Alignment.centerRight,
+      child: Container(
+        height: 650,
+        child: ListView(
+            //shrinkWrap: true,
+            //padding: EdgeInsets.all(50.0),
+            //shrinkWrap: true,
+            //controller: sc,
+            scrollDirection: vertical ? Axis.vertical : Axis.horizontal,
+            children: [
+              vertical ? _getVerticalContainer(l) : _getHorizontalContainer(l),
+            ]),
+      ),
+    );
+  }
+
+  Widget _getControlButton() {
+    return Positioned.fill(
+      bottom: 10,
+      left: 100,
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child: FloatingActionButton.extended(
+          /*
+          icon: Icon(Icons.swap_horiz),
+          label: Text(
+            widget.startTournament.round.toString(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          */
+          label: Icon(Icons.swap_horiz),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.black,
+          heroTag: "swapped",
+          onPressed: () {
+            print("swapped");
+          },
+        ),
+      ),
+    );
   }
 
   Widget getAt(int card, int index) {
@@ -148,12 +204,14 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
               _clickList.removeAt(0);
               print(_clickList);
             }
+            _showSwapButton = (_clickList.length == 2);
           } else if (widget.mode == StackMode.REPLACE_MODE) {
             if (!_clickList.contains(index)) _clickList.add(index);
             if (_clickList.length > 1) {
               _clickList.removeAt(0);
               print(_clickList);
             }
+            _showSwapButton = (_clickList.length == 1);
           }
 
           setState(() {});
@@ -209,24 +267,5 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
       }
     });
     return wl;
-  }
-
-  Widget createScrollableStack(List<int> l, {bool vertical = true}) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      //alignment: Alignment.centerRight,
-      child: Container(
-        height: 650,
-        child: ListView(
-            //shrinkWrap: true,
-            //padding: EdgeInsets.all(50.0),
-            //shrinkWrap: true,
-            //controller: sc,
-            scrollDirection: vertical ? Axis.vertical : Axis.horizontal,
-            children: [
-              vertical ? _getVerticalContainer(l) : _getHorizontalContainer(l),
-            ]),
-      ),
-    );
   }
 }
