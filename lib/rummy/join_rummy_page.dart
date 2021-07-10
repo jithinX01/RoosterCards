@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 
@@ -35,6 +37,8 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
   var _rummyState = RummyState.INIT_JOIN;
   late StartTournament _startTournament;
   dynamic _rummyLocalClient;
+  late StreamSubscription _streamSubscription;
+
   int _code = 0;
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,7 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
 
   @override
   void dispose() {
+    _streamSubscription.cancel();
     _rummyLocalClient.dispose();
 
     super.dispose();
@@ -70,6 +75,7 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
         });
       case RummyState.WAITING:
         _rummyLocalClient.sendMessage(_getGameJoinMessage().writeToBuffer());
+        _streamSubscription = _rummyLocalClient.channel.stream.listen(null);
         return WaitingScreen(
           onGameStart: (val) {
             _startTournament = val;
@@ -78,12 +84,13 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
             _rummyState = RummyState.PROGRESS;
             setState(() {});
           },
-          channel: _rummyLocalClient.channel,
+          channel: _streamSubscription,
           initedPlayer: false,
         );
       case RummyState.PROGRESS:
         return RummyPlay(
             channel: _rummyLocalClient.channel,
+            streamSubscription: _streamSubscription,
             startTournament: _startTournament);
     }
     return Container();

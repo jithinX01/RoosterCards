@@ -207,6 +207,7 @@ const StartTournament$json = const {
     const {'1': 'tournamentName', '3': 6, '4': 1, '5': 9, '10': 'tournamentName'},
     const {'1': 'trophyId', '3': 7, '4': 1, '5': 5, '10': 'trophyId'},
     const {'1': 'yourId', '3': 8, '4': 1, '5': 5, '10': 'yourId'},
+    const {'1': 'nextCard', '3': 9, '4': 1, '5': 5, '10': 'nextCard'},
   ],
   '3': const [StartTournament_PlayerMapEntry$json],
 };
@@ -222,7 +223,7 @@ const StartTournament_PlayerMapEntry$json = const {
 };
 
 /// Descriptor for `StartTournament`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List startTournamentDescriptor = $convert.base64Decode('Cg9TdGFydFRvdXJuYW1lbnQSSgoJcGxheWVyTWFwGAEgAygLMiwuZ2FtZV9tZXNzYWdlLlN0YXJ0VG91cm5hbWVudC5QbGF5ZXJNYXBFbnRyeVIJcGxheWVyTWFwEhQKBWNhcmRzGAIgAygFUgVjYXJkcxIaCgh5b3VTdGFydBgDIAEoCFIIeW91U3RhcnQSJgoOYWN0aXZlUGxheWVySWQYBCABKAVSDmFjdGl2ZVBsYXllcklkEhQKBXJvdW5kGAUgASgFUgVyb3VuZBImCg50b3VybmFtZW50TmFtZRgGIAEoCVIOdG91cm5hbWVudE5hbWUSGgoIdHJvcGh5SWQYByABKAVSCHRyb3BoeUlkEhYKBnlvdXJJZBgIIAEoBVIGeW91cklkGjwKDlBsYXllck1hcEVudHJ5EhAKA2tleRgBIAEoBVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAE=');
+final $typed_data.Uint8List startTournamentDescriptor = $convert.base64Decode('Cg9TdGFydFRvdXJuYW1lbnQSSgoJcGxheWVyTWFwGAEgAygLMiwuZ2FtZV9tZXNzYWdlLlN0YXJ0VG91cm5hbWVudC5QbGF5ZXJNYXBFbnRyeVIJcGxheWVyTWFwEhQKBWNhcmRzGAIgAygFUgVjYXJkcxIaCgh5b3VTdGFydBgDIAEoCFIIeW91U3RhcnQSJgoOYWN0aXZlUGxheWVySWQYBCABKAVSDmFjdGl2ZVBsYXllcklkEhQKBXJvdW5kGAUgASgFUgVyb3VuZBImCg50b3VybmFtZW50TmFtZRgGIAEoCVIOdG91cm5hbWVudE5hbWUSGgoIdHJvcGh5SWQYByABKAVSCHRyb3BoeUlkEhYKBnlvdXJJZBgIIAEoBVIGeW91cklkEhoKCG5leHRDYXJkGAkgASgFUghuZXh0Q2FyZBo8Cg5QbGF5ZXJNYXBFbnRyeRIQCgNrZXkYASABKAVSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
 @$core.Deprecated('Use gameServerUpdateDescriptor instead')
 const GameServerUpdate$json = const {
   '1': 'GameServerUpdate',

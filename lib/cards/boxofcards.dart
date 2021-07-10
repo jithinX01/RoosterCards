@@ -2,6 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:rooster_cards/cards/playing_card.dart';
 
 import 'package:flutter/material.dart';
+import 'package:rooster_cards/rummy/rummy_user_action.dart';
 
 const String _c = "club";
 const String _d = "diamond";
@@ -105,11 +106,15 @@ class PlayerCardStack extends StatefulWidget {
   final List<int> cards;
   final bool vertical;
   final StackMode mode;
+  final int nextCard;
+  final ValueChanged<RummyUserAction> onUserAction;
   PlayerCardStack(
       {Key? key,
       required this.cards,
       required this.vertical,
-      this.mode = StackMode.SWAP_MODE})
+      required this.onUserAction,
+      this.mode = StackMode.SWAP_MODE,
+      this.nextCard = -1})
       : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -128,6 +133,8 @@ class PlayerCardStack extends StatefulWidget {
 class _PlayerCardStackState extends State<PlayerCardStack> {
   late List<int> _clickList = List.empty(growable: true);
   bool _showSwapButton = false;
+  bool _showPopCard = true;
+  bool _newCardTook = false;
   @override
   Widget build(BuildContext context) {
     return _getScreen();
@@ -137,6 +144,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     List<Widget> wList = List.empty(growable: true);
     wList.add(createScrollableStack(widget.cards, vertical: widget.vertical));
     if (_showSwapButton) wList.add(_getControlButton());
+    if (_showPopCard && widget.mode == StackMode.REPLACE_MODE)
+      wList.add(_getPopCard(widget.nextCard));
     return Stack(children: wList);
   }
 
@@ -188,6 +197,47 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     );
   }
 
+  Widget _getPopCard(int card) {
+    List<Widget> wl = List.empty(growable: true);
+    //the pop up card
+    wl.add(PlayingCard(PACK[card]));
+    //not a proper way but it works
+    if (!_newCardTook) {
+      wl.add(Positioned(
+        right: 55,
+        bottom: 170,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            _newCardTook = true;
+            setState(() {});
+          },
+          label: Icon(Icons.check),
+          backgroundColor: Colors.green,
+          heroTag: "onAccept",
+        ),
+      ));
+
+      wl.add(Positioned(
+          left: 10,
+          bottom: 170,
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              _showPopCard = false;
+              setState(() {});
+            },
+            label: Icon(Icons.close),
+            backgroundColor: Colors.red,
+            heroTag: "onDiscard",
+          )));
+    }
+    return Positioned(
+        top: 80,
+        right: -50,
+        child: Stack(
+          children: wl,
+        ));
+  }
+
   Widget getAt(int card, int index) {
     return InkWell(
         onTap: () {
@@ -205,8 +255,11 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
               print(_clickList);
             }
             _showSwapButton = (_clickList.length == 2);
-          } else if (widget.mode == StackMode.REPLACE_MODE) {
-            if (!_clickList.contains(index)) _clickList.add(index);
+          } else if (widget.mode == StackMode.REPLACE_MODE && _newCardTook) {
+            if (!_clickList.contains(index))
+              _clickList.add(index);
+            else
+              _clickList.remove(index);
             if (_clickList.length > 1) {
               _clickList.removeAt(0);
               print(_clickList);

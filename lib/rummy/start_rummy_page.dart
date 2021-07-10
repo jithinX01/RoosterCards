@@ -6,6 +6,7 @@ import 'package:rooster_cards/rummy/rummy_local_server.dart';
 import 'package:rooster_cards/rummy/init_tournament_settings.dart';
 import 'package:rooster_cards/rummy/rummy_play.dart';
 import 'package:rooster_cards/rummy/waiting_screen.dart';
+import 'dart:async';
 
 enum RummyState {
   INIT,
@@ -38,6 +39,7 @@ class _StartRummyPageState extends State<StartRummyPage> {
   dynamic _rummyLocalClient;
   InitTournamentSettings _ts = InitTournamentSettings();
   late StartTournament _startTournament;
+  late StreamSubscription _streamSubscription;
   @override
   Widget build(BuildContext context) {
     return _getScreen(_rummyState);
@@ -45,6 +47,7 @@ class _StartRummyPageState extends State<StartRummyPage> {
 
   @override
   void dispose() {
+    _streamSubscription.cancel();
     _rummyLocalClient.dispose();
     _rummyLocalServer.dispose();
     super.dispose();
@@ -68,6 +71,7 @@ class _StartRummyPageState extends State<StartRummyPage> {
           });
         });
       case RummyState.WAITING:
+        _streamSubscription = _rummyLocalClient.channel.stream.listen(null);
         return WaitingScreen(
           onGameStart: (val) {
             _startTournament = val;
@@ -76,12 +80,13 @@ class _StartRummyPageState extends State<StartRummyPage> {
             _rummyState = RummyState.PROGRESS;
             setState(() {});
           },
-          channel: _rummyLocalClient.channel,
+          channel: _streamSubscription,
           initedPlayer: true,
         );
       case RummyState.PROGRESS:
         return RummyPlay(
             channel: _rummyLocalClient.channel,
+            streamSubscription: _streamSubscription,
             startTournament: _startTournament);
     }
     return Container();

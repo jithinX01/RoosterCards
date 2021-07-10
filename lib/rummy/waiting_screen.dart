@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WaitingScreen extends StatefulWidget {
   final ValueChanged<StartTournament> onGameStart;
-  final WebSocketChannel channel;
+  final StreamSubscription channel;
   final bool initedPlayer;
 
   WaitingScreen(
@@ -33,7 +32,24 @@ class _WaitingScreenState extends State<WaitingScreen> {
   String l = "Cancel";
   int _tournamentId = 0;
   int _playerId = -1;
+
+  late Widget _w;
+
   //var _startTournament;
+
+  @override
+  void initState() {
+    super.initState();
+    _w = _initWidget();
+    //widget.channel.stream.forEach(_onData);
+    widget.channel.onData(_onData);
+  }
+
+  void _onData(data) {
+    GameMessageServer gms = GameMessageServer.fromBuffer(data);
+    _w = _handleServerMessage(gms);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +68,9 @@ class _WaitingScreenState extends State<WaitingScreen> {
       body: Center(
         //padding: const EdgeInsets.only(top: 64),
         //heightFactor: 10,
-        child: StreamBuilder(
-          builder: _getWidget,
-          stream: widget.channel.stream,
-        ),
+        child: _w,
       ),
     );
-  }
-
-  Widget _getWidget(BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-    if (snapshot.hasData) {
-      print("data from server");
-      print(snapshot.data);
-      GameMessageServer gms = GameMessageServer.fromBuffer(snapshot.data);
-      print(gms.whichPayLoad());
-      return _handleServerMessage(gms);
-    } else {
-      return _initWidget();
-    }
   }
 
   Widget _handleServerMessage(GameMessageServer gms) {
@@ -89,10 +90,14 @@ class _WaitingScreenState extends State<WaitingScreen> {
 
   Widget _handleStartTournament(StartTournament startTournament) {
     //_startTournament = startTournament;
-    Timer(Duration(seconds: 1), () {
+    Timer(Duration(milliseconds: 1000), () {
+      //setState(() {});
+
       widget.onGameStart(startTournament);
     });
     print(startTournament.playerMap);
+
+    //_subscription.cancel();
     return _initWidget(msg: "Starting");
   }
 

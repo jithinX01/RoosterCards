@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/cards/playing_card.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
+import 'package:rooster_cards/timer_button.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:auto_orientation/auto_orientation.dart';
 
@@ -9,9 +12,14 @@ import 'package:auto_orientation/auto_orientation.dart';
 
 class RummyPlay extends StatefulWidget {
   final WebSocketChannel channel;
+  final StreamSubscription streamSubscription;
   final StartTournament startTournament;
 
-  RummyPlay({Key? key, required this.channel, required this.startTournament})
+  RummyPlay(
+      {Key? key,
+      required this.channel,
+      required this.streamSubscription,
+      required this.startTournament})
       : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -28,6 +36,17 @@ class RummyPlay extends StatefulWidget {
 }
 
 class _RummyPlayState extends State<RummyPlay> {
+  List<Widget> _wl = List.empty(growable: true);
+  late List<int> _playerCards;
+  @override
+  void initState() {
+    super.initState();
+    widget.streamSubscription.onData(_onData);
+    _playerCards = List.from(widget.startTournament.cards, growable: true);
+    _wl.add(_getPlayingCards());
+    _wl.add(_getTimer());
+  }
+
   @override
   Widget build(BuildContext context) {
     //return WaitingScreen();
@@ -40,41 +59,44 @@ class _RummyPlayState extends State<RummyPlay> {
     );
   }
 
+  void _onData(dynamic message) {}
+
   Widget _getScreen() {
-    return Stack(children: <Widget>[
-      _getPlayingCards(),
-      _getStatusButton(),
-      _getPopCard(),
-    ]);
+    return Stack(
+      children: _wl,
+    );
   }
 
-  Widget _getPlayingCards() {
+  Widget _getPlayingCards(
+      {StackMode mode = StackMode.SWAP_MODE, int nextCard = -1}) {
     return Container(
-        //padding: const EdgeInsets.only(top: 32),
-        /*
-        child: BoxOfCards().createScrollableStack(widget.startTournament.cards,
-            vertical: false));
-        */
         child: PlayerCardStack(
-            cards: widget.startTournament.cards, vertical: false));
+      cards: _playerCards,
+      vertical: false,
+      mode: mode,
+      nextCard: nextCard,
+      onUserAction: (val) {
+        print(val.rUserAction);
+      },
+    ));
   }
 
-  Widget _getStatusButton() {
+  Widget _getStatusButton(bool active, {String player = "You"}) {
     return Positioned(
       top: 20,
       left: 20,
       child: FloatingActionButton.extended(
         icon: Icon(Icons.router_rounded),
         label: Text(
-          widget.startTournament.round.toString(),
+          active ? player : player,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: active ? Colors.green : Colors.red,
         foregroundColor: Colors.black,
-        heroTag: "ggbb",
+        heroTag: "ggbb_status",
         onPressed: () {
           print("pressed");
         },
@@ -82,13 +104,14 @@ class _RummyPlayState extends State<RummyPlay> {
     );
   }
 
-  Widget _getPopCard() {
+  /*
+  Widget _getPopCard(int card) {
     return Positioned(
         top: 80,
         right: -50,
         child: Stack(
           children: [
-            PlayingCard(PCardInfo("K", Suit.SPADE)),
+            PlayingCard(PACK[card]),
             Positioned(
               right: 55,
               bottom: 170,
@@ -96,6 +119,7 @@ class _RummyPlayState extends State<RummyPlay> {
                 onPressed: () {},
                 label: Icon(Icons.check),
                 backgroundColor: Colors.green,
+                heroTag: "onAccept",
               ),
             ),
             Positioned(
@@ -105,8 +129,37 @@ class _RummyPlayState extends State<RummyPlay> {
                   onPressed: () {},
                   label: Icon(Icons.close),
                   backgroundColor: Colors.red,
+                  heroTag: "onDiscard",
                 )),
           ],
         ));
+  }
+  */
+  Widget _getTimer() {
+    return Positioned.fill(
+      top: 20,
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: TimerButton(
+            onEnd: () {
+              _wl.removeLast();
+              if (widget.startTournament.youStart) {
+                _wl.clear();
+                _wl.add(_getPlayingCards(
+                    mode: StackMode.REPLACE_MODE,
+                    nextCard: widget.startTournament.nextCard));
+                _wl.add(_getStatusButton(true));
+                //_wl.add(_getPopCard(widget.startTournament.nextCard));
+              } else {
+                String activePlayer = widget.startTournament
+                        .playerMap[widget.startTournament.activePlayerId] ??
+                    "";
+                _wl.add(_getStatusButton(false, player: activePlayer));
+              }
+              setState(() {});
+            },
+            time: 60),
+      ),
+    );
   }
 }

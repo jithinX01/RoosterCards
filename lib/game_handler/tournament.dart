@@ -74,19 +74,21 @@ class Tournament {
   }
 
   void _sendStartTournament() {
-    playerConnections.forEach((key, value) {
+    playerConnections.forEach((key, channel) {
       //value.sink.add(gms.writeToBuffer());
       GameMessageServer gms = GameMessageServer(
           startTournament: StartTournament(
-              playerMap: _data.players.asMap(),
-              cards: _data.playerCards[key]?.cards,
-              youStart: _data.currentPlayerId == key,
-              activePlayerId: _data.currentPlayerId,
-              round: _data.currentRound,
-              tournamentName: _data.tournamentName,
-              trophyId: _data.trophyId,
-              yourId: key));
-      value.sink.add(gms.writeToBuffer());
+        playerMap: _data.players.asMap(),
+        cards: _data.playerCards[key]?.cards,
+        youStart: _data.currentPlayerId == key,
+        activePlayerId: _data.currentPlayerId,
+        round: _data.currentRound,
+        tournamentName: _data.tournamentName,
+        trophyId: _data.trophyId,
+        yourId: key,
+        nextCard: _data.currentPlayerId == key ? _data.cardStack[0] : -1,
+      ));
+      channel.sink.add(gms.writeToBuffer());
     });
   }
 }
