@@ -321,24 +321,66 @@ class Join extends $pb.GeneratedMessage {
   void clearTournamentId() => clearField(2);
 }
 
-class ClientRummyAction extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClientRummyAction', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..e<CRAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'action', $pb.PbFieldType.OE, defaultOrMaker: CRAction.DRAW, valueOf: CRAction.valueOf, enumValues: CRAction.values)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newCard', $pb.PbFieldType.O3, protoName: 'newCard')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldCard', $pb.PbFieldType.O3, protoName: 'oldCard')
+class DiscardCard extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DiscardCard', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'card', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
-  ClientRummyAction._() : super();
-  factory ClientRummyAction({
-    CRAction? action,
+  DiscardCard._() : super();
+  factory DiscardCard({
+    $core.int? card,
+  }) {
+    final _result = create();
+    if (card != null) {
+      _result.card = card;
+    }
+    return _result;
+  }
+  factory DiscardCard.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DiscardCard.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DiscardCard clone() => DiscardCard()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DiscardCard copyWith(void Function(DiscardCard) updates) => super.copyWith((message) => updates(message as DiscardCard)) as DiscardCard; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DiscardCard create() => DiscardCard._();
+  DiscardCard createEmptyInstance() => create();
+  static $pb.PbList<DiscardCard> createRepeated() => $pb.PbList<DiscardCard>();
+  @$core.pragma('dart2js:noInline')
+  static DiscardCard getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DiscardCard>(create);
+  static DiscardCard? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get card => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set card($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCard() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCard() => clearField(1);
+}
+
+class DrawCard extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DrawCard', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newCard', $pb.PbFieldType.O3, protoName: 'newCard')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldCard', $pb.PbFieldType.O3, protoName: 'oldCard')
+    ..hasRequiredFields = false
+  ;
+
+  DrawCard._() : super();
+  factory DrawCard({
     $core.int? newCard,
     $core.int? oldCard,
   }) {
     final _result = create();
-    if (action != null) {
-      _result.action = action;
-    }
     if (newCard != null) {
       _result.newCard = newCard;
     }
@@ -347,88 +389,86 @@ class ClientRummyAction extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ClientRummyAction.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ClientRummyAction.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory DrawCard.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DrawCard.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ClientRummyAction clone() => ClientRummyAction()..mergeFromMessage(this);
+  DrawCard clone() => DrawCard()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ClientRummyAction copyWith(void Function(ClientRummyAction) updates) => super.copyWith((message) => updates(message as ClientRummyAction)) as ClientRummyAction; // ignore: deprecated_member_use
+  DrawCard copyWith(void Function(DrawCard) updates) => super.copyWith((message) => updates(message as DrawCard)) as DrawCard; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ClientRummyAction create() => ClientRummyAction._();
-  ClientRummyAction createEmptyInstance() => create();
-  static $pb.PbList<ClientRummyAction> createRepeated() => $pb.PbList<ClientRummyAction>();
+  static DrawCard create() => DrawCard._();
+  DrawCard createEmptyInstance() => create();
+  static $pb.PbList<DrawCard> createRepeated() => $pb.PbList<DrawCard>();
   @$core.pragma('dart2js:noInline')
-  static ClientRummyAction getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClientRummyAction>(create);
-  static ClientRummyAction? _defaultInstance;
+  static DrawCard getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DrawCard>(create);
+  static DrawCard? _defaultInstance;
 
   @$pb.TagNumber(1)
-  CRAction get action => $_getN(0);
+  $core.int get newCard => $_getIZ(0);
   @$pb.TagNumber(1)
-  set action(CRAction v) { setField(1, v); }
+  set newCard($core.int v) { $_setSignedInt32(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasAction() => $_has(0);
+  $core.bool hasNewCard() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAction() => clearField(1);
+  void clearNewCard() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get newCard => $_getIZ(1);
+  $core.int get oldCard => $_getIZ(1);
   @$pb.TagNumber(2)
-  set newCard($core.int v) { $_setSignedInt32(1, v); }
+  set oldCard($core.int v) { $_setSignedInt32(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasNewCard() => $_has(1);
+  $core.bool hasOldCard() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNewCard() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.int get oldCard => $_getIZ(2);
-  @$pb.TagNumber(3)
-  set oldCard($core.int v) { $_setSignedInt32(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasOldCard() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearOldCard() => clearField(3);
+  void clearOldCard() => clearField(2);
 }
 
 enum ClientGameStat_Stat {
-  clientRummyAction, 
+  drawCard, 
+  discardCard, 
   notSet
 }
 
 class ClientGameStat extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, ClientGameStat_Stat> _ClientGameStat_StatByTag = {
-    1 : ClientGameStat_Stat.clientRummyAction,
+    3 : ClientGameStat_Stat.drawCard,
+    4 : ClientGameStat_Stat.discardCard,
     0 : ClientGameStat_Stat.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClientGameStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..oo(0, [1])
-    ..aOM<ClientRummyAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clientRummyAction', protoName: 'clientRummyAction', subBuilder: ClientRummyAction.create)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerId', $pb.PbFieldType.O3, protoName: 'playerId')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentId', $pb.PbFieldType.O3, protoName: 'tournamentId')
+    ..oo(0, [3, 4])
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerId', $pb.PbFieldType.O3, protoName: 'playerId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentId', $pb.PbFieldType.O3, protoName: 'tournamentId')
+    ..aOM<DrawCard>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'drawCard', protoName: 'drawCard', subBuilder: DrawCard.create)
+    ..aOM<DiscardCard>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'discardCard', protoName: 'discardCard', subBuilder: DiscardCard.create)
     ..hasRequiredFields = false
   ;
 
   ClientGameStat._() : super();
   factory ClientGameStat({
-    ClientRummyAction? clientRummyAction,
     $core.int? playerId,
     $core.int? tournamentId,
+    DrawCard? drawCard,
+    DiscardCard? discardCard,
   }) {
     final _result = create();
-    if (clientRummyAction != null) {
-      _result.clientRummyAction = clientRummyAction;
-    }
     if (playerId != null) {
       _result.playerId = playerId;
     }
     if (tournamentId != null) {
       _result.tournamentId = tournamentId;
+    }
+    if (drawCard != null) {
+      _result.drawCard = drawCard;
+    }
+    if (discardCard != null) {
+      _result.discardCard = discardCard;
     }
     return _result;
   }
@@ -457,33 +497,44 @@ class ClientGameStat extends $pb.GeneratedMessage {
   void clearStat() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  ClientRummyAction get clientRummyAction => $_getN(0);
+  $core.int get playerId => $_getIZ(0);
   @$pb.TagNumber(1)
-  set clientRummyAction(ClientRummyAction v) { setField(1, v); }
+  set playerId($core.int v) { $_setSignedInt32(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasClientRummyAction() => $_has(0);
+  $core.bool hasPlayerId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearClientRummyAction() => clearField(1);
-  @$pb.TagNumber(1)
-  ClientRummyAction ensureClientRummyAction() => $_ensure(0);
+  void clearPlayerId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get playerId => $_getIZ(1);
+  $core.int get tournamentId => $_getIZ(1);
   @$pb.TagNumber(2)
-  set playerId($core.int v) { $_setSignedInt32(1, v); }
+  set tournamentId($core.int v) { $_setSignedInt32(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPlayerId() => $_has(1);
+  $core.bool hasTournamentId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPlayerId() => clearField(2);
+  void clearTournamentId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get tournamentId => $_getIZ(2);
+  DrawCard get drawCard => $_getN(2);
   @$pb.TagNumber(3)
-  set tournamentId($core.int v) { $_setSignedInt32(2, v); }
+  set drawCard(DrawCard v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasTournamentId() => $_has(2);
+  $core.bool hasDrawCard() => $_has(2);
   @$pb.TagNumber(3)
-  void clearTournamentId() => clearField(3);
+  void clearDrawCard() => clearField(3);
+  @$pb.TagNumber(3)
+  DrawCard ensureDrawCard() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  DiscardCard get discardCard => $_getN(3);
+  @$pb.TagNumber(4)
+  set discardCard(DiscardCard v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDiscardCard() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDiscardCard() => clearField(4);
+  @$pb.TagNumber(4)
+  DiscardCard ensureDiscardCard() => $_ensure(3);
 }
 
 class TournamentProgress extends $pb.GeneratedMessage {
@@ -920,6 +971,7 @@ class StartTournament extends $pb.GeneratedMessage {
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyId', $pb.PbFieldType.O3, protoName: 'trophyId')
     ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'yourId', $pb.PbFieldType.O3, protoName: 'yourId')
     ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextCard', $pb.PbFieldType.O3, protoName: 'nextCard')
+    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentId', $pb.PbFieldType.O3, protoName: 'tournamentId')
     ..hasRequiredFields = false
   ;
 
@@ -934,6 +986,7 @@ class StartTournament extends $pb.GeneratedMessage {
     $core.int? trophyId,
     $core.int? yourId,
     $core.int? nextCard,
+    $core.int? tournamentId,
   }) {
     final _result = create();
     if (playerMap != null) {
@@ -962,6 +1015,9 @@ class StartTournament extends $pb.GeneratedMessage {
     }
     if (nextCard != null) {
       _result.nextCard = nextCard;
+    }
+    if (tournamentId != null) {
+      _result.tournamentId = tournamentId;
     }
     return _result;
   }
@@ -1054,6 +1110,15 @@ class StartTournament extends $pb.GeneratedMessage {
   $core.bool hasNextCard() => $_has(8);
   @$pb.TagNumber(9)
   void clearNextCard() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get tournamentId => $_getIZ(9);
+  @$pb.TagNumber(10)
+  set tournamentId($core.int v) { $_setSignedInt32(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasTournamentId() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearTournamentId() => clearField(10);
 }
 
 enum GameServerUpdate_Update {
@@ -1262,16 +1327,21 @@ class ActiveRummyPlayerStat extends $pb.GeneratedMessage {
 class InActiveRummyPlaterStat extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'InActiveRummyPlaterStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activePlayerId', $pb.PbFieldType.O3, protoName: 'activePlayerId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status')
     ..hasRequiredFields = false
   ;
 
   InActiveRummyPlaterStat._() : super();
   factory InActiveRummyPlaterStat({
     $core.int? activePlayerId,
+    $core.String? status,
   }) {
     final _result = create();
     if (activePlayerId != null) {
       _result.activePlayerId = activePlayerId;
+    }
+    if (status != null) {
+      _result.status = status;
     }
     return _result;
   }
@@ -1304,5 +1374,14 @@ class InActiveRummyPlaterStat extends $pb.GeneratedMessage {
   $core.bool hasActivePlayerId() => $_has(0);
   @$pb.TagNumber(1)
   void clearActivePlayerId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get status => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set status($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStatus() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStatus() => clearField(2);
 }
 

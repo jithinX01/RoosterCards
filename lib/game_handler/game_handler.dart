@@ -23,6 +23,9 @@ class GameHandler {
       case GameMessageClient_PayLoad.join:
         _handleJoin(gmc.join, wc);
         break;
+      case GameMessageClient_PayLoad.clientGameStat:
+        _handleClientGameStat(gmc.clientGameStat, wc);
+        break;
       default:
     }
   }
@@ -41,6 +44,17 @@ class GameHandler {
     print(join.tournamentId);
     if (tournamentMap.containsKey(join.tournamentId)) {
       tournamentMap[join.tournamentId]?.handleJoin(join, wc);
+    } else {
+      //error case
+      _handleError(wc, 101, "No Tournament Found");
+    }
+  }
+
+  void _handleClientGameStat(
+      ClientGameStat clientGameStat, WebSocketChannel wc) {
+    if (tournamentMap.containsKey(clientGameStat.tournamentId)) {
+      tournamentMap[clientGameStat.tournamentId]
+          ?.handleClientGameStat(clientGameStat, wc);
     } else {
       //error case
       _handleError(wc, 101, "No Tournament Found");

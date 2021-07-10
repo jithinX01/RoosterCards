@@ -21,17 +21,6 @@ const GameType$json = const {
 
 /// Descriptor for `GameType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List gameTypeDescriptor = $convert.base64Decode('CghHYW1lVHlwZRIJCgVSVU1NWRAAEg0KCUFDRV9GTFVTSBABEgkKBVBPS0VSEAISDwoLTUVNT1JZX0dBTUUQAw==');
-@$core.Deprecated('Use cRActionDescriptor instead')
-const CRAction$json = const {
-  '1': 'CRAction',
-  '2': const [
-    const {'1': 'DRAW', '2': 0},
-    const {'1': 'DISCARD', '2': 1},
-  ],
-};
-
-/// Descriptor for `CRAction`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List cRActionDescriptor = $convert.base64Decode('CghDUkFjdGlvbhIICgREUkFXEAASCwoHRElTQ0FSRBAB');
 @$core.Deprecated('Use tPActionDescriptor instead')
 const TPAction$json = const {
   '1': 'TPAction',
@@ -97,25 +86,35 @@ const Join$json = const {
 
 /// Descriptor for `Join`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List joinDescriptor = $convert.base64Decode('CgRKb2luEh4KCnBsYXllck5hbWUYASABKAlSCnBsYXllck5hbWUSIgoMdG91cm5hbWVudElkGAIgASgFUgx0b3VybmFtZW50SWQ=');
-@$core.Deprecated('Use clientRummyActionDescriptor instead')
-const ClientRummyAction$json = const {
-  '1': 'ClientRummyAction',
+@$core.Deprecated('Use discardCardDescriptor instead')
+const DiscardCard$json = const {
+  '1': 'DiscardCard',
   '2': const [
-    const {'1': 'action', '3': 1, '4': 1, '5': 14, '6': '.game_message.CRAction', '10': 'action'},
-    const {'1': 'newCard', '3': 2, '4': 1, '5': 5, '10': 'newCard'},
-    const {'1': 'oldCard', '3': 3, '4': 1, '5': 5, '10': 'oldCard'},
+    const {'1': 'card', '3': 1, '4': 1, '5': 5, '10': 'card'},
   ],
 };
 
-/// Descriptor for `ClientRummyAction`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List clientRummyActionDescriptor = $convert.base64Decode('ChFDbGllbnRSdW1teUFjdGlvbhIuCgZhY3Rpb24YASABKA4yFi5nYW1lX21lc3NhZ2UuQ1JBY3Rpb25SBmFjdGlvbhIYCgduZXdDYXJkGAIgASgFUgduZXdDYXJkEhgKB29sZENhcmQYAyABKAVSB29sZENhcmQ=');
+/// Descriptor for `DiscardCard`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List discardCardDescriptor = $convert.base64Decode('CgtEaXNjYXJkQ2FyZBISCgRjYXJkGAEgASgFUgRjYXJk');
+@$core.Deprecated('Use drawCardDescriptor instead')
+const DrawCard$json = const {
+  '1': 'DrawCard',
+  '2': const [
+    const {'1': 'newCard', '3': 1, '4': 1, '5': 5, '10': 'newCard'},
+    const {'1': 'oldCard', '3': 2, '4': 1, '5': 5, '10': 'oldCard'},
+  ],
+};
+
+/// Descriptor for `DrawCard`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List drawCardDescriptor = $convert.base64Decode('CghEcmF3Q2FyZBIYCgduZXdDYXJkGAEgASgFUgduZXdDYXJkEhgKB29sZENhcmQYAiABKAVSB29sZENhcmQ=');
 @$core.Deprecated('Use clientGameStatDescriptor instead')
 const ClientGameStat$json = const {
   '1': 'ClientGameStat',
   '2': const [
-    const {'1': 'clientRummyAction', '3': 1, '4': 1, '5': 11, '6': '.game_message.ClientRummyAction', '9': 0, '10': 'clientRummyAction'},
-    const {'1': 'playerId', '3': 2, '4': 1, '5': 5, '10': 'playerId'},
-    const {'1': 'tournamentId', '3': 3, '4': 1, '5': 5, '10': 'tournamentId'},
+    const {'1': 'playerId', '3': 1, '4': 1, '5': 5, '10': 'playerId'},
+    const {'1': 'tournamentId', '3': 2, '4': 1, '5': 5, '10': 'tournamentId'},
+    const {'1': 'drawCard', '3': 3, '4': 1, '5': 11, '6': '.game_message.DrawCard', '9': 0, '10': 'drawCard'},
+    const {'1': 'discardCard', '3': 4, '4': 1, '5': 11, '6': '.game_message.DiscardCard', '9': 0, '10': 'discardCard'},
   ],
   '8': const [
     const {'1': 'stat'},
@@ -123,7 +122,7 @@ const ClientGameStat$json = const {
 };
 
 /// Descriptor for `ClientGameStat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List clientGameStatDescriptor = $convert.base64Decode('Cg5DbGllbnRHYW1lU3RhdBJPChFjbGllbnRSdW1teUFjdGlvbhgBIAEoCzIfLmdhbWVfbWVzc2FnZS5DbGllbnRSdW1teUFjdGlvbkgAUhFjbGllbnRSdW1teUFjdGlvbhIaCghwbGF5ZXJJZBgCIAEoBVIIcGxheWVySWQSIgoMdG91cm5hbWVudElkGAMgASgFUgx0b3VybmFtZW50SWRCBgoEc3RhdA==');
+final $typed_data.Uint8List clientGameStatDescriptor = $convert.base64Decode('Cg5DbGllbnRHYW1lU3RhdBIaCghwbGF5ZXJJZBgBIAEoBVIIcGxheWVySWQSIgoMdG91cm5hbWVudElkGAIgASgFUgx0b3VybmFtZW50SWQSNAoIZHJhd0NhcmQYAyABKAsyFi5nYW1lX21lc3NhZ2UuRHJhd0NhcmRIAFIIZHJhd0NhcmQSPQoLZGlzY2FyZENhcmQYBCABKAsyGS5nYW1lX21lc3NhZ2UuRGlzY2FyZENhcmRIAFILZGlzY2FyZENhcmRCBgoEc3RhdA==');
 @$core.Deprecated('Use tournamentProgressDescriptor instead')
 const TournamentProgress$json = const {
   '1': 'TournamentProgress',
@@ -208,6 +207,7 @@ const StartTournament$json = const {
     const {'1': 'trophyId', '3': 7, '4': 1, '5': 5, '10': 'trophyId'},
     const {'1': 'yourId', '3': 8, '4': 1, '5': 5, '10': 'yourId'},
     const {'1': 'nextCard', '3': 9, '4': 1, '5': 5, '10': 'nextCard'},
+    const {'1': 'tournamentId', '3': 10, '4': 1, '5': 5, '10': 'tournamentId'},
   ],
   '3': const [StartTournament_PlayerMapEntry$json],
 };
@@ -223,7 +223,7 @@ const StartTournament_PlayerMapEntry$json = const {
 };
 
 /// Descriptor for `StartTournament`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List startTournamentDescriptor = $convert.base64Decode('Cg9TdGFydFRvdXJuYW1lbnQSSgoJcGxheWVyTWFwGAEgAygLMiwuZ2FtZV9tZXNzYWdlLlN0YXJ0VG91cm5hbWVudC5QbGF5ZXJNYXBFbnRyeVIJcGxheWVyTWFwEhQKBWNhcmRzGAIgAygFUgVjYXJkcxIaCgh5b3VTdGFydBgDIAEoCFIIeW91U3RhcnQSJgoOYWN0aXZlUGxheWVySWQYBCABKAVSDmFjdGl2ZVBsYXllcklkEhQKBXJvdW5kGAUgASgFUgVyb3VuZBImCg50b3VybmFtZW50TmFtZRgGIAEoCVIOdG91cm5hbWVudE5hbWUSGgoIdHJvcGh5SWQYByABKAVSCHRyb3BoeUlkEhYKBnlvdXJJZBgIIAEoBVIGeW91cklkEhoKCG5leHRDYXJkGAkgASgFUghuZXh0Q2FyZBo8Cg5QbGF5ZXJNYXBFbnRyeRIQCgNrZXkYASABKAVSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
+final $typed_data.Uint8List startTournamentDescriptor = $convert.base64Decode('Cg9TdGFydFRvdXJuYW1lbnQSSgoJcGxheWVyTWFwGAEgAygLMiwuZ2FtZV9tZXNzYWdlLlN0YXJ0VG91cm5hbWVudC5QbGF5ZXJNYXBFbnRyeVIJcGxheWVyTWFwEhQKBWNhcmRzGAIgAygFUgVjYXJkcxIaCgh5b3VTdGFydBgDIAEoCFIIeW91U3RhcnQSJgoOYWN0aXZlUGxheWVySWQYBCABKAVSDmFjdGl2ZVBsYXllcklkEhQKBXJvdW5kGAUgASgFUgVyb3VuZBImCg50b3VybmFtZW50TmFtZRgGIAEoCVIOdG91cm5hbWVudE5hbWUSGgoIdHJvcGh5SWQYByABKAVSCHRyb3BoeUlkEhYKBnlvdXJJZBgIIAEoBVIGeW91cklkEhoKCG5leHRDYXJkGAkgASgFUghuZXh0Q2FyZBIiCgx0b3VybmFtZW50SWQYCiABKAVSDHRvdXJuYW1lbnRJZBo8Cg5QbGF5ZXJNYXBFbnRyeRIQCgNrZXkYASABKAVSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
 @$core.Deprecated('Use gameServerUpdateDescriptor instead')
 const GameServerUpdate$json = const {
   '1': 'GameServerUpdate',
@@ -267,8 +267,9 @@ const InActiveRummyPlaterStat$json = const {
   '1': 'InActiveRummyPlaterStat',
   '2': const [
     const {'1': 'activePlayerId', '3': 1, '4': 1, '5': 5, '10': 'activePlayerId'},
+    const {'1': 'status', '3': 2, '4': 1, '5': 9, '10': 'status'},
   ],
 };
 
 /// Descriptor for `InActiveRummyPlaterStat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List inActiveRummyPlaterStatDescriptor = $convert.base64Decode('ChdJbkFjdGl2ZVJ1bW15UGxhdGVyU3RhdBImCg5hY3RpdmVQbGF5ZXJJZBgBIAEoBVIOYWN0aXZlUGxheWVySWQ=');
+final $typed_data.Uint8List inActiveRummyPlaterStatDescriptor = $convert.base64Decode('ChdJbkFjdGl2ZVJ1bW15UGxhdGVyU3RhdBImCg5hY3RpdmVQbGF5ZXJJZBgBIAEoBVIOYWN0aXZlUGxheWVySWQSFgoGc3RhdHVzGAIgASgJUgZzdGF0dXM=');

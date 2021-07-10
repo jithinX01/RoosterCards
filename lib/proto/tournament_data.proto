@@ -25,6 +25,8 @@ message TournamentData
     }
     repeated int32 discardedCards = 11;
     int32 currentRound = 12;
+    int32 tournamentId = 13;
+    int32 nextCard = 14;
 }
 
 message RummyTournamentData {

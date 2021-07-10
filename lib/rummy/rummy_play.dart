@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/cards/playing_card.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
+import 'package:rooster_cards/rummy/rummy_user_action.dart';
 import 'package:rooster_cards/timer_button.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:auto_orientation/auto_orientation.dart';
@@ -37,12 +38,15 @@ class RummyPlay extends StatefulWidget {
 
 class _RummyPlayState extends State<RummyPlay> {
   List<Widget> _wl = List.empty(growable: true);
-  late List<int> _playerCards;
+  StartTournament _tournamentData = StartTournament();
+  StackMode _mode = StackMode.SWAP_MODE;
+  //late List<int> _playerCards;
   @override
   void initState() {
     super.initState();
     widget.streamSubscription.onData(_onData);
-    _playerCards = List.from(widget.startTournament.cards, growable: true);
+    _tournamentData = widget.startTournament;
+    //_playerCards = List.from(_tournamentData.cards, growable: true);
     _wl.add(_getPlayingCards());
     _wl.add(_getTimer());
   }
@@ -67,18 +71,61 @@ class _RummyPlayState extends State<RummyPlay> {
     );
   }
 
-  Widget _getPlayingCards(
-      {StackMode mode = StackMode.SWAP_MODE, int nextCard = -1}) {
+  Widget _getPlayingCards() {
     return Container(
         child: PlayerCardStack(
-      cards: _playerCards,
+      cards: _tournamentData.cards,
       vertical: false,
-      mode: mode,
-      nextCard: nextCard,
+      mode: _mode,
+      nextCard: _tournamentData.nextCard,
       onUserAction: (val) {
         print(val.rUserAction);
+        _handleUserAction(val);
+        setState(() {});
       },
     ));
+  }
+
+  void _handleUserAction(RummyUserAction rummyUserAction) {
+    switch (rummyUserAction.rUserAction) {
+      case RUserAction.DISCARD:
+        print(rummyUserAction.newCard);
+        print("Discarded");
+        _mode = StackMode.SWAP_MODE;
+        _tournamentData.cards.clear();
+        _tournamentData.cards.addAll(rummyUserAction.cards);
+        _wl.clear();
+        _wl.add(_getPlayingCards());
+        _wl.add(_getStatusButton(false));
+        GameMessageClient gmc = GameMessageClient(
+          clientGameStat: ClientGameStat(
+            playerId: _tournamentData.yourId,
+            tournamentId: _tournamentData.tournamentId,
+            discardCard: DiscardCard(
+              card: rummyUserAction.newCard,
+            ),
+          ),
+        );
+
+        widget.channel.sink.add(gmc.writeToBuffer());
+        break;
+      case RUserAction.NORMAL_SWAP:
+        _tournamentData.cards.clear();
+        _tournamentData.cards.addAll(rummyUserAction.cards);
+        print("Normal Swap");
+        break;
+      case RUserAction.REPLACE:
+        _mode = StackMode.SWAP_MODE;
+        _tournamentData.cards.clear();
+        _tournamentData.cards.addAll(rummyUserAction.cards);
+        _wl.clear();
+        _wl.add(_getPlayingCards());
+        _wl.add(_getStatusButton(false));
+        print("replace");
+
+        break;
+      default:
+    }
   }
 
   Widget _getStatusButton(bool active, {String player = "You"}) {
@@ -144,10 +191,9 @@ class _RummyPlayState extends State<RummyPlay> {
             onEnd: () {
               _wl.removeLast();
               if (widget.startTournament.youStart) {
+                _mode = StackMode.REPLACE_MODE;
                 _wl.clear();
-                _wl.add(_getPlayingCards(
-                    mode: StackMode.REPLACE_MODE,
-                    nextCard: widget.startTournament.nextCard));
+                _wl.add(_getPlayingCards());
                 _wl.add(_getStatusButton(true));
                 //_wl.add(_getPopCard(widget.startTournament.nextCard));
               } else {
@@ -158,7 +204,7 @@ class _RummyPlayState extends State<RummyPlay> {
               }
               setState(() {});
             },
-            time: 60),
+            time: 10),
       ),
     );
   }

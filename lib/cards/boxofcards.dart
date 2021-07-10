@@ -132,19 +132,41 @@ class PlayerCardStack extends StatefulWidget {
 
 class _PlayerCardStackState extends State<PlayerCardStack> {
   late List<int> _clickList = List.empty(growable: true);
+  late List<int> _cards;
   bool _showSwapButton = false;
   bool _showPopCard = true;
   bool _newCardTook = false;
+  bool _userReplace = false;
+  StackMode _stackMode = StackMode.SWAP_MODE;
+
+  @override
+  void initState() {
+    super.initState();
+    _stackMode = widget.mode;
+    print("Inited");
+    _cards = List.from(widget.cards);
+  }
+
   @override
   Widget build(BuildContext context) {
+    /*
+    if (!_userReplace) {
+      _stackMode = widget.mode;
+    } else {
+      _userReplace = false;
+    }
+    */
+    _stackMode = widget.mode;
     return _getScreen();
   }
 
   Widget _getScreen() {
     List<Widget> wList = List.empty(growable: true);
-    wList.add(createScrollableStack(widget.cards, vertical: widget.vertical));
+    wList.add(createScrollableStack(_cards, vertical: widget.vertical));
     if (_showSwapButton) wList.add(_getControlButton());
-    if (_showPopCard && widget.mode == StackMode.REPLACE_MODE)
+    print("getScreen");
+    print(_stackMode);
+    if (_showPopCard && _stackMode == StackMode.REPLACE_MODE)
       wList.add(_getPopCard(widget.nextCard));
     return Stack(children: wList);
   }
@@ -190,11 +212,46 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
           foregroundColor: Colors.black,
           heroTag: "swapped",
           onPressed: () {
-            print("swapped");
+            if (_stackMode == StackMode.SWAP_MODE) {
+              swap();
+            } else if (_stackMode == StackMode.REPLACE_MODE) {
+              replace();
+            }
+            setState(() {});
+            print(_stackMode);
           },
         ),
       ),
     );
+  }
+
+  void replace() {
+    int card = _cards[_clickList[0]];
+    _cards[_clickList[0]] = widget.nextCard;
+    var action = RummyUserAction(rUserAction: RUserAction.REPLACE);
+    action.newCard = widget.nextCard;
+    action.oldCard = card;
+    action.playerCards = _cards;
+
+    _showPopCard = false;
+    _showSwapButton = false;
+    _clickList.clear();
+    _userReplace = true;
+    _stackMode = StackMode.SWAP_MODE;
+    widget.onUserAction(action);
+  }
+
+  void swap() {
+    int card = _cards[_clickList[0]];
+
+    _cards[_clickList[0]] = _cards[_clickList[1]];
+    _cards[_clickList[1]] = card;
+
+    var action = RummyUserAction(rUserAction: RUserAction.NORMAL_SWAP);
+    action.playerCards = _cards;
+    _clickList.clear();
+    _showSwapButton = false;
+    widget.onUserAction(action);
   }
 
   Widget _getPopCard(int card) {
@@ -224,6 +281,10 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             onPressed: () {
               _showPopCard = false;
               setState(() {});
+              RummyUserAction rummyUserAction =
+                  RummyUserAction(rUserAction: RUserAction.DISCARD);
+              rummyUserAction.newCard = card;
+              widget.onUserAction(rummyUserAction);
             },
             label: Icon(Icons.close),
             backgroundColor: Colors.red,
@@ -243,7 +304,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
         onTap: () {
           print(card);
           print(index);
-          if (widget.mode == StackMode.SWAP_MODE) {
+          if (_stackMode == StackMode.SWAP_MODE) {
             if (!_clickList.contains(index)) {
               _clickList.add(index);
             } else {
@@ -252,19 +313,19 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
 
             if (_clickList.length > 2) {
               _clickList.removeAt(0);
-              print(_clickList);
             }
             _showSwapButton = (_clickList.length == 2);
-          } else if (widget.mode == StackMode.REPLACE_MODE && _newCardTook) {
+            print(_clickList);
+          } else if (_stackMode == StackMode.REPLACE_MODE && _newCardTook) {
             if (!_clickList.contains(index))
               _clickList.add(index);
             else
               _clickList.remove(index);
             if (_clickList.length > 1) {
               _clickList.removeAt(0);
-              print(_clickList);
             }
             _showSwapButton = (_clickList.length == 1);
+            print(_clickList);
           }
 
           setState(() {});

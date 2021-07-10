@@ -47,26 +47,32 @@ message Join {
     string playerName = 1;
     int32 tournamentId = 2;
 }
-
+/*
 enum CRAction {
     DRAW = 0;
     DISCARD = 1;
 }
+*/
+message DiscardCard {
+    int32 card = 1;
+}
 
-message ClientRummyAction
+message DrawCard
 {
-    CRAction action = 1;
-    int32 newCard = 2;
-    int32 oldCard = 3;
+    //CRAction action = 1;
+    int32 newCard = 1;
+    int32 oldCard = 2;
 }
 
 message ClientGameStat {
     
+    int32 playerId = 1;
+    int32 tournamentId = 2;
     oneof stat {
-        ClientRummyAction clientRummyAction = 1;
+        DrawCard drawCard = 3;
+        DiscardCard discardCard = 4;
     }
-    int32 playerId = 2;
-    int32 tournamentId = 3;
+    
 }
 
 enum TPAction
@@ -129,6 +135,7 @@ message StartTournament {
     int32 trophyId = 7;
     int32 yourId = 8;
     int32 nextCard = 9;
+    int32 tournamentId = 10;
 }
 
 message GameServerUpdate
@@ -159,4 +166,5 @@ message ActiveRummyPlayerStat {
 
 message InActiveRummyPlaterStat {
     int32 activePlayerId = 1;
+    string status = 2;
 }

@@ -7,7 +7,7 @@ const NO_OF_RUMMY_CARDS = 13;
 
 class Tournament {
   late TournamentData _data;
-  late int _tournamentId;
+  //late int _tournamentId;
   int _joinedPlayers = 0;
   var playerConnections = Map<int, WebSocketChannel>();
 
@@ -23,13 +23,13 @@ class Tournament {
     _data.currentPlayerId = _joinedPlayers;
     playerConnections[_joinedPlayers] = wc;
     ++_joinedPlayers;
-    _tournamentId = tournamentId;
+    _data.tournamentId = tournamentId;
     _gameTypeInit(initStart);
     _sendInitStat(wc);
   }
   void _sendInitStat(WebSocketChannel wc) {
     InitStartStat initStartStat = InitStartStat(
-        playerId: _data.currentPlayerId, tournamentId: _tournamentId);
+        playerId: _data.currentPlayerId, tournamentId: _data.tournamentId);
     print("ServerSending Data");
     GameMessageServer gms = GameMessageServer();
     gms.initStartStat = initStartStat;
@@ -57,6 +57,9 @@ class Tournament {
     }
   }
 
+  void handleClientGameStat(
+      ClientGameStat clientGameStat, WebSocketChannel wc) {}
+
   void _sendJoinProgress(int connectedPlayerId) {
     GameMessageServer gms = GameMessageServer(
         joinProgress: JoinProgress(players: _data.players.skipWhile((value) {
@@ -74,6 +77,7 @@ class Tournament {
   }
 
   void _sendStartTournament() {
+    _data.nextCard = _data.cardStack[0];
     playerConnections.forEach((key, channel) {
       //value.sink.add(gms.writeToBuffer());
       GameMessageServer gms = GameMessageServer(
@@ -87,6 +91,7 @@ class Tournament {
         trophyId: _data.trophyId,
         yourId: key,
         nextCard: _data.currentPlayerId == key ? _data.cardStack[0] : -1,
+        tournamentId: _data.tournamentId,
       ));
       channel.sink.add(gms.writeToBuffer());
     });
@@ -140,4 +145,63 @@ class RummyTournament extends Tournament {
 
     _data.cardStack.addAll(stack);
   }
+
+  @override
+  void handleClientGameStat(
+      ClientGameStat clientGameStat, WebSocketChannel wc) {
+    switch (clientGameStat.whichStat()) {
+      case ClientGameStat_Stat.discardCard:
+        _handleDiscardCard(clientGameStat);
+        break;
+      case ClientGameStat_Stat.drawCard:
+        _handleDrawCard(clientGameStat);
+        break;
+      default:
+    }
+  }
+
+  void _handleDiscardCard(ClientGameStat clientGameStat) {
+    int card = clientGameStat.discardCard.card;
+    int playerId = clientGameStat.playerId;
+    _data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
+    if (card == _data.cardStack[0]) {
+      //from deck
+      _data.cardStack.removeAt(0);
+      //_data.discardedCards.add(card);
+    } else {
+      //previous player discarded cards
+      _data.discardedCards.add(card);
+      _data.nextCard = _data.cardStack[0];
+      _data.currentPlayerId = playerId;
+    }
+    _sendGameUpdate();
+  }
+
+  void _sendGameUpdate() {
+    playerConnections.forEach((playerId, channel) {
+      GameMessageServer gms = GameMessageServer(
+        gameServerUpdate: GameServerUpdate(
+          rummyPlayerStat: RummyPlayerStat(
+            inactiveRPS: playerId != _data.currentPlayerId
+                ? InActiveRummyPlaterStat(
+                    activePlayerId: _data.currentPlayerId,
+                    status: "something",
+                  )
+                : null,
+            activeRPS: playerId == _data.currentPlayerId
+                ? ActiveRummyPlayerStat(
+                    nextCard: _data.nextCard,
+                    arpAction: _data.nextCard == _data.cardStack[0]
+                        ? ARPAction.DRAW_CARD
+                        : ARPAction.DROP_CARD,
+                  )
+                : null,
+          ),
+        ),
+      );
+      channel.sink.add(gms.writeToBuffer());
+    });
+  }
+
+  void _handleDrawCard(ClientGameStat clientGameStat) {}
 }

@@ -28,21 +28,6 @@ class GameType extends $pb.ProtobufEnum {
   const GameType._($core.int v, $core.String n) : super(v, n);
 }
 
-class CRAction extends $pb.ProtobufEnum {
-  static const CRAction DRAW = CRAction._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DRAW');
-  static const CRAction DISCARD = CRAction._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DISCARD');
-
-  static const $core.List<CRAction> values = <CRAction> [
-    DRAW,
-    DISCARD,
-  ];
-
-  static final $core.Map<$core.int, CRAction> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static CRAction? valueOf($core.int value) => _byValue[value];
-
-  const CRAction._($core.int v, $core.String n) : super(v, n);
-}
-
 class TPAction extends $pb.ProtobufEnum {
   static const TPAction TAKE_BREAK = TPAction._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TAKE_BREAK');
   static const TPAction NEXT_GAME = TPAction._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NEXT_GAME');
