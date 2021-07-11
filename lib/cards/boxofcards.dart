@@ -136,7 +136,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   bool _showSwapButton = false;
   bool _showPopCard = true;
   bool _newCardTook = false;
-  bool _userReplace = false;
+
   StackMode _stackMode = StackMode.SWAP_MODE;
 
   @override
@@ -214,10 +214,10 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
           onPressed: () {
             if (_stackMode == StackMode.SWAP_MODE) {
               swap();
+              setState(() {});
             } else if (_stackMode == StackMode.REPLACE_MODE) {
               replace();
             }
-            setState(() {});
             print(_stackMode);
           },
         ),
@@ -236,9 +236,15 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     _showPopCard = false;
     _showSwapButton = false;
     _clickList.clear();
-    _userReplace = true;
-    _stackMode = StackMode.SWAP_MODE;
+    setState(() {
+      _stackMode = StackMode.SWAP_MODE;
+    });
+    _showPopCard = true;
+
+    _newCardTook = false;
+
     widget.onUserAction(action);
+    //setState(() {});
   }
 
   void swap() {
@@ -267,7 +273,6 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
           onPressed: () {
             _newCardTook = true;
             setState(() {});
-            _newCardTook = false;
           },
           label: Icon(Icons.check),
           backgroundColor: Colors.green,
