@@ -203,5 +203,24 @@ class RummyTournament extends Tournament {
     });
   }
 
-  void _handleDrawCard(ClientGameStat clientGameStat) {}
+  void _handleDrawCard(ClientGameStat clientGameStat) {
+    int playerId = clientGameStat.playerId;
+    //next player
+    _data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
+
+    int oldCard = clientGameStat.drawCard.oldCard;
+    int newCard = clientGameStat.drawCard.newCard;
+    //next card
+    _data.nextCard = oldCard;
+    //remove new Card if it was from stack
+    if (newCard == _data.cardStack[0]) {
+      //from deck
+      _data.cardStack.removeAt(0);
+      //_data.discardedCards.add(card);
+    }
+
+    _data.playerCards[playerId]?.cards.remove(oldCard);
+    _data.playerCards[playerId]?.cards.add(newCard);
+    _sendGameUpdate();
+  }
 }

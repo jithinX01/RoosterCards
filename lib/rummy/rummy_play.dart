@@ -170,6 +170,19 @@ class _RummyPlayState extends State<RummyPlay> {
         _wl.clear();
         _wl.add(_getPlayingCards());
         _wl.add(_getStatusButton(false));
+
+        //send data to server
+        GameMessageClient gmc = GameMessageClient(
+          clientGameStat: ClientGameStat(
+            playerId: _tournamentData.yourId,
+            tournamentId: _tournamentData.tournamentId,
+            drawCard: DrawCard(
+              newCard: rummyUserAction.newCard,
+              oldCard: rummyUserAction.oldCard,
+            ),
+          ),
+        );
+        widget.channel.sink.add(gmc.writeToBuffer());
         print("replace");
 
         break;
