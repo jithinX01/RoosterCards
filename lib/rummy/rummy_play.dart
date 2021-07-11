@@ -63,7 +63,56 @@ class _RummyPlayState extends State<RummyPlay> {
     );
   }
 
-  void _onData(dynamic message) {}
+  void _onData(data) {
+    print("onData Rummy Play");
+    GameMessageServer gms = GameMessageServer.fromBuffer(data);
+    _handleServerMessage(gms);
+  }
+
+  void _handleServerMessage(GameMessageServer gms) {
+    switch (gms.whichPayLoad()) {
+      case GameMessageServer_PayLoad.gameServerUpdate:
+        _handleGameServerUpdate(gms.gameServerUpdate);
+        break;
+      default:
+    }
+  }
+
+  void _handleGameServerUpdate(GameServerUpdate gmUpdate) {
+    if (gmUpdate.hasRummyPlayerStat()) {
+      switch (gmUpdate.rummyPlayerStat.whichStat()) {
+        case RummyPlayerStat_Stat.activeRPS:
+          _handleActiveRPS(gmUpdate.rummyPlayerStat.activeRPS);
+          break;
+        case RummyPlayerStat_Stat.inactiveRPS:
+          _handleInActiveRPS(gmUpdate.rummyPlayerStat.inactiveRPS);
+          break;
+        default:
+      }
+    } else {
+      print("Something wrong with Rummy gms update");
+    }
+  }
+
+  void _handleActiveRPS(ActiveRummyPlayerStat activeRummyPlayerStat) {
+    print("next card");
+    print(activeRummyPlayerStat.nextCard);
+    _tournamentData.nextCard = activeRummyPlayerStat.nextCard;
+    _mode = StackMode.REPLACE_MODE;
+    _wl.clear();
+    _wl.add(_getPlayingCards());
+    _wl.add(_getStatusButton(true));
+    setState(() {});
+  }
+
+  void _handleInActiveRPS(InActiveRummyPlaterStat inActiveRummyPlaterStat) {
+    int activePlayerId = inActiveRummyPlaterStat.activePlayerId;
+    String activePlayer =
+        widget.startTournament.playerMap[activePlayerId] ?? "";
+    _wl.removeLast();
+    _wl.add(_getStatusButton(false, player: activePlayer));
+    setState(() {});
+  }
 
   Widget _getScreen() {
     return Stack(
@@ -151,37 +200,6 @@ class _RummyPlayState extends State<RummyPlay> {
     );
   }
 
-  /*
-  Widget _getPopCard(int card) {
-    return Positioned(
-        top: 80,
-        right: -50,
-        child: Stack(
-          children: [
-            PlayingCard(PACK[card]),
-            Positioned(
-              right: 55,
-              bottom: 170,
-              child: FloatingActionButton.extended(
-                onPressed: () {},
-                label: Icon(Icons.check),
-                backgroundColor: Colors.green,
-                heroTag: "onAccept",
-              ),
-            ),
-            Positioned(
-                left: 10,
-                bottom: 170,
-                child: FloatingActionButton.extended(
-                  onPressed: () {},
-                  label: Icon(Icons.close),
-                  backgroundColor: Colors.red,
-                  heroTag: "onDiscard",
-                )),
-          ],
-        ));
-  }
-  */
   Widget _getTimer() {
     return Positioned.fill(
       top: 20,

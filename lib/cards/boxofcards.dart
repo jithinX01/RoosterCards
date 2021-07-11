@@ -267,6 +267,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
           onPressed: () {
             _newCardTook = true;
             setState(() {});
+            _newCardTook = false;
           },
           label: Icon(Icons.check),
           backgroundColor: Colors.green,
@@ -284,6 +285,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
               RummyUserAction rummyUserAction =
                   RummyUserAction(rUserAction: RUserAction.DISCARD);
               rummyUserAction.newCard = card;
+              _showPopCard = true;
               widget.onUserAction(rummyUserAction);
             },
             label: Icon(Icons.close),
