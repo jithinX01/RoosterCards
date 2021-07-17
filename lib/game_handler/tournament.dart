@@ -1,3 +1,4 @@
+import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/proto/tournament_data.pbserver.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -144,6 +145,10 @@ class RummyTournament extends Tournament {
     stack.removeRange(0, NO_OF_RUMMY_CARDS * _data.noOfPlayers);
 
     _data.cardStack.addAll(stack);
+    //sort the player card list
+    _data.playerCards.forEach((key, value) {
+      value.cards.sort();
+    });
   }
 
   @override
@@ -164,6 +169,7 @@ class RummyTournament extends Tournament {
     int card = clientGameStat.discardCard.card;
     int playerId = clientGameStat.playerId;
     _data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
+    bool fromDeck = false;
     if (card == _data.cardStack[0]) {
       //from deck
       _data.cardStack.removeAt(0);
@@ -173,11 +179,46 @@ class RummyTournament extends Tournament {
       _data.discardedCards.add(card);
       _data.nextCard = _data.cardStack[0];
       _data.currentPlayerId = playerId;
+      fromDeck = true;
     }
-    _sendGameUpdate();
+    String status =
+        " Dropped " + PACK[card].strUtf + (fromDeck ? " Took a card" : "");
+    _sendGameUpdate(status: status);
   }
 
-  void _sendGameUpdate() {
+  void _handleDrawCard(ClientGameStat clientGameStat) {
+    int playerId = clientGameStat.playerId;
+    //next player
+    _data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
+
+    int oldCard = clientGameStat.drawCard.oldCard;
+    int newCard = clientGameStat.drawCard.newCard;
+    //next card
+    _data.nextCard = oldCard;
+    bool fromDeck = false;
+    //remove new Card if it was from stack
+    if (newCard == _data.cardStack[0]) {
+      //from deck
+      fromDeck = true;
+      _data.cardStack.removeAt(0);
+      //_data.discardedCards.add(card);
+    }
+    String status = "";
+    if (fromDeck) {
+      status = " Took a card, Dropped " + PACK[oldCard].strUtf;
+    } else {
+      status = " Took " +
+          PACK[newCard].infoUtf +
+          " , Dropped " +
+          PACK[oldCard].strUtf;
+    }
+
+    _data.playerCards[playerId]?.cards.remove(oldCard);
+    _data.playerCards[playerId]?.cards.add(newCard);
+    _sendGameUpdate(status: status);
+  }
+
+  void _sendGameUpdate({String status = ":)"}) {
     playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
         gameServerUpdate: GameServerUpdate(
@@ -185,7 +226,7 @@ class RummyTournament extends Tournament {
             inactiveRPS: playerId != _data.currentPlayerId
                 ? InActiveRummyPlaterStat(
                     activePlayerId: _data.currentPlayerId,
-                    status: "something",
+                    status: _getPlayerName(playerId) + status,
                   )
                 : null,
             activeRPS: playerId == _data.currentPlayerId
@@ -203,24 +244,11 @@ class RummyTournament extends Tournament {
     });
   }
 
-  void _handleDrawCard(ClientGameStat clientGameStat) {
-    int playerId = clientGameStat.playerId;
-    //next player
-    _data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
-
-    int oldCard = clientGameStat.drawCard.oldCard;
-    int newCard = clientGameStat.drawCard.newCard;
-    //next card
-    _data.nextCard = oldCard;
-    //remove new Card if it was from stack
-    if (newCard == _data.cardStack[0]) {
-      //from deck
-      _data.cardStack.removeAt(0);
-      //_data.discardedCards.add(card);
+  String _getPlayerName(int playerId) {
+    if (playerId == (_data.currentPlayerId - 1) % _data.noOfPlayers) {
+      return "You";
+    } else {
+      return _data.players[playerId];
     }
-
-    _data.playerCards[playerId]?.cards.remove(oldCard);
-    _data.playerCards[playerId]?.cards.add(newCard);
-    _sendGameUpdate();
   }
 }

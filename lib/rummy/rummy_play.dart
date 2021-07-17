@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:rooster_cards/cards/boxofcards.dart';
-import 'package:rooster_cards/cards/playing_card.dart';
+import 'package:rooster_cards/cards/player_card_stack.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
 import 'package:rooster_cards/timer_button.dart';

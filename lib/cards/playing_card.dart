@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
-
 import 'package:rooster_cards/cards/boxofcards.dart';
+import 'dart:math';
 
 class Invert extends StatelessWidget {
   final StatelessWidget w;
