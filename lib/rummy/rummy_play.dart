@@ -5,6 +5,7 @@ import 'package:rooster_cards/cards/player_card_stack.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
 import 'package:rooster_cards/timer_button.dart';
+import 'package:rooster_cards/timer_message.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:auto_orientation/auto_orientation.dart';
 
@@ -105,12 +106,18 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _handleInActiveRPS(InActiveRummyPlaterStat inActiveRummyPlaterStat) {
+    print("handleInActive");
+    print(inActiveRummyPlaterStat.status);
     int activePlayerId = inActiveRummyPlaterStat.activePlayerId;
     String activePlayer =
         widget.startTournament.playerMap[activePlayerId] ?? "";
-    _wl.removeLast();
-    _wl.add(_getStatusButton(false, player: activePlayer));
-    setState(() {});
+
+    setState(() {
+      _wl.clear();
+      _wl.add(_getPlayingCards());
+      _wl.add(_getStatusButton(false, player: activePlayer));
+      _wl.add(_getTimerMessage(inActiveRummyPlaterStat.status));
+    });
   }
 
   Widget _getScreen() {
@@ -235,6 +242,16 @@ class _RummyPlayState extends State<RummyPlay> {
               setState(() {});
             },
             time: 10),
+      ),
+    );
+  }
+
+  Widget _getTimerMessage(String message) {
+    return Positioned.fill(
+      top: 20,
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: TimerMessage(time: 2, message: message),
       ),
     );
   }

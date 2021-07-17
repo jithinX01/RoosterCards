@@ -1,6 +1,7 @@
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/proto/tournament_data.pbserver.dart';
+import 'package:rooster_cards/rummy/winning_hand.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 const NO_OF_CARDS = 53;
@@ -77,6 +78,33 @@ class Tournament {
     wc.sink.add(gms.writeToBuffer());
   }
 
+  void _sendStartTournament() {}
+
+  String _getPlayerName(int playerId, int previousPlayerId) {
+    if (playerId == previousPlayerId) {
+      return "You";
+    } else {
+      return _data.players[playerId];
+    }
+  }
+}
+
+class RummyTournament extends Tournament {
+  //late RummyTournamentData _data;
+  RummyTournament(InitStart initStart, WebSocketChannel wc, int tournamentId)
+      : super(initStart, wc, tournamentId);
+  @override
+  void _gameTypeInit(InitStart initStart) {
+    _data.rummyData = RummyTournamentData(state: RummyState.INIT);
+  }
+
+  @override
+  void _startTournament() {
+    _data.currentRound = 1;
+    _shuffleDeckAndDeal();
+  }
+
+  @override
   void _sendStartTournament() {
     _data.nextCard = _data.cardStack[0];
     playerConnections.forEach((key, channel) {
@@ -96,22 +124,6 @@ class Tournament {
       ));
       channel.sink.add(gms.writeToBuffer());
     });
-  }
-}
-
-class RummyTournament extends Tournament {
-  //late RummyTournamentData _data;
-  RummyTournament(InitStart initStart, WebSocketChannel wc, int tournamentId)
-      : super(initStart, wc, tournamentId);
-  @override
-  void _gameTypeInit(InitStart initStart) {
-    _data.rummyData = RummyTournamentData(state: RummyState.INIT);
-  }
-
-  @override
-  void _startTournament() {
-    _data.currentRound = 1;
-    _shuffleDeckAndDeal();
   }
 
   void _shuffleDeckAndDeal() {
@@ -182,8 +194,8 @@ class RummyTournament extends Tournament {
       fromDeck = true;
     }
     String status =
-        " Dropped " + PACK[card].strUtf + (fromDeck ? " Took a card" : "");
-    _sendGameUpdate(status: status);
+        " Dropped " + PACK[card].infoUtf + (fromDeck ? " Took a card" : "");
+    _sendGameUpdate(status: status, previousPlayerId: playerId);
   }
 
   void _handleDrawCard(ClientGameStat clientGameStat) {
@@ -205,20 +217,23 @@ class RummyTournament extends Tournament {
     }
     String status = "";
     if (fromDeck) {
-      status = " Took a card, Dropped " + PACK[oldCard].strUtf;
+      status = " Took a card, Dropped " + PACK[oldCard].infoUtf;
     } else {
       status = " Took " +
           PACK[newCard].infoUtf +
           " , Dropped " +
-          PACK[oldCard].strUtf;
+          PACK[oldCard].infoUtf;
     }
 
     _data.playerCards[playerId]?.cards.remove(oldCard);
     _data.playerCards[playerId]?.cards.add(newCard);
-    _sendGameUpdate(status: status);
+    if (isWinningHand(_data.playerCards[playerId]?.cards)) {
+      print("$playerId won");
+    }
+    _sendGameUpdate(status: status, previousPlayerId: playerId);
   }
 
-  void _sendGameUpdate({String status = ":)"}) {
+  void _sendGameUpdate({String status = ":)", required int previousPlayerId}) {
     playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
         gameServerUpdate: GameServerUpdate(
@@ -226,7 +241,7 @@ class RummyTournament extends Tournament {
             inactiveRPS: playerId != _data.currentPlayerId
                 ? InActiveRummyPlaterStat(
                     activePlayerId: _data.currentPlayerId,
-                    status: _getPlayerName(playerId) + status,
+                    status: _getPlayerName(playerId, previousPlayerId) + status,
                   )
                 : null,
             activeRPS: playerId == _data.currentPlayerId
@@ -242,13 +257,5 @@ class RummyTournament extends Tournament {
       );
       channel.sink.add(gms.writeToBuffer());
     });
-  }
-
-  String _getPlayerName(int playerId) {
-    if (playerId == (_data.currentPlayerId - 1) % _data.noOfPlayers) {
-      return "You";
-    } else {
-      return _data.players[playerId];
-    }
   }
 }
