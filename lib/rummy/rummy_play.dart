@@ -87,6 +87,9 @@ class _RummyPlayState extends State<RummyPlay> {
         case RummyPlayerStat_Stat.inactiveRPS:
           _handleInActiveRPS(gmUpdate.rummyPlayerStat.inactiveRPS);
           break;
+        case RummyPlayerStat_Stat.nextGame:
+          _handleNextGame(gmUpdate.rummyPlayerStat.nextGame);
+          break;
         default:
       }
     } else {
@@ -118,6 +121,35 @@ class _RummyPlayState extends State<RummyPlay> {
       _wl.add(_getStatusButton(false, player: activePlayer));
       _wl.add(_getTimerMessage(inActiveRummyPlaterStat.status));
     });
+  }
+
+  void _handleWonPlayerStat(WonPlayerStat wonPlayerStat) {}
+
+  void _handleLosePlayerStat(LosePlayerStat losePlayerStat) {}
+
+  void _handleNextGame(NextGame nextGame) {
+    _tournamentData.activePlayerId = nextGame.activePlayerId;
+    _tournamentData.cards.clear();
+    _tournamentData.cards.addAll(nextGame.cards);
+    _tournamentData.youStart = nextGame.youStart;
+    _tournamentData.nextCard = nextGame.nextCard;
+    _tournamentData.round = nextGame.round;
+
+    if (_tournamentData.youStart) {
+      _mode = StackMode.REPLACE_MODE;
+      _wl.clear();
+      _wl.add(_getPlayingCards());
+      _wl.add(_getStatusButton(true));
+      //_wl.add(_getPopCard(widget.startTournament.nextCard));
+    } else {
+      String activePlayer =
+          _tournamentData.playerMap[_tournamentData.activePlayerId] ?? "";
+      _mode = StackMode.SWAP_MODE;
+      _wl.clear();
+      _wl.add(_getPlayingCards());
+      _wl.add(_getStatusButton(false, player: activePlayer));
+    }
+    setState(() {});
   }
 
   Widget _getScreen() {

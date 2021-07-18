@@ -8,6 +8,7 @@ import 'package:rooster_cards/rummy/rummy_user_action.dart';
 enum StackMode {
   SWAP_MODE,
   REPLACE_MODE,
+  VIEW_MODE,
 }
 
 class PlayerCardStack extends StatefulWidget {
@@ -231,6 +232,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             }
             _showSwapButton = (_clickList.length == 2);
             print(_clickList);
+            setState(() {});
           } else if (_stackMode == StackMode.REPLACE_MODE && _newCardTook) {
             if (!_clickList.contains(index))
               _clickList.add(index);
@@ -241,9 +243,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             }
             _showSwapButton = (_clickList.length == 1);
             print(_clickList);
+            setState(() {});
           }
-
-          setState(() {});
         },
         child: PlayingCard(PACK[card]));
   }

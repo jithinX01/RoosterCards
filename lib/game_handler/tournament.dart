@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/proto/tournament_data.pbserver.dart';
@@ -229,8 +231,10 @@ class RummyTournament extends Tournament {
     _data.playerCards[playerId]?.cards.add(newCard);
     if (isWinningHand(_data.playerCards[playerId]?.cards)) {
       print("$playerId won");
+      _handleGameWin(playerId);
+    } else {
+      _sendGameUpdate(status: status, previousPlayerId: playerId);
     }
-    _sendGameUpdate(status: status, previousPlayerId: playerId);
   }
 
   void _sendGameUpdate({String status = ":)", required int previousPlayerId}) {
@@ -252,6 +256,76 @@ class RummyTournament extends Tournament {
                         : ARPAction.DROP_CARD,
                   )
                 : null,
+          ),
+        ),
+      );
+      channel.sink.add(gms.writeToBuffer());
+    });
+  }
+
+  void _handleGameWin(int winnerId) {
+    _sendGameWonUpdate(winnerId);
+    //reset values.
+    _data.currentRound += 1;
+    if (_data.currentRound < _data.noOfRounds + 1) {
+      _startNextGame();
+      //winner starts next game.
+      _data.currentPlayerId = winnerId;
+      //after 5 seconds
+      Timer(Duration(seconds: 5), _sendNextGameUpdate);
+    } else {
+      print("Tournament Over");
+    }
+  }
+
+  void _sendGameWonUpdate(int winnerId) {
+    playerConnections.forEach((playerId, channel) {
+      GameMessageServer gms = GameMessageServer(
+        gameServerUpdate: GameServerUpdate(
+          rummyPlayerStat: RummyPlayerStat(
+            wonPlayerStat: winnerId == playerId
+                ? WonPlayerStat(
+                    round: _data.currentRound,
+                  )
+                : null,
+            losePlayerStat: winnerId != playerId
+                ? LosePlayerStat(
+                    round: _data.currentRound,
+                    wonPlayer: _data.players[winnerId],
+                    winningCards: _data.playerCards[winnerId]?.cards,
+                  )
+                : null,
+          ),
+        ),
+      );
+
+      channel.sink.add(gms.writeToBuffer());
+    });
+  }
+
+  void _startNextGame() {
+    //reset.
+    _data.cardStack.clear();
+    _data.playerCards.forEach((key, value) {
+      value.cards.clear();
+    });
+    _data.discardedCards.clear();
+    _shuffleDeckAndDeal();
+  }
+
+  void _sendNextGameUpdate() {
+    playerConnections.forEach((playerId, channel) {
+      GameMessageServer gms = GameMessageServer(
+        gameServerUpdate: GameServerUpdate(
+          rummyPlayerStat: RummyPlayerStat(
+            nextGame: NextGame(
+              cards: _data.playerCards[playerId]?.cards,
+              youStart: _data.currentPlayerId == playerId,
+              activePlayerId: _data.currentPlayerId,
+              round: _data.currentRound,
+              nextCard:
+                  _data.currentPlayerId == playerId ? _data.cardStack[0] : -1,
+            ),
           ),
         ),
       );

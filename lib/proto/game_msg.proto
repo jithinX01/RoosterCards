@@ -150,7 +150,12 @@ message RummyPlayerStat
 {
     oneof stat {
         ActiveRummyPlayerStat activeRPS = 1;
-        InActiveRummyPlaterStat inactiveRPS = 2; 
+        InActiveRummyPlaterStat inactiveRPS = 2;
+        WonPlayerStat WonPlayerStat = 3;
+        LosePlayerStat LosePlayerStat = 4;
+        NextGame NextGame = 5;
+        TournamentOver tournamentOver = 6;
+        
     }
 }
 
@@ -167,4 +172,23 @@ message ActiveRummyPlayerStat {
 message InActiveRummyPlaterStat {
     int32 activePlayerId = 1;
     string status = 2;
+}
+message WonPlayerStat {
+    int32 round = 1;
+}
+
+message LosePlayerStat {
+    int32 round = 1;
+    string wonPlayer = 2;
+    repeated int32 winningCards = 3;
+}
+message NextGame {
+    repeated int32 cards = 2;
+    bool youStart = 3;
+    int32 activePlayerId = 4;
+    int32 round = 5;
+    int32 nextCard = 9;
+}
+message TournamentOver {
+    int32 wonPlayer = 1;
 }
