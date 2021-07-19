@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/player_card_stack.dart';
+import 'package:rooster_cards/game_loser_card.dart';
+import 'package:rooster_cards/game_winner_card.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
 import 'package:rooster_cards/timer_button.dart';
@@ -90,6 +92,12 @@ class _RummyPlayState extends State<RummyPlay> {
         case RummyPlayerStat_Stat.nextGame:
           _handleNextGame(gmUpdate.rummyPlayerStat.nextGame);
           break;
+        case RummyPlayerStat_Stat.wonPlayerStat:
+          _handleWonPlayerStat(gmUpdate.rummyPlayerStat.wonPlayerStat);
+          break;
+        case RummyPlayerStat_Stat.losePlayerStat:
+          _handleLosePlayerStat(gmUpdate.rummyPlayerStat.losePlayerStat);
+          break;
         default:
       }
     } else {
@@ -123,9 +131,26 @@ class _RummyPlayState extends State<RummyPlay> {
     });
   }
 
-  void _handleWonPlayerStat(WonPlayerStat wonPlayerStat) {}
+  void _handleWonPlayerStat(WonPlayerStat wonPlayerStat) {
+    _wl.clear();
+    _wl.add(GameWinnerCard(
+      title: "Round " + wonPlayerStat.round.toString(),
+    ));
+    setState(() {});
+  }
 
-  void _handleLosePlayerStat(LosePlayerStat losePlayerStat) {}
+  void _handleLosePlayerStat(LosePlayerStat losePlayerStat) {
+    _wl.clear();
+    _mode = StackMode.VIEW_MODE;
+    _tournamentData.cards.clear();
+    _tournamentData.cards.addAll(losePlayerStat.winningCards);
+    _wl.add(_getPlayingCards());
+    _wl.add(GameLoserCard(
+        time: 5,
+        player: losePlayerStat.wonPlayer,
+        round: "Round " + losePlayerStat.round.toString()));
+    setState(() {});
+  }
 
   void _handleNextGame(NextGame nextGame) {
     _tournamentData.activePlayerId = nextGame.activePlayerId;

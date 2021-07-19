@@ -9,7 +9,7 @@ class GameWinnerCard extends StatelessWidget {
     Key? key,
     this.title = "",
     this.c = Colors.green,
-    this.icon = Icons.settings,
+    this.icon = Icons.military_tech,
   }) : super(key: key);
 
   Decoration getDecoration({Color c = Colors.grey}) {
@@ -29,21 +29,29 @@ class GameWinnerCard extends StatelessWidget {
   Widget getCard(String val, Color c, IconData icon) {
     return Container(
       width: 300,
-      height: 200,
+      height: 250,
       padding: EdgeInsets.all(16.0),
       alignment: Alignment.center,
       decoration: getDecoration(c: c),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
             icon,
-            size: 70,
+            size: 96,
           ),
           Text(
             val,
             style: TextStyle(
-              fontSize: 52,
+              fontSize: 16,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            "WINNER",
+            style: TextStyle(
+              fontSize: 32,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.bold,
             ),
@@ -56,10 +64,10 @@ class GameWinnerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-        top: 20,
+        //top: 20,
         child: Align(
-          alignment: Alignment.topCenter,
-          child: getCard(this.title, this.c, this.icon),
-        ));
+      alignment: Alignment.center,
+      child: getCard(this.title, this.c, this.icon),
+    ));
   }
 }
