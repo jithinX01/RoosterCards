@@ -108,6 +108,7 @@ class _RummyPlayState extends State<RummyPlay> {
   void _handleActiveRPS(ActiveRummyPlayerStat activeRummyPlayerStat) {
     print("next card");
     print(activeRummyPlayerStat.nextCard);
+    _tournamentData.youStart = true;
     _tournamentData.nextCard = activeRummyPlayerStat.nextCard;
     _mode = StackMode.REPLACE_MODE;
     _wl.clear();
@@ -119,9 +120,9 @@ class _RummyPlayState extends State<RummyPlay> {
   void _handleInActiveRPS(InActiveRummyPlaterStat inActiveRummyPlaterStat) {
     print("handleInActive");
     print(inActiveRummyPlaterStat.status);
+    _tournamentData.youStart = false;
     int activePlayerId = inActiveRummyPlaterStat.activePlayerId;
-    String activePlayer =
-        widget.startTournament.playerMap[activePlayerId] ?? "";
+    String activePlayer = _tournamentData.playerMap[activePlayerId] ?? "";
 
     setState(() {
       _wl.clear();
@@ -193,7 +194,7 @@ class _RummyPlayState extends State<RummyPlay> {
       onUserAction: (val) {
         print(val.rUserAction);
         _handleUserAction(val);
-        setState(() {});
+        //setState(() {});
       },
     ));
   }
@@ -204,11 +205,14 @@ class _RummyPlayState extends State<RummyPlay> {
         print(rummyUserAction.newCard);
         print("Discarded");
         _mode = StackMode.SWAP_MODE;
+        /*
         _tournamentData.cards.clear();
         _tournamentData.cards.addAll(rummyUserAction.cards);
+        */
         _wl.clear();
         _wl.add(_getPlayingCards());
         _wl.add(_getStatusButton(false));
+        setState(() {});
         GameMessageClient gmc = GameMessageClient(
           clientGameStat: ClientGameStat(
             playerId: _tournamentData.yourId,
@@ -230,10 +234,11 @@ class _RummyPlayState extends State<RummyPlay> {
         _mode = StackMode.SWAP_MODE;
         _tournamentData.cards.clear();
         _tournamentData.cards.addAll(rummyUserAction.cards);
+        print(rummyUserAction.cards);
         _wl.clear();
         _wl.add(_getPlayingCards());
         _wl.add(_getStatusButton(false));
-
+        setState(() {});
         //send data to server
         GameMessageClient gmc = GameMessageClient(
           clientGameStat: ClientGameStat(
@@ -283,17 +288,18 @@ class _RummyPlayState extends State<RummyPlay> {
         alignment: Alignment.topCenter,
         child: TimerButton(
             onEnd: () {
-              _wl.removeLast();
-              if (widget.startTournament.youStart) {
+              _wl.clear();
+              if (_tournamentData.youStart) {
                 _mode = StackMode.REPLACE_MODE;
-                _wl.clear();
                 _wl.add(_getPlayingCards());
                 _wl.add(_getStatusButton(true));
                 //_wl.add(_getPopCard(widget.startTournament.nextCard));
               } else {
-                String activePlayer = widget.startTournament
-                        .playerMap[widget.startTournament.activePlayerId] ??
-                    "";
+                _mode = StackMode.SWAP_MODE;
+                _wl.add(_getPlayingCards());
+                String activePlayer =
+                    _tournamentData.playerMap[_tournamentData.activePlayerId] ??
+                        "";
                 _wl.add(_getStatusButton(false, player: activePlayer));
               }
               setState(() {});

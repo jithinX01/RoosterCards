@@ -1,6 +1,8 @@
 const int JOKER = 52;
 
 bool isWinningHand(List<int>? cards) {
+  print("isWinningHand");
+  print(cards);
   List<int> L = List.from(cards ?? []);
   if (L.length != 13) {
     return false;

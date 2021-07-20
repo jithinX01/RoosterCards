@@ -187,6 +187,12 @@ class RummyTournament extends Tournament {
     if (card == _data.cardStack[0]) {
       //from deck
       _data.cardStack.removeAt(0);
+      //if card stack empty reshuffle
+      if (_data.cardStack.isEmpty) {
+        _data.discardedCards.shuffle();
+        _data.cardStack.addAll(_data.discardedCards);
+        _data.discardedCards.clear();
+      }
       //_data.discardedCards.add(card);
     } else {
       //previous player discarded cards

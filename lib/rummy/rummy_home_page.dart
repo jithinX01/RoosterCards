@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/navigation_card.dart';
 import 'package:rooster_cards/rummy/join_rummy_page.dart';
+import 'package:rooster_cards/rummy/rummy_page_action.dart';
 import 'package:rooster_cards/rummy/start_rummy_page.dart';
 
 class RummyHomePage extends StatefulWidget {
@@ -28,12 +29,14 @@ class _RummyHomePageState extends State<RummyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             NavigationCard(
-              w: StartRummyPage(),
+              //w: StartRummyPage(),
+              w: RummyPageAction(rummyAction: RummyAction.START),
               title: "Start",
               icon: Icons.videogame_asset,
             ),
             NavigationCard(
-              w: JoinRummyPage(),
+              //w: JoinRummyPage(),
+              w: RummyPageAction(rummyAction: RummyAction.JOIN),
               title: "Join",
               c: Colors.amber,
               icon: Icons.connect_without_contact,

@@ -41,13 +41,14 @@ class PlayerCardStack extends StatefulWidget {
 
 class _PlayerCardStackState extends State<PlayerCardStack> {
   late List<int> _clickList = List.empty(growable: true);
-  late List<int> _cards;
+  //late List<int> _cards;
   bool _showSwapButton = false;
   bool _showPopCard = true;
   bool _newCardTook = false;
+  bool _fromInside = false;
 
   StackMode _stackMode = StackMode.SWAP_MODE;
-
+  /*
   @override
   void initState() {
     super.initState();
@@ -55,6 +56,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     print("Inited");
     _cards = List.from(widget.cards);
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +67,21 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
       _userReplace = false;
     }
     */
-    _stackMode = widget.mode;
+    if (!_fromInside) {
+      print("Not From Inside");
+      _stackMode = widget.mode;
+    } else {
+      _fromInside = false;
+    }
     return _getScreen();
   }
 
   Widget _getScreen() {
     List<Widget> wList = List.empty(growable: true);
-    wList.add(createScrollableStack(_cards, vertical: widget.vertical));
+    wList.add(createScrollableStack(widget.cards, vertical: widget.vertical));
     if (_showSwapButton) wList.add(_getControlButton());
     print("getScreen");
+    print(widget.cards);
     print(_stackMode);
     if (_showPopCard && _stackMode == StackMode.REPLACE_MODE)
       wList.add(_getPopCard(widget.nextCard));
@@ -123,7 +131,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
           onPressed: () {
             if (_stackMode == StackMode.SWAP_MODE) {
               swap();
-              setState(() {});
+              //setState(() {});
             } else if (_stackMode == StackMode.REPLACE_MODE) {
               replace();
             }
@@ -135,21 +143,22 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   }
 
   void replace() {
-    int card = _cards[_clickList[0]];
-    _cards[_clickList[0]] = widget.nextCard;
+    //List<int> cards = List.from(widget.cards);
+    int card = widget.cards[_clickList[0]];
+    widget.cards[_clickList[0]] = widget.nextCard;
     var action = RummyUserAction(rUserAction: RUserAction.REPLACE);
     action.newCard = widget.nextCard;
     action.oldCard = card;
-    action.playerCards = _cards;
+    action.playerCards.addAll(widget.cards);
 
     _showPopCard = false;
     _showSwapButton = false;
     _clickList.clear();
-    setState(() {
-      _stackMode = StackMode.SWAP_MODE;
-    });
-    _showPopCard = true;
+    _fromInside = true;
+    _stackMode = StackMode.SWAP_MODE;
+    setState(() {});
 
+    _showPopCard = true;
     _newCardTook = false;
 
     widget.onUserAction(action);
@@ -157,15 +166,16 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   }
 
   void swap() {
-    int card = _cards[_clickList[0]];
+    int card = widget.cards[_clickList[0]];
 
-    _cards[_clickList[0]] = _cards[_clickList[1]];
-    _cards[_clickList[1]] = card;
+    widget.cards[_clickList[0]] = widget.cards[_clickList[1]];
+    widget.cards[_clickList[1]] = card;
 
     var action = RummyUserAction(rUserAction: RUserAction.NORMAL_SWAP);
-    action.playerCards = _cards;
+    action.playerCards.addAll(widget.cards);
     _clickList.clear();
     _showSwapButton = false;
+    setState(() {});
     widget.onUserAction(action);
   }
 
