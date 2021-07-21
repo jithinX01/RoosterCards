@@ -51,7 +51,12 @@ bool winningHand(List<int> L, List<int> jokers,
     bool fourFound = false,
     bool pureRunFound = false,
     int setCount = 0}) {
-  var setList = [];
+  List<int> L1 = List.from(L);
+  List<int> jokers1 = List.from(jokers);
+  bool fourFound1 = fourFound;
+  bool pureRunFound1 = pureRunFound;
+  int setCount1 = setCount;
+
   while ((L.length - lStart) + jokers.length >= 3) {
     List<int> run = findRun(L, lStart, jokers);
     //if find a run with len 3
@@ -63,41 +68,33 @@ bool winningHand(List<int> L, List<int> jokers,
         L = L.sublist(0, lStart) + L.sublist(lStart + (3 - jkCount));
       }
       //print("3------set, $run, $L");
+      bool valid = false;
       if (L.isEmpty && jokers.isEmpty) {
-        bool valid = setCount == 4 && fourFound;
+        valid = setCount == 4 && fourFound;
         if (valid) {
-          setList.add(run);
-          print("valid1 $valid");
-          setList.forEach((set) {
-            print(set);
-          });
+          print(run);
         }
         return valid;
       }
 
       //check sequence to next cards
-      int lStart2 = lStart;
-      bool valid = false;
-      while ((L.length - lStart2) + jokers.length >= 3) {
+
+      if ((L.length - lStart) + jokers.length >= 3) {
         //call with the copy of list.
         valid = winningHand(
           List.from(L),
           List.from(jokers),
           noOfJokers: jokers.length,
           noOfDeck: noOfDeck,
-          lStart: lStart2,
+          lStart: lStart,
           setCount: setCount,
           fourFound: fourFound,
           pureRunFound: pureRunFound,
         );
         if (valid) {
-          setList.add(run);
-          setList.forEach((set) {
-            print(set);
-          });
+          print(run);
           return valid;
         }
-        lStart2 += 1;
       }
       //check for 4th run
       if (!valid && !fourFound) {
@@ -116,66 +113,61 @@ bool winningHand(List<int> L, List<int> jokers,
         if (fourFound) {
           //print("4------set, $run, $L");
           if (L.isEmpty && jokers.isEmpty) {
-            bool valid = (setCount == 4);
+            valid = (setCount == 4);
 
             if (valid) {
-              setList.add(run);
-              print("valid2 $valid");
-              setList.forEach((set) {
-                print(set);
-              });
+              print(run);
             }
             return valid;
           }
 
-          lStart2 = lStart;
-          valid = false;
-          while ((L.length - lStart2) + jokers.length >= 3) {
+          if ((L.length - lStart) + jokers.length >= 3) {
             //call with the copy of list.
             valid = winningHand(
               List.from(L),
               List.from(jokers),
               noOfJokers: jokers.length,
               noOfDeck: noOfDeck,
-              lStart: lStart2,
+              lStart: lStart,
               setCount: setCount,
               fourFound: fourFound,
               pureRunFound: pureRunFound,
             );
             if (valid) {
-              setList.add(run);
-              setList.forEach((set) {
-                print(set);
-              });
+              print(run);
               return valid;
             }
-            lStart2 += 1;
           }
         }
       }
+
+      valid = winningSet(L, jokers, fourFound, setCount, pureRunFound);
+      if (valid) {
+        print(run);
+        return valid;
+      }
+      setCount -= 1;
+      lStart += 1;
+      //reset
+      L.clear();
+      L.addAll(L1);
+      jokers.clear();
+      jokers.addAll(jokers1);
+      noOfJokers = jokers.length;
+      fourFound = fourFound1;
+      pureRunFound = pureRunFound1;
+
       //l_start += 1;
-      setList.add(run);
+
     } else {
       if (run.length > 0) {
         lStart += run.length;
         continue;
       }
-      /* 
-      else {
-        l_start + 1;
-      }
-      */
     }
-    lStart += 1;
   }
 
-  var valid = winningSet(L, jokers, fourFound, setCount, pureRunFound);
-  if (valid) {
-    setList.forEach((set) {
-      print(set);
-    });
-  }
-  return valid;
+  return false;
 }
 
 bool winningSet(List<int> L, List<int> jokers, bool fourFound, int setCount,
@@ -241,14 +233,9 @@ List<int> findSet(List<int> L, List<int> jokers, {int noOfDeck = 1}) {
         if (set.length == 3) {
           return set;
         }
-        if (L.contains(index)) {
-          break;
-        } else {
-          index += 13;
-        }
-      } else {
-        break;
+        if (L.contains(index)) break;
       }
+      index += 13;
     }
   }
 
