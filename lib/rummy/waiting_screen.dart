@@ -59,9 +59,12 @@ class _WaitingScreenState extends State<WaitingScreen> {
           l,
         ),
         onPressed: () {
+          Navigator.pop(context);
+          /*
           setState(() {
             l = "Clicked";
           });
+          */
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

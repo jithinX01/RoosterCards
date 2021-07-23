@@ -605,6 +605,7 @@ enum GameMessageServer_PayLoad {
   startTournament, 
   gameServerUpdate, 
   errorStat, 
+  tournamentOver, 
   notSet
 }
 
@@ -616,16 +617,18 @@ class GameMessageServer extends $pb.GeneratedMessage {
     5 : GameMessageServer_PayLoad.startTournament,
     6 : GameMessageServer_PayLoad.gameServerUpdate,
     7 : GameMessageServer_PayLoad.errorStat,
+    8 : GameMessageServer_PayLoad.tournamentOver,
     0 : GameMessageServer_PayLoad.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GameMessageServer', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6, 7])
+    ..oo(0, [2, 3, 4, 5, 6, 7, 8])
     ..aOM<InitStartStat>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initStartStat', protoName: 'initStartStat', subBuilder: InitStartStat.create)
     ..aOM<JoinStat>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'joinStat', protoName: 'joinStat', subBuilder: JoinStat.create)
     ..aOM<JoinProgress>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'joinProgress', protoName: 'joinProgress', subBuilder: JoinProgress.create)
     ..aOM<StartTournament>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startTournament', protoName: 'startTournament', subBuilder: StartTournament.create)
     ..aOM<GameServerUpdate>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gameServerUpdate', protoName: 'gameServerUpdate', subBuilder: GameServerUpdate.create)
     ..aOM<ErrorStat>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'errorStat', protoName: 'errorStat', subBuilder: ErrorStat.create)
+    ..aOM<TournamentOver>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentOver', protoName: 'tournamentOver', subBuilder: TournamentOver.create)
     ..hasRequiredFields = false
   ;
 
@@ -637,6 +640,7 @@ class GameMessageServer extends $pb.GeneratedMessage {
     StartTournament? startTournament,
     GameServerUpdate? gameServerUpdate,
     ErrorStat? errorStat,
+    TournamentOver? tournamentOver,
   }) {
     final _result = create();
     if (initStartStat != null) {
@@ -656,6 +660,9 @@ class GameMessageServer extends $pb.GeneratedMessage {
     }
     if (errorStat != null) {
       _result.errorStat = errorStat;
+    }
+    if (tournamentOver != null) {
+      _result.tournamentOver = tournamentOver;
     }
     return _result;
   }
@@ -748,6 +755,17 @@ class GameMessageServer extends $pb.GeneratedMessage {
   void clearErrorStat() => clearField(7);
   @$pb.TagNumber(7)
   ErrorStat ensureErrorStat() => $_ensure(5);
+
+  @$pb.TagNumber(8)
+  TournamentOver get tournamentOver => $_getN(6);
+  @$pb.TagNumber(8)
+  set tournamentOver(TournamentOver v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasTournamentOver() => $_has(6);
+  @$pb.TagNumber(8)
+  void clearTournamentOver() => clearField(8);
+  @$pb.TagNumber(8)
+  TournamentOver ensureTournamentOver() => $_ensure(6);
 }
 
 class ErrorStat extends $pb.GeneratedMessage {
@@ -1189,7 +1207,6 @@ enum RummyPlayerStat_Stat {
   wonPlayerStat, 
   losePlayerStat, 
   nextGame, 
-  tournamentOver, 
   notSet
 }
 
@@ -1200,17 +1217,15 @@ class RummyPlayerStat extends $pb.GeneratedMessage {
     3 : RummyPlayerStat_Stat.wonPlayerStat,
     4 : RummyPlayerStat_Stat.losePlayerStat,
     5 : RummyPlayerStat_Stat.nextGame,
-    6 : RummyPlayerStat_Stat.tournamentOver,
     0 : RummyPlayerStat_Stat.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RummyPlayerStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6])
+    ..oo(0, [1, 2, 3, 4, 5])
     ..aOM<ActiveRummyPlayerStat>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeRPS', protoName: 'activeRPS', subBuilder: ActiveRummyPlayerStat.create)
     ..aOM<InActiveRummyPlaterStat>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inactiveRPS', protoName: 'inactiveRPS', subBuilder: InActiveRummyPlaterStat.create)
     ..aOM<WonPlayerStat>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'WonPlayerStat', protoName: 'WonPlayerStat', subBuilder: WonPlayerStat.create)
     ..aOM<LosePlayerStat>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'LosePlayerStat', protoName: 'LosePlayerStat', subBuilder: LosePlayerStat.create)
     ..aOM<NextGame>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'NextGame', protoName: 'NextGame', subBuilder: NextGame.create)
-    ..aOM<TournamentOver>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentOver', protoName: 'tournamentOver', subBuilder: TournamentOver.create)
     ..hasRequiredFields = false
   ;
 
@@ -1221,7 +1236,6 @@ class RummyPlayerStat extends $pb.GeneratedMessage {
     WonPlayerStat? wonPlayerStat,
     LosePlayerStat? losePlayerStat,
     NextGame? nextGame,
-    TournamentOver? tournamentOver,
   }) {
     final _result = create();
     if (activeRPS != null) {
@@ -1238,9 +1252,6 @@ class RummyPlayerStat extends $pb.GeneratedMessage {
     }
     if (nextGame != null) {
       _result.nextGame = nextGame;
-    }
-    if (tournamentOver != null) {
-      _result.tournamentOver = tournamentOver;
     }
     return _result;
   }
@@ -1322,17 +1333,6 @@ class RummyPlayerStat extends $pb.GeneratedMessage {
   void clearNextGame() => clearField(5);
   @$pb.TagNumber(5)
   NextGame ensureNextGame() => $_ensure(4);
-
-  @$pb.TagNumber(6)
-  TournamentOver get tournamentOver => $_getN(5);
-  @$pb.TagNumber(6)
-  set tournamentOver(TournamentOver v) { setField(6, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasTournamentOver() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearTournamentOver() => clearField(6);
-  @$pb.TagNumber(6)
-  TournamentOver ensureTournamentOver() => $_ensure(5);
 }
 
 class ActiveRummyPlayerStat extends $pb.GeneratedMessage {
@@ -1672,17 +1672,22 @@ class NextGame extends $pb.GeneratedMessage {
 
 class TournamentOver extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TournamentOver', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wonPlayer', $pb.PbFieldType.O3, protoName: 'wonPlayer')
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sharedTrophy', protoName: 'sharedTrophy')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyWinners', protoName: 'trophyWinners')
     ..hasRequiredFields = false
   ;
 
   TournamentOver._() : super();
   factory TournamentOver({
-    $core.int? wonPlayer,
+    $core.bool? sharedTrophy,
+    $core.Iterable<$core.String>? trophyWinners,
   }) {
     final _result = create();
-    if (wonPlayer != null) {
-      _result.wonPlayer = wonPlayer;
+    if (sharedTrophy != null) {
+      _result.sharedTrophy = sharedTrophy;
+    }
+    if (trophyWinners != null) {
+      _result.trophyWinners.addAll(trophyWinners);
     }
     return _result;
   }
@@ -1708,12 +1713,15 @@ class TournamentOver extends $pb.GeneratedMessage {
   static TournamentOver? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get wonPlayer => $_getIZ(0);
+  $core.bool get sharedTrophy => $_getBF(0);
   @$pb.TagNumber(1)
-  set wonPlayer($core.int v) { $_setSignedInt32(0, v); }
+  set sharedTrophy($core.bool v) { $_setBool(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasWonPlayer() => $_has(0);
+  $core.bool hasSharedTrophy() => $_has(0);
   @$pb.TagNumber(1)
-  void clearWonPlayer() => clearField(1);
+  void clearSharedTrophy() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get trophyWinners => $_getList(1);
 }
 

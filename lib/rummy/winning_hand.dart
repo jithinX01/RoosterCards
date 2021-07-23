@@ -55,7 +55,6 @@ bool winningHand(List<int> L, List<int> jokers,
   List<int> jokers1 = List.from(jokers);
   bool fourFound1 = fourFound;
   bool pureRunFound1 = pureRunFound;
-  int setCount1 = setCount;
 
   while ((L.length - lStart) + jokers.length >= 3) {
     List<int> run = findRun(L, lStart, jokers);

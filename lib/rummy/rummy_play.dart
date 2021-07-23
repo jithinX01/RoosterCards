@@ -76,6 +76,9 @@ class _RummyPlayState extends State<RummyPlay> {
       case GameMessageServer_PayLoad.gameServerUpdate:
         _handleGameServerUpdate(gms.gameServerUpdate);
         break;
+      case GameMessageServer_PayLoad.tournamentOver:
+        _handleTournamentOver(gms.tournamentOver);
+        break;
       default:
     }
   }
@@ -177,6 +180,8 @@ class _RummyPlayState extends State<RummyPlay> {
     }
     setState(() {});
   }
+
+  void _handleTournamentOver(TournamentOver tournamentOver) {}
 
   Widget _getScreen() {
     return Stack(
@@ -295,11 +300,11 @@ class _RummyPlayState extends State<RummyPlay> {
                 _wl.add(_getStatusButton(true));
                 //_wl.add(_getPopCard(widget.startTournament.nextCard));
               } else {
-                _mode = StackMode.SWAP_MODE;
-                _wl.add(_getPlayingCards());
                 String activePlayer =
                     _tournamentData.playerMap[_tournamentData.activePlayerId] ??
                         "";
+                _mode = StackMode.SWAP_MODE;
+                _wl.add(_getPlayingCards());
                 _wl.add(_getStatusButton(false, player: activePlayer));
               }
               setState(() {});

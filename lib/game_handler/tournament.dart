@@ -23,6 +23,11 @@ class Tournament {
       trophyId: initStart.trophyId,
       tournamentName: initStart.tournamentName,
     );
+    //initialise
+    for (var i = 0; i < _data.noOfPlayers; i++) {
+      _data.winCount.add(0);
+    }
+    _data.maxWinCount = 0;
     _data.players.add(initStart.playerName);
     _data.currentPlayerId = _joinedPlayers;
     playerConnections[_joinedPlayers] = wc;
@@ -88,6 +93,39 @@ class Tournament {
     } else {
       return _data.players[playerId];
     }
+  }
+
+  void _handleTournamentEnd() {
+    var winList = [];
+    for (var i = 0; i < _data.winCount.length; i++) {
+      if (_data.winCount[i] == _data.maxWinCount) winList.add(i);
+    }
+    bool sharedTrophy = winList.length > 1;
+    _sendTournamentOver(sharedTrophy, winList);
+  }
+
+  void _sendTournamentOver(bool sharedTrophy, var winList) {
+    playerConnections.forEach((playerId, channel) {
+      GameMessageServer gms = GameMessageServer(
+        tournamentOver: TournamentOver(
+          sharedTrophy: sharedTrophy,
+          trophyWinners: _getWinPlayerNames(playerId, winList),
+        ),
+      );
+
+      channel.sink.add(gms.writeToBuffer());
+    });
+  }
+
+  List<String> _getWinPlayerNames(int playerId, var winList) {
+    List<String> winPlayers = [];
+    for (var id in winList) {
+      if (id == playerId)
+        winPlayers.add("You");
+      else
+        winPlayers.add(_data.players[id]);
+    }
+    return winPlayers;
   }
 }
 
@@ -270,8 +308,13 @@ class RummyTournament extends Tournament {
   }
 
   void _handleGameWin(int winnerId) {
+    _data.roundWinner.add(winnerId);
+    _data.winCount[winnerId] += 1;
+    if (_data.winCount[winnerId] > _data.maxWinCount) {
+      _data.maxWinCount = _data.winCount[winnerId];
+    }
     _sendGameWonUpdate(winnerId);
-    //reset values.
+
     _data.currentRound += 1;
     if (_data.currentRound < _data.noOfRounds + 1) {
       _startNextGame();
@@ -281,6 +324,7 @@ class RummyTournament extends Tournament {
       Timer(Duration(seconds: 5), _sendNextGameUpdate);
     } else {
       print("Tournament Over");
+      _handleTournamentEnd();
     }
   }
 

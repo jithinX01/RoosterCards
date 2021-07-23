@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/navigation_card.dart';
-import 'package:rooster_cards/rummy/join_rummy_page.dart';
+//import 'package:rooster_cards/rummy/join_rummy_page.dart';
 import 'package:rooster_cards/rummy/rummy_page_action.dart';
-import 'package:rooster_cards/rummy/start_rummy_page.dart';
+//import 'package:rooster_cards/rummy/start_rummy_page.dart';
 
 class RummyHomePage extends StatefulWidget {
   RummyHomePage({Key? key}) : super(key: key);

@@ -144,6 +144,7 @@ const GameMessageServer$json = const {
     const {'1': 'startTournament', '3': 5, '4': 1, '5': 11, '6': '.game_message.StartTournament', '9': 0, '10': 'startTournament'},
     const {'1': 'gameServerUpdate', '3': 6, '4': 1, '5': 11, '6': '.game_message.GameServerUpdate', '9': 0, '10': 'gameServerUpdate'},
     const {'1': 'errorStat', '3': 7, '4': 1, '5': 11, '6': '.game_message.ErrorStat', '9': 0, '10': 'errorStat'},
+    const {'1': 'tournamentOver', '3': 8, '4': 1, '5': 11, '6': '.game_message.TournamentOver', '9': 0, '10': 'tournamentOver'},
   ],
   '8': const [
     const {'1': 'pay_load'},
@@ -151,7 +152,7 @@ const GameMessageServer$json = const {
 };
 
 /// Descriptor for `GameMessageServer`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List gameMessageServerDescriptor = $convert.base64Decode('ChFHYW1lTWVzc2FnZVNlcnZlchJDCg1pbml0U3RhcnRTdGF0GAIgASgLMhsuZ2FtZV9tZXNzYWdlLkluaXRTdGFydFN0YXRIAFINaW5pdFN0YXJ0U3RhdBI0Cghqb2luU3RhdBgDIAEoCzIWLmdhbWVfbWVzc2FnZS5Kb2luU3RhdEgAUghqb2luU3RhdBJACgxqb2luUHJvZ3Jlc3MYBCABKAsyGi5nYW1lX21lc3NhZ2UuSm9pblByb2dyZXNzSABSDGpvaW5Qcm9ncmVzcxJJCg9zdGFydFRvdXJuYW1lbnQYBSABKAsyHS5nYW1lX21lc3NhZ2UuU3RhcnRUb3VybmFtZW50SABSD3N0YXJ0VG91cm5hbWVudBJMChBnYW1lU2VydmVyVXBkYXRlGAYgASgLMh4uZ2FtZV9tZXNzYWdlLkdhbWVTZXJ2ZXJVcGRhdGVIAFIQZ2FtZVNlcnZlclVwZGF0ZRI3CgllcnJvclN0YXQYByABKAsyFy5nYW1lX21lc3NhZ2UuRXJyb3JTdGF0SABSCWVycm9yU3RhdEIKCghwYXlfbG9hZA==');
+final $typed_data.Uint8List gameMessageServerDescriptor = $convert.base64Decode('ChFHYW1lTWVzc2FnZVNlcnZlchJDCg1pbml0U3RhcnRTdGF0GAIgASgLMhsuZ2FtZV9tZXNzYWdlLkluaXRTdGFydFN0YXRIAFINaW5pdFN0YXJ0U3RhdBI0Cghqb2luU3RhdBgDIAEoCzIWLmdhbWVfbWVzc2FnZS5Kb2luU3RhdEgAUghqb2luU3RhdBJACgxqb2luUHJvZ3Jlc3MYBCABKAsyGi5nYW1lX21lc3NhZ2UuSm9pblByb2dyZXNzSABSDGpvaW5Qcm9ncmVzcxJJCg9zdGFydFRvdXJuYW1lbnQYBSABKAsyHS5nYW1lX21lc3NhZ2UuU3RhcnRUb3VybmFtZW50SABSD3N0YXJ0VG91cm5hbWVudBJMChBnYW1lU2VydmVyVXBkYXRlGAYgASgLMh4uZ2FtZV9tZXNzYWdlLkdhbWVTZXJ2ZXJVcGRhdGVIAFIQZ2FtZVNlcnZlclVwZGF0ZRI3CgllcnJvclN0YXQYByABKAsyFy5nYW1lX21lc3NhZ2UuRXJyb3JTdGF0SABSCWVycm9yU3RhdBJGCg50b3VybmFtZW50T3ZlchgIIAEoCzIcLmdhbWVfbWVzc2FnZS5Ub3VybmFtZW50T3ZlckgAUg50b3VybmFtZW50T3ZlckIKCghwYXlfbG9hZA==');
 @$core.Deprecated('Use errorStatDescriptor instead')
 const ErrorStat$json = const {
   '1': 'ErrorStat',
@@ -246,7 +247,6 @@ const RummyPlayerStat$json = const {
     const {'1': 'WonPlayerStat', '3': 3, '4': 1, '5': 11, '6': '.game_message.WonPlayerStat', '9': 0, '10': 'WonPlayerStat'},
     const {'1': 'LosePlayerStat', '3': 4, '4': 1, '5': 11, '6': '.game_message.LosePlayerStat', '9': 0, '10': 'LosePlayerStat'},
     const {'1': 'NextGame', '3': 5, '4': 1, '5': 11, '6': '.game_message.NextGame', '9': 0, '10': 'NextGame'},
-    const {'1': 'tournamentOver', '3': 6, '4': 1, '5': 11, '6': '.game_message.TournamentOver', '9': 0, '10': 'tournamentOver'},
   ],
   '8': const [
     const {'1': 'stat'},
@@ -254,7 +254,7 @@ const RummyPlayerStat$json = const {
 };
 
 /// Descriptor for `RummyPlayerStat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List rummyPlayerStatDescriptor = $convert.base64Decode('Cg9SdW1teVBsYXllclN0YXQSQwoJYWN0aXZlUlBTGAEgASgLMiMuZ2FtZV9tZXNzYWdlLkFjdGl2ZVJ1bW15UGxheWVyU3RhdEgAUglhY3RpdmVSUFMSSQoLaW5hY3RpdmVSUFMYAiABKAsyJS5nYW1lX21lc3NhZ2UuSW5BY3RpdmVSdW1teVBsYXRlclN0YXRIAFILaW5hY3RpdmVSUFMSQwoNV29uUGxheWVyU3RhdBgDIAEoCzIbLmdhbWVfbWVzc2FnZS5Xb25QbGF5ZXJTdGF0SABSDVdvblBsYXllclN0YXQSRgoOTG9zZVBsYXllclN0YXQYBCABKAsyHC5nYW1lX21lc3NhZ2UuTG9zZVBsYXllclN0YXRIAFIOTG9zZVBsYXllclN0YXQSNAoITmV4dEdhbWUYBSABKAsyFi5nYW1lX21lc3NhZ2UuTmV4dEdhbWVIAFIITmV4dEdhbWUSRgoOdG91cm5hbWVudE92ZXIYBiABKAsyHC5nYW1lX21lc3NhZ2UuVG91cm5hbWVudE92ZXJIAFIOdG91cm5hbWVudE92ZXJCBgoEc3RhdA==');
+final $typed_data.Uint8List rummyPlayerStatDescriptor = $convert.base64Decode('Cg9SdW1teVBsYXllclN0YXQSQwoJYWN0aXZlUlBTGAEgASgLMiMuZ2FtZV9tZXNzYWdlLkFjdGl2ZVJ1bW15UGxheWVyU3RhdEgAUglhY3RpdmVSUFMSSQoLaW5hY3RpdmVSUFMYAiABKAsyJS5nYW1lX21lc3NhZ2UuSW5BY3RpdmVSdW1teVBsYXRlclN0YXRIAFILaW5hY3RpdmVSUFMSQwoNV29uUGxheWVyU3RhdBgDIAEoCzIbLmdhbWVfbWVzc2FnZS5Xb25QbGF5ZXJTdGF0SABSDVdvblBsYXllclN0YXQSRgoOTG9zZVBsYXllclN0YXQYBCABKAsyHC5nYW1lX21lc3NhZ2UuTG9zZVBsYXllclN0YXRIAFIOTG9zZVBsYXllclN0YXQSNAoITmV4dEdhbWUYBSABKAsyFi5nYW1lX21lc3NhZ2UuTmV4dEdhbWVIAFIITmV4dEdhbWVCBgoEc3RhdA==');
 @$core.Deprecated('Use activeRummyPlayerStatDescriptor instead')
 const ActiveRummyPlayerStat$json = const {
   '1': 'ActiveRummyPlayerStat',
@@ -317,9 +317,10 @@ final $typed_data.Uint8List nextGameDescriptor = $convert.base64Decode('CghOZXh0
 const TournamentOver$json = const {
   '1': 'TournamentOver',
   '2': const [
-    const {'1': 'wonPlayer', '3': 1, '4': 1, '5': 5, '10': 'wonPlayer'},
+    const {'1': 'sharedTrophy', '3': 1, '4': 1, '5': 8, '10': 'sharedTrophy'},
+    const {'1': 'trophyWinners', '3': 2, '4': 3, '5': 9, '10': 'trophyWinners'},
   ],
 };
 
 /// Descriptor for `TournamentOver`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List tournamentOverDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50T3ZlchIcCgl3b25QbGF5ZXIYASABKAVSCXdvblBsYXllcg==');
+final $typed_data.Uint8List tournamentOverDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50T3ZlchIiCgxzaGFyZWRUcm9waHkYASABKAhSDHNoYXJlZFRyb3BoeRIkCg10cm9waHlXaW5uZXJzGAIgAygJUg10cm9waHlXaW5uZXJz');

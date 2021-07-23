@@ -105,6 +105,7 @@ message GameMessageServer {
         StartTournament startTournament = 5;
         GameServerUpdate gameServerUpdate = 6;
         ErrorStat errorStat = 7;
+        TournamentOver tournamentOver = 8;
     }
 }
 
@@ -154,7 +155,7 @@ message RummyPlayerStat
         WonPlayerStat WonPlayerStat = 3;
         LosePlayerStat LosePlayerStat = 4;
         NextGame NextGame = 5;
-        TournamentOver tournamentOver = 6;
+        
         
     }
 }
@@ -190,5 +191,6 @@ message NextGame {
     int32 nextCard = 9;
 }
 message TournamentOver {
-    int32 wonPlayer = 1;
+    bool sharedTrophy = 1;
+    repeated string trophyWinners = 2;
 }

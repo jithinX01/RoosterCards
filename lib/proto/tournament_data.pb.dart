@@ -40,6 +40,9 @@ class TournamentData extends $pb.GeneratedMessage {
     ..a<$core.int>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentId', $pb.PbFieldType.O3, protoName: 'tournamentId')
     ..a<$core.int>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextCard', $pb.PbFieldType.O3, protoName: 'nextCard')
     ..p<$core.int>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roundWinner', $pb.PbFieldType.P3, protoName: 'roundWinner')
+    ..p<$core.int>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winCount', $pb.PbFieldType.P3, protoName: 'winCount')
+    ..a<$core.int>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxWinCount', $pb.PbFieldType.O3, protoName: 'maxWinCount')
+    ..aOB(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'done')
     ..hasRequiredFields = false
   ;
 
@@ -60,6 +63,9 @@ class TournamentData extends $pb.GeneratedMessage {
     $core.int? tournamentId,
     $core.int? nextCard,
     $core.Iterable<$core.int>? roundWinner,
+    $core.Iterable<$core.int>? winCount,
+    $core.int? maxWinCount,
+    $core.bool? done,
   }) {
     final _result = create();
     if (noOfPlayers != null) {
@@ -106,6 +112,15 @@ class TournamentData extends $pb.GeneratedMessage {
     }
     if (roundWinner != null) {
       _result.roundWinner.addAll(roundWinner);
+    }
+    if (winCount != null) {
+      _result.winCount.addAll(winCount);
+    }
+    if (maxWinCount != null) {
+      _result.maxWinCount = maxWinCount;
+    }
+    if (done != null) {
+      _result.done = done;
     }
     return _result;
   }
@@ -239,6 +254,27 @@ class TournamentData extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(15)
   $core.List<$core.int> get roundWinner => $_getList(14);
+
+  @$pb.TagNumber(16)
+  $core.List<$core.int> get winCount => $_getList(15);
+
+  @$pb.TagNumber(17)
+  $core.int get maxWinCount => $_getIZ(16);
+  @$pb.TagNumber(17)
+  set maxWinCount($core.int v) { $_setSignedInt32(16, v); }
+  @$pb.TagNumber(17)
+  $core.bool hasMaxWinCount() => $_has(16);
+  @$pb.TagNumber(17)
+  void clearMaxWinCount() => clearField(17);
+
+  @$pb.TagNumber(18)
+  $core.bool get done => $_getBF(17);
+  @$pb.TagNumber(18)
+  set done($core.bool v) { $_setBool(17, v); }
+  @$pb.TagNumber(18)
+  $core.bool hasDone() => $_has(17);
+  @$pb.TagNumber(18)
+  void clearDone() => clearField(18);
 }
 
 class RummyTournamentData extends $pb.GeneratedMessage {

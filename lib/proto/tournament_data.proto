@@ -28,6 +28,9 @@ message TournamentData
     int32 tournamentId = 13;
     int32 nextCard = 14;
     repeated int32 roundWinner = 15;
+    repeated int32 winCount = 16;
+    int32 maxWinCount = 17;
+    bool done = 18;
 }
 
 message RummyTournamentData {
