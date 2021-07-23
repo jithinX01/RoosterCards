@@ -8,6 +8,7 @@ import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
 import 'package:rooster_cards/timer_button.dart';
 import 'package:rooster_cards/timer_message.dart';
+import 'package:rooster_cards/tournament_winners_card.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:auto_orientation/auto_orientation.dart';
 
@@ -42,6 +43,7 @@ class _RummyPlayState extends State<RummyPlay> {
   List<Widget> _wl = List.empty(growable: true);
   StartTournament _tournamentData = StartTournament();
   StackMode _mode = StackMode.SWAP_MODE;
+  late Timer _t;
   //late List<int> _playerCards;
   @override
   void initState() {
@@ -51,6 +53,12 @@ class _RummyPlayState extends State<RummyPlay> {
     //_playerCards = List.from(_tournamentData.cards, growable: true);
     _wl.add(_getPlayingCards());
     _wl.add(_getTimer());
+  }
+
+  @override
+  void dispose() {
+    if (_t.isActive) _t.cancel();
+    super.dispose();
   }
 
   @override
@@ -164,24 +172,31 @@ class _RummyPlayState extends State<RummyPlay> {
     _tournamentData.nextCard = nextGame.nextCard;
     _tournamentData.round = nextGame.round;
 
-    if (_tournamentData.youStart) {
-      _mode = StackMode.REPLACE_MODE;
-      _wl.clear();
-      _wl.add(_getPlayingCards());
-      _wl.add(_getStatusButton(true));
-      //_wl.add(_getPopCard(widget.startTournament.nextCard));
-    } else {
-      String activePlayer =
-          _tournamentData.playerMap[_tournamentData.activePlayerId] ?? "";
-      _mode = StackMode.SWAP_MODE;
-      _wl.clear();
-      _wl.add(_getPlayingCards());
-      _wl.add(_getStatusButton(false, player: activePlayer));
-    }
-    setState(() {});
+    _wl.clear();
+    _wl.add(_getPlayingCards());
+    _wl.add(_getTimer());
+    _t = Timer(Duration(seconds: 7), () {
+      setState(() {});
+    });
   }
 
-  void _handleTournamentOver(TournamentOver tournamentOver) {}
+  void _handleTournamentOver(TournamentOver tournamentOver) {
+    _wl.clear();
+    _wl.add(TournamentWinnersCard(
+      wonPlayers: tournamentOver.trophyWinners,
+      sharedTrophy: tournamentOver.sharedTrophy,
+      tournamentName: _tournamentData.tournamentName,
+      c: Colors.orangeAccent,
+    ));
+    _t = Timer(Duration(seconds: 7), () {
+      setState(() {
+        AutoOrientation.portraitAutoMode();
+      });
+      _t = Timer(Duration(seconds: 5), () {
+        Navigator.pop(context);
+      });
+    });
+  }
 
   Widget _getScreen() {
     return Stack(

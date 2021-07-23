@@ -321,7 +321,8 @@ class RummyTournament extends Tournament {
       //winner starts next game.
       _data.currentPlayerId = winnerId;
       //after 5 seconds
-      Timer(Duration(seconds: 5), _sendNextGameUpdate);
+      _sendNextGameUpdate();
+      //Timer(Duration(seconds: 5), _sendNextGameUpdate);
     } else {
       print("Tournament Over");
       _handleTournamentEnd();
