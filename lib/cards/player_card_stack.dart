@@ -79,12 +79,13 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   Widget _getScreen() {
     List<Widget> wList = List.empty(growable: true);
     wList.add(createScrollableStack(widget.cards, vertical: widget.vertical));
-    if (_showSwapButton) wList.add(_getControlButton());
+
     print("getScreen");
     print(widget.cards);
     print(_stackMode);
     if (_showPopCard && _stackMode == StackMode.REPLACE_MODE)
       wList.add(_getPopCard(widget.nextCard));
+    if (_showSwapButton) wList.add(_getControlButton());
     return Stack(children: wList);
   }
 
@@ -187,7 +188,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     if (!_newCardTook) {
       wl.add(Positioned(
         right: 55,
-        bottom: 170,
+        //bottom: 170,
+        top: 55,
         child: FloatingActionButton.extended(
           onPressed: () {
             _newCardTook = true;
@@ -200,8 +202,9 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
       ));
 
       wl.add(Positioned(
-          left: 10,
-          bottom: 170,
+          left: 35,
+          //bottom: 170,
+          top: 55,
           child: FloatingActionButton.extended(
             onPressed: () {
               _showPopCard = false;
@@ -217,12 +220,47 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             heroTag: "onDiscard",
           )));
     }
-    return Positioned(
-        top: 80,
-        right: -50,
+    return Positioned.fill(
+      top: 80,
+      right: -50,
+      //alignment: Alignment.center,
+      child: DraggableScrollableSheet(
+          builder: (BuildContext context, ScrollController scrollController) {
+        return Align(
+          //alignment: Alignment.bottomRight,
+          //scrollDirection: Axis.horizontal,
+          //controller: scrollController,
+          child: Container(
+            //height: 600,
+            //width: 400,
+            child: SingleChildScrollView(
+              //clipBehavior: Clip.antiAliasWithSaveLayer,
+              scrollDirection: Axis.vertical,
+              controller: scrollController,
+              child: Container(
+                width: 600,
+                height: 600,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: wl,
+                ),
+              ),
+            ),
+            /*
+          child: Stack(
+            alignment: Alignment.center,
+            children: wl,
+          ),
+          */
+          ),
+        );
+      }),
+    );
+    /*
         child: Stack(
           children: wl,
         ));
+        */
   }
 
   Widget getAt(int card, int index) {
@@ -274,7 +312,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     return Container(
       //height: l.length * 100.0 + 600,
       //padding: const EdgeInsets.only(top: 32),
-      width: l.length * 100.0 + 300,
+      width: l.length * 100.0 + 350,
       child: Stack(
         alignment: Alignment.center,
         children: cardsFromList(l, vertical: false),

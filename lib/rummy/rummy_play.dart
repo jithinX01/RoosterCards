@@ -58,6 +58,7 @@ class _RummyPlayState extends State<RummyPlay> {
   @override
   void dispose() {
     if (_t.isActive) _t.cancel();
+    AutoOrientation.portraitAutoMode();
     super.dispose();
   }
 
@@ -181,16 +182,15 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _handleTournamentOver(TournamentOver tournamentOver) {
-    _wl.clear();
-    _wl.add(TournamentWinnersCard(
-      wonPlayers: tournamentOver.trophyWinners,
-      sharedTrophy: tournamentOver.sharedTrophy,
-      tournamentName: _tournamentData.tournamentName,
-      c: Colors.orangeAccent,
-    ));
     _t = Timer(Duration(seconds: 7), () {
       setState(() {
-        AutoOrientation.portraitAutoMode();
+        _wl.clear();
+        _wl.add(TournamentWinnersCard(
+          wonPlayers: tournamentOver.trophyWinners,
+          sharedTrophy: tournamentOver.sharedTrophy,
+          tournamentName: _tournamentData.tournamentName,
+          c: Colors.orangeAccent,
+        ));
       });
       _t = Timer(Duration(seconds: 5), () {
         Navigator.pop(context);
