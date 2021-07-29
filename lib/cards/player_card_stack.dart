@@ -186,6 +186,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     wl.add(PlayingCard(PACK[card]));
     //not a proper way but it works
     if (!_newCardTook) {
+      _clickList.clear();
       wl.add(Positioned(
         right: 55,
         //bottom: 170,
@@ -238,8 +239,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
               scrollDirection: Axis.vertical,
               controller: scrollController,
               child: Container(
-                width: 600,
-                height: 600,
+                width: _newCardTook ? 320 : 600,
+                height: 520,
                 child: Stack(
                   alignment: Alignment.center,
                   children: wl,
