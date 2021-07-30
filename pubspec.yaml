@@ -33,6 +33,8 @@ dependencies:
   bonsoir: ^1.0.0+1
   protobuf: ^2.0.0
   auto_orientation: ^2.0.2
+  path_provider: ^2.0.2
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:

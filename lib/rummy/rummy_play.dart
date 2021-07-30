@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/player_card_stack.dart';
-import 'package:rooster_cards/game_loser_card.dart';
-import 'package:rooster_cards/game_winner_card.dart';
+import 'package:rooster_cards/utilities/game_loser_card.dart';
+import 'package:rooster_cards/utilities/game_winner_card.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
-import 'package:rooster_cards/timer_button.dart';
-import 'package:rooster_cards/timer_message.dart';
-import 'package:rooster_cards/tournament_winners_card.dart';
+import 'package:rooster_cards/utilities/timer_button.dart';
+import 'package:rooster_cards/utilities/timer_message.dart';
+import 'package:rooster_cards/utilities/tournament_winners_card.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:auto_orientation/auto_orientation.dart';
 

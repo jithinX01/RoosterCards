@@ -1,0 +1,10 @@
+syntax = "proto3";
+package user_data;
+
+message UserData {
+    string name = 1;
+    string userId = 2;
+    string password = 3;
+    string email = 4;
+    bool initDone = 5;
+}

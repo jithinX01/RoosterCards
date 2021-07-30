@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rooster_cards/num_button.dart';
 import 'package:rooster_cards/rummy/init_tournament_settings.dart';
+import 'package:rooster_cards/utilities/num_button.dart';
 
 class ClickableRummySettings extends StatefulWidget {
   ClickableRummySettings({Key? key}) : super(key: key);

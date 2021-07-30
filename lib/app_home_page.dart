@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rooster_cards/navigation_card.dart';
+import 'package:rooster_cards/utilities/navigation_card.dart';
 import 'package:rooster_cards/rummy/rummy_home_page.dart';
 
 class AppHomePage extends StatefulWidget {
