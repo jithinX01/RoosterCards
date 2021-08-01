@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/app_home_page.dart';
+import 'package:rooster_cards/utilities/init_app.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: AppHomePage(title: 'Flutter Demo Home Page'),
+      home: getInitAppWidget(),
     );
   }
 }

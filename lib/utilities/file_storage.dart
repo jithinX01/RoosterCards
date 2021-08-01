@@ -23,7 +23,7 @@ class RoosterFileStorage {
 
   Future<bool> get fileExist async {
     path = await _localPath;
-    if (await File("$path/$filename").exists()) {
+    if (File("$path/$filename").existsSync()) {
       return true;
     }
     return false;

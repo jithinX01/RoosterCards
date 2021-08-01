@@ -9,6 +9,8 @@ import 'package:rooster_cards/rummy/rummy_play.dart';
 import 'package:rooster_cards/rummy/waiting_screen.dart';
 import 'dart:async';
 
+import 'package:rooster_cards/utilities/global_user_data_info.dart';
+
 enum RummyState {
   START,
   JOIN,
@@ -156,6 +158,7 @@ class _RummyPageActionState extends State<RummyPageAction> {
     initStart.gameType = GameType.RUMMY;
     initStart.tournamentName = _ts.tournamentName;
     initStart.playerName = "SomePlayer";
+    //initStart.playerName = UserDataInfo.of(context).userInfo.name;
     initStart.noOfDeck = _ts.cs.noOfDeck;
     initStart.noOfPlayers = _ts.cs.noOfPlayers;
     initStart.noOfRounds = _ts.cs.noOfRounds;
@@ -166,7 +169,10 @@ class _RummyPageActionState extends State<RummyPageAction> {
   GameMessageClient _getGameJoinMessage() {
     GameMessageClient gmc = GameMessageClient();
 
-    gmc.join = Join(playerName: "JoinPlayer", tournamentId: _code);
+    gmc.join = Join(
+        //playerName: UserDataInfo.of(context).userInfo.name,
+        playerName: "JoinPlayer",
+        tournamentId: _code);
 
     return gmc;
   }
