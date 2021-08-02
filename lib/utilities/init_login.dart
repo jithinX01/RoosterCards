@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rooster_cards/proto/user_data.pbserver.dart';
+import 'package:rooster_cards/utilities/file_storage.dart';
 
 class InitLogin extends StatefulWidget {
   final ValueChanged<UserData> onDone;
@@ -24,93 +25,105 @@ class _InitLoginState extends State<InitLogin> {
   }
 
   Widget _getWidget() {
-    return Center(
-      child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.person),
-                  hintText: 'What do people call you?',
-                  labelText: 'Name *',
-                ),
-                onSaved: (String? value) {
-                  print("OnSaved");
-                  print(value);
-                  if (value != null) {
-                    _userData.name = value;
-                  }
-                },
-                validator: (String? value) {
-                  return (value != null && value.contains('@'))
-                      ? 'Do not use the @ char.'
-                      : null;
-                },
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(15),
-                ],
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    icon: const Icon(Icons.email),
-                    hintText: 'Enter your email address',
-                    labelText: 'Email'),
-                keyboardType: TextInputType.emailAddress,
-                validator: (String? value) {
-                  if (!_emailRegex.hasMatch(value ?? "")) {
-                    return 'Please enter valid email';
-                  }
-                  return null;
-                },
-                onSaved: (String? value) {
-                  if (value != null) {
-                    _userData.email = value;
-                  }
-                },
-              ),
-              TextFormField(
-                //key: _passwordFieldKey,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  icon: const Icon(Icons.security),
-                  hintText: 'Select your password',
-                  labelText: 'Password',
-                ),
-                validator: (String? value) {
-                  if (value != null && value.isEmpty) {
-                    return 'Please enter password';
-                  }
-                  return null;
-                },
-                onSaved: (String? value) {
-                  if (value != null) {
-                    _userData.password = value;
-                  }
-                },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    print("User Data ");
-                    print(_userData.name);
+    return Container(
+        padding: EdgeInsets.only(top: 64, right: 10, left: 10),
+        child: Center(
+          child: Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'What do people call you?',
+                      labelText: 'Name *',
+                    ),
+                    onSaved: (String? value) {
+                      print("OnSaved");
+                      print(value);
+                      if (value != null) {
+                        _userData.name = value;
+                      }
+                    },
+                    validator: (String? value) {
+                      return (value != null && value.contains('@'))
+                          ? 'Do not use the @ char.'
+                          : null;
+                    },
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(15),
+                    ],
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        icon: const Icon(Icons.email),
+                        hintText: 'Enter your email address',
+                        labelText: 'Email'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (String? value) {
+                      if (!_emailRegex.hasMatch(value ?? "")) {
+                        return 'Please enter valid email';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {
+                      if (value != null) {
+                        _userData.email = value;
+                      }
+                    },
+                  ),
+                  TextFormField(
+                    //key: _passwordFieldKey,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      icon: const Icon(Icons.security),
+                      hintText: 'Give a password',
+                      labelText: 'Password',
+                    ),
+                    validator: (String? value) {
+                      if (value != null && value.isEmpty) {
+                        return 'Please enter password';
+                      } else if (value!.length < 6) {
+                        return '6 characters required';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {
+                      if (value != null) {
+                        _userData.password = value;
+                      }
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        print("User Data ");
+                        print(_userData.name);
 
-                    print("$_userData");
-                    _userData.initDone = true;
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                    widget.onDone(_userData);
-                  }
-                },
-                child: const Text('SignUp'),
-              ),
-            ],
-          )),
-    );
+                        print("$_userData");
+                        _userData.initDone = true;
+                        // If the form is valid, display a snackbar. In the real world,
+                        // you'd often call a server or save the information in a database.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                        _saveUserData().then((v) {
+                          widget.onDone(_userData);
+                        });
+                      }
+                    },
+                    child: const Text('SignUp'),
+                  ),
+                ],
+              )),
+        ));
+  }
+
+  Future<void> _saveUserData() async {
+    var rfs = RoosterFileStorage("user.data");
+    await rfs.fileExist;
+    rfs.writeFile(_userData.writeToBuffer());
   }
 }

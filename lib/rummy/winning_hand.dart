@@ -25,6 +25,7 @@ bool isWinningHand(List<int>? cards) {
 List<int> findRun(List<int> L, int lStart, List<int> jokers,
     {int noOfDeck = 1}) {
   List<int> run = [];
+  List<int> usedJokers = [];
   if (lStart < L.length) {
     int mstart = L[lStart];
     int limit = ((mstart ~/ 13) + 1) * 13;
@@ -37,14 +38,29 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
         lStart += 1;
         if (lStart < L.length && mstart == L[lStart]) {
           break;
-        } else {
+        }
+        /* 
+        else {
           mstart += 1;
         }
+        */
+      } else if (run.length > 0 && jokers.length > 0) {
+        run.add(jokers.elementAt(0));
+        usedJokers.add(jokers.elementAt(0));
+        jokers.removeAt(0);
       } else {
         break;
       }
+      mstart += 1;
     }
   }
+  //if dont find run
+  //remove jokers and add back to jokers set
+  if (usedJokers.length > 0) {
+    jokers.add(usedJokers.elementAt(0));
+    run.removeLast();
+  }
+
   if (jokers.length + run.length >= 3) {
     while (run.length < 3 && jokers.isNotEmpty) {
       run.add(jokers.elementAt(0));

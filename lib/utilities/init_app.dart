@@ -46,6 +46,7 @@ Future<UserData> loadUserData() async {
   if (await rfs.fileExist) {
     var data = rfs.readFile();
     userData = UserData.fromBuffer(data);
+    //print(userData);
     return userData;
   }
   return userData;

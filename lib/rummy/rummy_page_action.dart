@@ -157,8 +157,8 @@ class _RummyPageActionState extends State<RummyPageAction> {
     InitStart initStart = InitStart();
     initStart.gameType = GameType.RUMMY;
     initStart.tournamentName = _ts.tournamentName;
-    initStart.playerName = "SomePlayer";
-    //initStart.playerName = UserDataInfo.of(context).userInfo.name;
+    //initStart.playerName = "SomePlayer";
+    initStart.playerName = UserDataInfo.of(context).userInfo.name;
     initStart.noOfDeck = _ts.cs.noOfDeck;
     initStart.noOfPlayers = _ts.cs.noOfPlayers;
     initStart.noOfRounds = _ts.cs.noOfRounds;
@@ -170,8 +170,8 @@ class _RummyPageActionState extends State<RummyPageAction> {
     GameMessageClient gmc = GameMessageClient();
 
     gmc.join = Join(
-        //playerName: UserDataInfo.of(context).userInfo.name,
-        playerName: "JoinPlayer",
+        playerName: UserDataInfo.of(context).userInfo.name,
+        //playerName: "JoinPlayer",
         tournamentId: _code);
 
     return gmc;

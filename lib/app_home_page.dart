@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/navigation_card.dart';
 import 'package:rooster_cards/rummy/rummy_home_page.dart';
 
@@ -56,7 +57,9 @@ class _AppHomePageState extends State<AppHomePage> {
           //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             NavigationCard(
-              w: RummyHomePage(),
+              w: UserDataInfo(
+                  userInfo: UserDataInfo.of(context).userInfo,
+                  child: RummyHomePage()),
               title: "Rummy",
               icon: Icons.local_play,
             ),
