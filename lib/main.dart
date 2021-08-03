@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rooster_cards/app_home_page.dart';
+//import 'package:rooster_cards/app_home_page.dart';
 import 'package:rooster_cards/utilities/init_app.dart';
 
 void main() {

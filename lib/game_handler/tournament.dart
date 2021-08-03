@@ -89,7 +89,7 @@ class Tournament {
     if (playerId == previousPlayerId) {
       return "You";
     } else {
-      return _data.players[playerId];
+      return _data.players[previousPlayerId];
     }
   }
 
