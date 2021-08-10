@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rooster_cards/just_cards/card_picker.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/navigation_card.dart';
 import 'package:rooster_cards/rummy/rummy_home_page.dart';
@@ -69,7 +70,7 @@ class _AppHomePageState extends State<AppHomePage> {
                 c: Colors.orange,
                 icon: Icons.cabin),
             NavigationCard(
-                w: Container(),
+                w: CardPicker(),
                 title: "Just Cards",
                 c: Colors.pink,
                 icon: Icons.card_giftcard),

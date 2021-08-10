@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_init.dart';
@@ -45,8 +47,8 @@ class RummyPageAction extends StatefulWidget {
 class _RummyPageActionState extends State<RummyPageAction> {
   late RummyState _rummyState;
 
-  late RummyLocalServer _rummyLocalServer;
-  late RummyLocalClient _rummyLocalClient;
+  RummyLocalServer? _rummyLocalServer;
+  RummyLocalClient? _rummyLocalClient;
   late InitTournamentSettings _ts;
   late StartTournament _startTournament;
   late StreamSubscription _streamSubscription;
@@ -75,8 +77,8 @@ class _RummyPageActionState extends State<RummyPageAction> {
   void dispose() {
     if (_rummyState.index >= RummyState.WAITING.index)
       _streamSubscription.cancel();
-    _rummyLocalClient.dispose();
-    if (widget.rummyAction == RummyAction.START) _rummyLocalServer.dispose();
+    _rummyLocalClient?.dispose();
+    if (widget.rummyAction == RummyAction.START) _rummyLocalServer?.dispose();
     super.dispose();
     print("dispose");
   }
@@ -105,20 +107,20 @@ class _RummyPageActionState extends State<RummyPageAction> {
           _code = val;
 
           _rummyLocalClient = RummyLocalClient(
-              initDiscovery: false,
+              //initDiscovery: false,
               onConnected: (val) {
-                print(val);
-                //print(_rummyLocalClient);
-                _rummyState = RummyState.WAITING;
+            print(val);
+            //print(_rummyLocalClient);
+            _rummyState = RummyState.WAITING;
 
-                //_rummyLocalClient
-                //    .sendMessage(_getGameJoinMessage().writeToBuffer());
-                setState(() {});
-              });
+            //_rummyLocalClient
+            //    .sendMessage(_getGameJoinMessage().writeToBuffer());
+            setState(() {});
+          });
         });
       case RummyState.WAITING:
-        _rummyLocalClient.sendMessage(_getMessage().writeToBuffer());
-        _streamSubscription = _rummyLocalClient.channel.stream.listen(null);
+        _rummyLocalClient!.sendMessage(_getMessage().writeToBuffer());
+        _streamSubscription = _rummyLocalClient!.channel.stream.listen(null);
         return WaitingScreen(
           onGameStart: (val) {
             _startTournament = val;
@@ -132,7 +134,7 @@ class _RummyPageActionState extends State<RummyPageAction> {
         );
       case RummyState.PROGRESS:
         return RummyPlay(
-            channel: _rummyLocalClient.channel,
+            channel: _rummyLocalClient!.channel,
             streamSubscription: _streamSubscription,
             startTournament: _startTournament);
     }

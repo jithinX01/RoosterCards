@@ -156,11 +156,20 @@ class PlayingCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: Stack(
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextIcon(pCardInfo.suit, pCardInfo.val),
-          SuitIcon(pCardInfo.suit, 180, 1.0, Alignment.center),
-          Invert(TextIcon(pCardInfo.suit, pCardInfo.val)),
+          TextIcon(
+            pCardInfo.suit,
+            pCardInfo.val,
+            width: 300,
+          ),
+          SuitIcon(pCardInfo.suit, 300, 1, Alignment.center),
+          Invert(TextIcon(
+            pCardInfo.suit,
+            pCardInfo.val,
+            width: 300,
+          )),
         ],
       ),
     );
