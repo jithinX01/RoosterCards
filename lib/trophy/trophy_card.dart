@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-class TournamentWinnersCard extends StatelessWidget {
+class TrophyCard extends StatelessWidget {
   final String tournamentName;
   final bool sharedTrophy;
   final List<String> wonPlayers;
+  final int trophyId;
 
   final Color c;
   final IconData icon;
-  const TournamentWinnersCard({
+  const TrophyCard({
     Key? key,
     this.tournamentName = "",
     this.c = Colors.green,
     this.icon = Icons.emoji_events,
     this.sharedTrophy = false,
+    this.trophyId = 0,
     required this.wonPlayers,
   }) : super(key: key);
 
@@ -33,7 +35,7 @@ class TournamentWinnersCard extends StatelessWidget {
   Widget _getCard(String tournamentName, Color c, IconData icon) {
     return Container(
       width: 300,
-      height: 600,
+      height: 400,
       padding: EdgeInsets.all(16.0),
       alignment: Alignment.center,
       decoration: _getDecoration(c: c),

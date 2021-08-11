@@ -108,6 +108,7 @@ class Tournament {
         tournamentOver: TournamentOver(
           sharedTrophy: sharedTrophy,
           trophyWinners: _getWinPlayerNames(playerId, winList),
+          youWon: winList.contains(playerId),
         ),
       );
 

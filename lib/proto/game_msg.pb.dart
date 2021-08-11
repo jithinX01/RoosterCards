@@ -1674,6 +1674,7 @@ class TournamentOver extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TournamentOver', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sharedTrophy', protoName: 'sharedTrophy')
     ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyWinners', protoName: 'trophyWinners')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'youWon', protoName: 'youWon')
     ..hasRequiredFields = false
   ;
 
@@ -1681,6 +1682,7 @@ class TournamentOver extends $pb.GeneratedMessage {
   factory TournamentOver({
     $core.bool? sharedTrophy,
     $core.Iterable<$core.String>? trophyWinners,
+    $core.bool? youWon,
   }) {
     final _result = create();
     if (sharedTrophy != null) {
@@ -1688,6 +1690,9 @@ class TournamentOver extends $pb.GeneratedMessage {
     }
     if (trophyWinners != null) {
       _result.trophyWinners.addAll(trophyWinners);
+    }
+    if (youWon != null) {
+      _result.youWon = youWon;
     }
     return _result;
   }
@@ -1723,5 +1728,14 @@ class TournamentOver extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<$core.String> get trophyWinners => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.bool get youWon => $_getBF(2);
+  @$pb.TagNumber(3)
+  set youWon($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasYouWon() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearYouWon() => clearField(3);
 }
 

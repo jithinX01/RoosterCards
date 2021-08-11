@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/app_home_page.dart';
 import 'package:rooster_cards/proto/user_data.pbserver.dart';
@@ -27,7 +29,7 @@ class _InitAppState extends State<InitApp> {
       return UserDataInfo(
           userInfo: widget.userData,
           child: AppHomePage(
-            title: "Rooster Rummy",
+            title: "Rooster Cards",
           ));
     } else {
       return InitLogin(onDone: (userData) {
@@ -47,8 +49,23 @@ Future<UserData> loadUserData() async {
     var data = rfs.readFile();
     userData = UserData.fromBuffer(data);
     //print(userData);
-    return userData;
+    //return userData;
   }
+  var dirPath = await rfs.localPath;
+  if (!Directory('$dirPath/trophy').existsSync()) {
+    Directory('$dirPath/trophy').createSync();
+  }
+  userData.trophyDir = '$dirPath/trophy';
+  /*
+  var list = Directory('$dirPath/trophy').listSync();
+  print("files $list");
+
+  
+  else {
+    var list = Directory('$dirPath/trophy').listSync();
+    list.forEach((element) {});
+  }
+  */
   return userData;
 }
 

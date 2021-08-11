@@ -319,8 +319,9 @@ const TournamentOver$json = const {
   '2': const [
     const {'1': 'sharedTrophy', '3': 1, '4': 1, '5': 8, '10': 'sharedTrophy'},
     const {'1': 'trophyWinners', '3': 2, '4': 3, '5': 9, '10': 'trophyWinners'},
+    const {'1': 'youWon', '3': 3, '4': 1, '5': 8, '10': 'youWon'},
   ],
 };
 
 /// Descriptor for `TournamentOver`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List tournamentOverDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50T3ZlchIiCgxzaGFyZWRUcm9waHkYASABKAhSDHNoYXJlZFRyb3BoeRIkCg10cm9waHlXaW5uZXJzGAIgAygJUg10cm9waHlXaW5uZXJz');
+final $typed_data.Uint8List tournamentOverDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50T3ZlchIiCgxzaGFyZWRUcm9waHkYASABKAhSDHNoYXJlZFRyb3BoeRIkCg10cm9waHlXaW5uZXJzGAIgAygJUg10cm9waHlXaW5uZXJzEhYKBnlvdVdvbhgDIAEoCFIGeW91V29u');

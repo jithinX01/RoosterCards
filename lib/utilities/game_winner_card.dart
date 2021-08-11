@@ -63,7 +63,7 @@ class GameWinnerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
+    return Container(
         //top: 20,
         child: Align(
       alignment: Alignment.center,

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:rooster_cards/proto/user_data.pbserver.dart';
 
 class RoosterFileStorage {
   final filename;
@@ -11,18 +12,18 @@ class RoosterFileStorage {
   }
 
   void _initLocalPath() async {
-    path = await _localPath;
+    path = await localPath;
     print("file $path/$filename");
   }
 
-  Future<String> get _localPath async {
+  Future<String> get localPath async {
     final directory = await getApplicationDocumentsDirectory();
 
     return directory.path;
   }
 
   Future<bool> get fileExist async {
-    path = await _localPath;
+    path = await localPath;
     if (File("$path/$filename").existsSync()) {
       return true;
     }
@@ -38,4 +39,11 @@ class RoosterFileStorage {
     final file = File("$path/$filename");
     return file.readAsBytesSync();
   }
+}
+
+void saveTrophy(String trophyDir, TrophyData trophyData) {
+  var now = DateTime.now();
+  final file = File(
+      "$trophyDir/${now.year}-${now.month}-${now.day}_${now.hour}_${now.minute}.trophy");
+  file.writeAsBytes(trophyData.writeToBuffer());
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/just_cards/card_picker.dart';
+import 'package:rooster_cards/trophy/trophy_cabinet.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/navigation_card.dart';
 import 'package:rooster_cards/rummy/rummy_home_page.dart';
@@ -65,7 +66,9 @@ class _AppHomePageState extends State<AppHomePage> {
               icon: Icons.local_play,
             ),
             NavigationCard(
-                w: Container(),
+                w: UserDataInfo(
+                    userInfo: UserDataInfo.of(context).userInfo,
+                    child: TrophyCabinet()),
                 title: "Trophy",
                 c: Colors.orange,
                 icon: Icons.cabin),

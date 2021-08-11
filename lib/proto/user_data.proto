@@ -7,4 +7,12 @@ message UserData {
     string password = 3;
     string email = 4;
     bool initDone = 5;
+    string trophyDir=6;
+}
+
+message TrophyData {
+    string tournamentName = 1;
+    int32 trophyId = 2;
+    bool shared = 3;
+    repeated string trophyWinners = 4;
 }

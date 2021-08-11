@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/player_card_stack.dart';
+import 'package:rooster_cards/proto/user_data.pb.dart';
+import 'package:rooster_cards/utilities/file_storage.dart';
 import 'package:rooster_cards/utilities/game_loser_card.dart';
 import 'package:rooster_cards/utilities/game_winner_card.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
+import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/timer_button.dart';
 import 'package:rooster_cards/utilities/timer_message.dart';
 import 'package:rooster_cards/utilities/tournament_winners_card.dart';
@@ -182,6 +185,17 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _handleTournamentOver(TournamentOver tournamentOver) {
+    //save the info for trophy
+    if (tournamentOver.youWon) {
+      saveTrophy(
+          UserDataInfo.of(context).userInfo.trophyDir,
+          TrophyData(
+            tournamentName: _tournamentData.tournamentName,
+            trophyId: _tournamentData.tournamentId,
+            trophyWinners: tournamentOver.trophyWinners,
+            shared: tournamentOver.sharedTrophy,
+          ));
+    }
     _t = Timer(Duration(seconds: 7), () {
       setState(() {
         _wl.clear();
@@ -192,7 +206,7 @@ class _RummyPlayState extends State<RummyPlay> {
           c: Colors.orangeAccent,
         ));
       });
-      _t = Timer(Duration(seconds: 5), () {
+      _t = Timer(Duration(seconds: 7), () {
         Navigator.pop(context);
       });
     });

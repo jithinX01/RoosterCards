@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_init.dart';
@@ -107,16 +105,16 @@ class _RummyPageActionState extends State<RummyPageAction> {
           _code = val;
 
           _rummyLocalClient = RummyLocalClient(
-              //initDiscovery: false,
+              initDiscovery: false,
               onConnected: (val) {
-            print(val);
-            //print(_rummyLocalClient);
-            _rummyState = RummyState.WAITING;
+                print(val);
+                //print(_rummyLocalClient);
+                _rummyState = RummyState.WAITING;
 
-            //_rummyLocalClient
-            //    .sendMessage(_getGameJoinMessage().writeToBuffer());
-            setState(() {});
-          });
+                //_rummyLocalClient
+                //    .sendMessage(_getGameJoinMessage().writeToBuffer());
+                setState(() {});
+              });
         });
       case RummyState.WAITING:
         _rummyLocalClient!.sendMessage(_getMessage().writeToBuffer());

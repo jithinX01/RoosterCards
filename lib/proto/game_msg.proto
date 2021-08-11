@@ -193,4 +193,5 @@ message NextGame {
 message TournamentOver {
     bool sharedTrophy = 1;
     repeated string trophyWinners = 2;
+    bool youWon = 3;
 }

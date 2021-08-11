@@ -17,8 +17,22 @@ const UserData$json = const {
     const {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
     const {'1': 'email', '3': 4, '4': 1, '5': 9, '10': 'email'},
     const {'1': 'initDone', '3': 5, '4': 1, '5': 8, '10': 'initDone'},
+    const {'1': 'trophyDir', '3': 6, '4': 1, '5': 9, '10': 'trophyDir'},
   ],
 };
 
 /// Descriptor for `UserData`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userDataDescriptor = $convert.base64Decode('CghVc2VyRGF0YRISCgRuYW1lGAEgASgJUgRuYW1lEhYKBnVzZXJJZBgCIAEoCVIGdXNlcklkEhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZBIUCgVlbWFpbBgEIAEoCVIFZW1haWwSGgoIaW5pdERvbmUYBSABKAhSCGluaXREb25l');
+final $typed_data.Uint8List userDataDescriptor = $convert.base64Decode('CghVc2VyRGF0YRISCgRuYW1lGAEgASgJUgRuYW1lEhYKBnVzZXJJZBgCIAEoCVIGdXNlcklkEhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZBIUCgVlbWFpbBgEIAEoCVIFZW1haWwSGgoIaW5pdERvbmUYBSABKAhSCGluaXREb25lEhwKCXRyb3BoeURpchgGIAEoCVIJdHJvcGh5RGly');
+@$core.Deprecated('Use trophyDataDescriptor instead')
+const TrophyData$json = const {
+  '1': 'TrophyData',
+  '2': const [
+    const {'1': 'tournamentName', '3': 1, '4': 1, '5': 9, '10': 'tournamentName'},
+    const {'1': 'trophyId', '3': 2, '4': 1, '5': 5, '10': 'trophyId'},
+    const {'1': 'shared', '3': 3, '4': 1, '5': 8, '10': 'shared'},
+    const {'1': 'trophyWinners', '3': 4, '4': 3, '5': 9, '10': 'trophyWinners'},
+  ],
+};
+
+/// Descriptor for `TrophyData`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List trophyDataDescriptor = $convert.base64Decode('CgpUcm9waHlEYXRhEiYKDnRvdXJuYW1lbnROYW1lGAEgASgJUg50b3VybmFtZW50TmFtZRIaCgh0cm9waHlJZBgCIAEoBVIIdHJvcGh5SWQSFgoGc2hhcmVkGAMgASgIUgZzaGFyZWQSJAoNdHJvcGh5V2lubmVycxgEIAMoCVINdHJvcGh5V2lubmVycw==');
