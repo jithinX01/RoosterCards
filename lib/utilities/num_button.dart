@@ -29,34 +29,36 @@ class _NumButtonState extends State<NumButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        NumberPicker(
-          minValue: widget.minValue,
-          maxValue: widget.maxValue,
-          value: _count,
-          itemCount: 1,
-          //axis: Axis.horizontal,
-          onChanged: (value) => setState(() {
-            _count = value;
-            _s = _count.toString() + " " + widget.name;
-            widget.onChanged(_count);
-          }),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.black26),
-          ),
-        ),
-        FloatingActionButton.extended(
-          onPressed: () {},
-          //isExtended: true,
-          icon: Icon(Icons.confirmation_number),
-          label: Text(_s),
-          heroTag: "btnc" + widget.name,
-          //shape: CircleBorder() ,
-        ),
-      ],
-    );
+    return Container(
+        padding: const EdgeInsets.only(top: 32),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            NumberPicker(
+              minValue: widget.minValue,
+              maxValue: widget.maxValue,
+              value: _count,
+              itemCount: 1,
+              //axis: Axis.horizontal,
+              onChanged: (value) => setState(() {
+                _count = value;
+                _s = _count.toString() + " " + widget.name;
+                widget.onChanged(_count);
+              }),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.black26),
+              ),
+            ),
+            FloatingActionButton.extended(
+              onPressed: () {},
+              //isExtended: true,
+              icon: Icon(Icons.confirmation_number),
+              label: Text(_s),
+              heroTag: "btnc" + widget.name,
+              //shape: CircleBorder() ,
+            ),
+          ],
+        ));
   }
 }

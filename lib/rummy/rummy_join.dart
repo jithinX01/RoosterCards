@@ -18,41 +18,62 @@ class RummyJoin extends StatefulWidget {
 }
 
 class _RummyJoinState extends State<RummyJoin> {
+  final _formKey = GlobalKey<FormState>();
   int code = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(top: 64),
-        child: Column(
-          children: <Widget>[
-            Text("JOIN THE TOURNAMENT"),
-            //Text("Name of Tournament"),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              /*
-              validator: (value) {
-                int l = value?.length ?? 0;
-                if (l != 4) {
-                  return "Wrong Code";
-                }
-              },
-              */
-
-              textAlign: TextAlign.center,
-              onChanged: (String? value) {
-                //ts.tournamentName = value ?? ts.tournamentName;
-                print(value);
-                code = int.parse(value ?? "0");
-              },
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  widget.onChanged(code);
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              Text("JOIN THE TOURNAMENT"),
+              //Text("Name of Tournament"),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(4)
+                ],
+                validator: (String? value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please enter  4 digit code';
+                  } else if (value!.length != 4) {
+                    return '4 digit code';
+                  }
+                  return null;
                 },
-                child: const Text('JOIN')),
-          ],
+                textAlign: TextAlign.center,
+                onSaved: (String? value) {
+                  if (value != null) {
+                    code = int.parse(value);
+                  }
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Enter Code',
+                  border: const OutlineInputBorder(),
+                ),
+                /*
+                onChanged: (String? value) {
+                  //ts.tournamentName = value ?? ts.tournamentName;
+                  print(value);
+                  code = int.parse(value ?? "0");
+                },
+                */
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      print(code);
+                      widget.onChanged(code);
+                    }
+                  },
+                  child: const Text('JOIN')),
+            ],
+          ),
         ),
       ),
     );

@@ -46,7 +46,7 @@ class _RummyPlayState extends State<RummyPlay> {
   List<Widget> _wl = List.empty(growable: true);
   StartTournament _tournamentData = StartTournament();
   StackMode _mode = StackMode.SWAP_MODE;
-  late Timer _t;
+  Timer? _t;
   //late List<int> _playerCards;
   @override
   void initState() {
@@ -60,7 +60,7 @@ class _RummyPlayState extends State<RummyPlay> {
 
   @override
   void dispose() {
-    if (_t.isActive) _t.cancel();
+    if (_t!.isActive) _t!.cancel();
     AutoOrientation.portraitAutoMode();
     super.dispose();
   }
