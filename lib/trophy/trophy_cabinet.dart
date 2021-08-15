@@ -35,11 +35,18 @@ class _TrophyCabinetState extends State<TrophyCabinet> {
     return Scaffold(
       body: Container(
         child: _trophyList.length > 0
-            ? ListView.builder(
-                itemCount: _trophyList.length, itemBuilder: _itemBuilder)
+            ? ListView.separated(
+                itemCount: _trophyList.length,
+                itemBuilder: _itemBuilder,
+                separatorBuilder: _separatorBuilder,
+              )
             : _noTrophy(),
       ),
     );
+  }
+
+  Widget _separatorBuilder(BuildContext context, int index) {
+    return Divider();
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
