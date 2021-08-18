@@ -23,14 +23,14 @@ class TournamentData extends $pb.GeneratedMessage {
     10 : TournamentData_Type.rummyData,
     0 : TournamentData_Type.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TournamentData', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'rummy_data'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TournamentData', createEmptyInstance: create)
     ..oo(0, [10])
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noOfPlayers', $pb.PbFieldType.O3, protoName: 'noOfPlayers')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noOfRounds', $pb.PbFieldType.O3, protoName: 'noOfRounds')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noOfDeck', $pb.PbFieldType.O3, protoName: 'noOfDeck')
     ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'players')
     ..p<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cardStack', $pb.PbFieldType.P3, protoName: 'cardStack')
-    ..m<$core.int, PlayerCard>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerCards', protoName: 'playerCards', entryClassName: 'TournamentData.PlayerCardsEntry', keyFieldType: $pb.PbFieldType.O3, valueFieldType: $pb.PbFieldType.OM, valueCreator: PlayerCard.create, packageName: const $pb.PackageName('rummy_data'))
+    ..m<$core.int, PlayerCard>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerCards', protoName: 'playerCards', entryClassName: 'TournamentData.PlayerCardsEntry', keyFieldType: $pb.PbFieldType.O3, valueFieldType: $pb.PbFieldType.OM, valueCreator: PlayerCard.create)
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentPlayerId', $pb.PbFieldType.O3, protoName: 'currentPlayerId')
     ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentName', protoName: 'tournamentName')
     ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyId', $pb.PbFieldType.O3, protoName: 'trophyId')
@@ -278,18 +278,33 @@ class TournamentData extends $pb.GeneratedMessage {
 }
 
 class RummyTournamentData extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RummyTournamentData', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'rummy_data'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RummyTournamentData', createEmptyInstance: create)
     ..e<RummyState>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: RummyState.INIT, valueOf: RummyState.valueOf, enumValues: RummyState.values)
+    ..pc<AfterWinCards>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winCards', $pb.PbFieldType.PM, protoName: 'winCards', subBuilder: AfterWinCards.create)
+    ..m<$core.String, $core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'points', entryClassName: 'RummyTournamentData.PointsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.O3)
+    ..m<$core.String, $core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'crPoints', protoName: 'crPoints', entryClassName: 'RummyTournamentData.CrPointsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
   RummyTournamentData._() : super();
   factory RummyTournamentData({
     RummyState? state,
+    $core.Iterable<AfterWinCards>? winCards,
+    $core.Map<$core.String, $core.int>? points,
+    $core.Map<$core.String, $core.int>? crPoints,
   }) {
     final _result = create();
     if (state != null) {
       _result.state = state;
+    }
+    if (winCards != null) {
+      _result.winCards.addAll(winCards);
+    }
+    if (points != null) {
+      _result.points.addAll(points);
+    }
+    if (crPoints != null) {
+      _result.crPoints.addAll(crPoints);
     }
     return _result;
   }
@@ -322,10 +337,19 @@ class RummyTournamentData extends $pb.GeneratedMessage {
   $core.bool hasState() => $_has(0);
   @$pb.TagNumber(1)
   void clearState() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<AfterWinCards> get winCards => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.Map<$core.String, $core.int> get points => $_getMap(2);
+
+  @$pb.TagNumber(4)
+  $core.Map<$core.String, $core.int> get crPoints => $_getMap(3);
 }
 
 class PlayerCard extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlayerCard', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'rummy_data'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlayerCard', createEmptyInstance: create)
     ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cards', $pb.PbFieldType.P3)
     ..hasRequiredFields = false
   ;
@@ -363,5 +387,46 @@ class PlayerCard extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get cards => $_getList(0);
+}
+
+class AfterWinCards extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AfterWinCards', createEmptyInstance: create)
+    ..m<$core.String, PlayerCard>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerCards', protoName: 'playerCards', entryClassName: 'AfterWinCards.PlayerCardsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: PlayerCard.create)
+    ..hasRequiredFields = false
+  ;
+
+  AfterWinCards._() : super();
+  factory AfterWinCards({
+    $core.Map<$core.String, PlayerCard>? playerCards,
+  }) {
+    final _result = create();
+    if (playerCards != null) {
+      _result.playerCards.addAll(playerCards);
+    }
+    return _result;
+  }
+  factory AfterWinCards.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AfterWinCards.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AfterWinCards clone() => AfterWinCards()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AfterWinCards copyWith(void Function(AfterWinCards) updates) => super.copyWith((message) => updates(message as AfterWinCards)) as AfterWinCards; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AfterWinCards create() => AfterWinCards._();
+  AfterWinCards createEmptyInstance() => create();
+  static $pb.PbList<AfterWinCards> createRepeated() => $pb.PbList<AfterWinCards>();
+  @$core.pragma('dart2js:noInline')
+  static AfterWinCards getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AfterWinCards>(create);
+  static AfterWinCards? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.Map<$core.String, PlayerCard> get playerCards => $_getMap(0);
 }
 

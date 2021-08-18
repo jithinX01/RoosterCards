@@ -4,6 +4,7 @@ import 'package:rooster_cards/cards/playing_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
+import 'dart:math';
 
 enum StackMode {
   SWAP_MODE,
@@ -329,13 +330,18 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   List<Widget> cardsFromList(List<int> l, {bool vertical = true}) {
     double start = 50;
     List<Widget> wl = List<Widget>.generate(l.length, (int index) {
+      //print((pi / ((index - 6).abs() + 2)) * (index > 6 ? 1 : -1));
+
+      //var angle = (pi / ((index - 6).abs() + 2)) * (index > 6 ? 1 : -1);
+      var angle = pi;
       if (!vertical) {
         return Positioned(
           //top: (index * 100) + start,
           //top: 100,
+
           top: _getCardTopPos(index),
           left: (index * 100) + start,
-          child: getAt(l[index], index),
+          child: Transform.rotate(angle: angle, child: getAt(l[index], index)),
         );
       } else {
         return Positioned(

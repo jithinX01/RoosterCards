@@ -9,6 +9,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'tournament_data.pb.dart' as $0;
+
 import 'game_msg.pbenum.dart';
 
 export 'game_msg.pbenum.dart';
@@ -1460,16 +1462,26 @@ class InActiveRummyPlaterStat extends $pb.GeneratedMessage {
 class WonPlayerStat extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WonPlayerStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'round', $pb.PbFieldType.O3)
+    ..aOM<$0.AfterWinCards>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'afterWinCards', protoName: 'afterWinCards', subBuilder: $0.AfterWinCards.create)
+    ..m<$core.String, $core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'points', entryClassName: 'WonPlayerStat.PointsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.O3, packageName: const $pb.PackageName('game_message'))
     ..hasRequiredFields = false
   ;
 
   WonPlayerStat._() : super();
   factory WonPlayerStat({
     $core.int? round,
+    $0.AfterWinCards? afterWinCards,
+    $core.Map<$core.String, $core.int>? points,
   }) {
     final _result = create();
     if (round != null) {
       _result.round = round;
+    }
+    if (afterWinCards != null) {
+      _result.afterWinCards = afterWinCards;
+    }
+    if (points != null) {
+      _result.points.addAll(points);
     }
     return _result;
   }
@@ -1502,6 +1514,20 @@ class WonPlayerStat extends $pb.GeneratedMessage {
   $core.bool hasRound() => $_has(0);
   @$pb.TagNumber(1)
   void clearRound() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $0.AfterWinCards get afterWinCards => $_getN(1);
+  @$pb.TagNumber(2)
+  set afterWinCards($0.AfterWinCards v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAfterWinCards() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAfterWinCards() => clearField(2);
+  @$pb.TagNumber(2)
+  $0.AfterWinCards ensureAfterWinCards() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.Map<$core.String, $core.int> get points => $_getMap(2);
 }
 
 class LosePlayerStat extends $pb.GeneratedMessage {
@@ -1509,6 +1535,8 @@ class LosePlayerStat extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'round', $pb.PbFieldType.O3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wonPlayer', protoName: 'wonPlayer')
     ..p<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winningCards', $pb.PbFieldType.P3, protoName: 'winningCards')
+    ..aOM<$0.AfterWinCards>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'afterWinCards', protoName: 'afterWinCards', subBuilder: $0.AfterWinCards.create)
+    ..m<$core.String, $core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'points', entryClassName: 'LosePlayerStat.PointsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.O3, packageName: const $pb.PackageName('game_message'))
     ..hasRequiredFields = false
   ;
 
@@ -1517,6 +1545,8 @@ class LosePlayerStat extends $pb.GeneratedMessage {
     $core.int? round,
     $core.String? wonPlayer,
     $core.Iterable<$core.int>? winningCards,
+    $0.AfterWinCards? afterWinCards,
+    $core.Map<$core.String, $core.int>? points,
   }) {
     final _result = create();
     if (round != null) {
@@ -1527,6 +1557,12 @@ class LosePlayerStat extends $pb.GeneratedMessage {
     }
     if (winningCards != null) {
       _result.winningCards.addAll(winningCards);
+    }
+    if (afterWinCards != null) {
+      _result.afterWinCards = afterWinCards;
+    }
+    if (points != null) {
+      _result.points.addAll(points);
     }
     return _result;
   }
@@ -1571,6 +1607,20 @@ class LosePlayerStat extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.List<$core.int> get winningCards => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $0.AfterWinCards get afterWinCards => $_getN(3);
+  @$pb.TagNumber(4)
+  set afterWinCards($0.AfterWinCards v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAfterWinCards() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAfterWinCards() => clearField(4);
+  @$pb.TagNumber(4)
+  $0.AfterWinCards ensureAfterWinCards() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $core.Map<$core.String, $core.int> get points => $_getMap(4);
 }
 
 class NextGame extends $pb.GeneratedMessage {

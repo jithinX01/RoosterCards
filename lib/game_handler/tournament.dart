@@ -1,7 +1,8 @@
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/proto/tournament_data.pbserver.dart';
-import 'package:rooster_cards/rummy/winning_hand.dart';
+//import 'package:rooster_cards/rummy/winning_hand.dart';
+import 'package:rooster_cards/rummy/possible_winning_hand_lib.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 const NO_OF_CARDS = 53;
@@ -312,6 +313,7 @@ class RummyTournament extends Tournament {
     if (_data.winCount[winnerId] > _data.maxWinCount) {
       _data.maxWinCount = _data.winCount[winnerId];
     }
+    calulatePoints(winnerId);
     _sendGameWonUpdate(winnerId);
 
     _data.currentRound += 1;
@@ -328,6 +330,30 @@ class RummyTournament extends Tournament {
     }
   }
 
+  void calulatePoints(int winnerId) {
+    AfterWinCards afterWinCards = AfterWinCards();
+    _data.playerCards.forEach((key, value) {
+      if (winnerId != key) {
+        var point = findPoints(value.cards);
+        _data.rummyData.crPoints[_data.players[key]] = point;
+
+        if (_data.rummyData.points.containsKey(_data.players[key])) {
+          _data.rummyData.points[_data.players[key]] =
+              _data.rummyData.points[_data.players[key]] ?? 0 + point;
+        } else {
+          _data.rummyData.points[_data.players[key]] = point;
+        }
+      } else {
+        if (!_data.rummyData.points.containsKey(_data.players[key]))
+          _data.rummyData.points[_data.players[key]] = 0;
+        _data.rummyData.crPoints[_data.players[key]] = 0;
+      }
+      afterWinCards.playerCards[_data.players[key]] = value;
+    });
+
+    _data.rummyData.winCards.add(afterWinCards);
+  }
+
   void _sendGameWonUpdate(int winnerId) {
     playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
@@ -336,6 +362,9 @@ class RummyTournament extends Tournament {
             wonPlayerStat: winnerId == playerId
                 ? WonPlayerStat(
                     round: _data.currentRound,
+                    afterWinCards:
+                        _data.rummyData.winCards[_data.currentRound - 1],
+                    points: _data.rummyData.crPoints,
                   )
                 : null,
             losePlayerStat: winnerId != playerId
@@ -343,6 +372,9 @@ class RummyTournament extends Tournament {
                     round: _data.currentRound,
                     wonPlayer: _data.players[winnerId],
                     winningCards: _data.playerCards[winnerId]?.cards,
+                    afterWinCards:
+                        _data.rummyData.winCards[_data.currentRound - 1],
+                    points: _data.rummyData.crPoints,
                   )
                 : null,
           ),

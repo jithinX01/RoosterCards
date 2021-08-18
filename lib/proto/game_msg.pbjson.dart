@@ -282,11 +282,24 @@ const WonPlayerStat$json = const {
   '1': 'WonPlayerStat',
   '2': const [
     const {'1': 'round', '3': 1, '4': 1, '5': 5, '10': 'round'},
+    const {'1': 'afterWinCards', '3': 2, '4': 1, '5': 11, '6': '.AfterWinCards', '10': 'afterWinCards'},
+    const {'1': 'points', '3': 3, '4': 3, '5': 11, '6': '.game_message.WonPlayerStat.PointsEntry', '10': 'points'},
   ],
+  '3': const [WonPlayerStat_PointsEntry$json],
+};
+
+@$core.Deprecated('Use wonPlayerStatDescriptor instead')
+const WonPlayerStat_PointsEntry$json = const {
+  '1': 'PointsEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 5, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 /// Descriptor for `WonPlayerStat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List wonPlayerStatDescriptor = $convert.base64Decode('Cg1Xb25QbGF5ZXJTdGF0EhQKBXJvdW5kGAEgASgFUgVyb3VuZA==');
+final $typed_data.Uint8List wonPlayerStatDescriptor = $convert.base64Decode('Cg1Xb25QbGF5ZXJTdGF0EhQKBXJvdW5kGAEgASgFUgVyb3VuZBI0Cg1hZnRlcldpbkNhcmRzGAIgASgLMg4uQWZ0ZXJXaW5DYXJkc1INYWZ0ZXJXaW5DYXJkcxI/CgZwb2ludHMYAyADKAsyJy5nYW1lX21lc3NhZ2UuV29uUGxheWVyU3RhdC5Qb2ludHNFbnRyeVIGcG9pbnRzGjkKC1BvaW50c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgFUgV2YWx1ZToCOAE=');
 @$core.Deprecated('Use losePlayerStatDescriptor instead')
 const LosePlayerStat$json = const {
   '1': 'LosePlayerStat',
@@ -294,11 +307,24 @@ const LosePlayerStat$json = const {
     const {'1': 'round', '3': 1, '4': 1, '5': 5, '10': 'round'},
     const {'1': 'wonPlayer', '3': 2, '4': 1, '5': 9, '10': 'wonPlayer'},
     const {'1': 'winningCards', '3': 3, '4': 3, '5': 5, '10': 'winningCards'},
+    const {'1': 'afterWinCards', '3': 4, '4': 1, '5': 11, '6': '.AfterWinCards', '10': 'afterWinCards'},
+    const {'1': 'points', '3': 5, '4': 3, '5': 11, '6': '.game_message.LosePlayerStat.PointsEntry', '10': 'points'},
   ],
+  '3': const [LosePlayerStat_PointsEntry$json],
+};
+
+@$core.Deprecated('Use losePlayerStatDescriptor instead')
+const LosePlayerStat_PointsEntry$json = const {
+  '1': 'PointsEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 5, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 /// Descriptor for `LosePlayerStat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List losePlayerStatDescriptor = $convert.base64Decode('Cg5Mb3NlUGxheWVyU3RhdBIUCgVyb3VuZBgBIAEoBVIFcm91bmQSHAoJd29uUGxheWVyGAIgASgJUgl3b25QbGF5ZXISIgoMd2lubmluZ0NhcmRzGAMgAygFUgx3aW5uaW5nQ2FyZHM=');
+final $typed_data.Uint8List losePlayerStatDescriptor = $convert.base64Decode('Cg5Mb3NlUGxheWVyU3RhdBIUCgVyb3VuZBgBIAEoBVIFcm91bmQSHAoJd29uUGxheWVyGAIgASgJUgl3b25QbGF5ZXISIgoMd2lubmluZ0NhcmRzGAMgAygFUgx3aW5uaW5nQ2FyZHMSNAoNYWZ0ZXJXaW5DYXJkcxgEIAEoCzIOLkFmdGVyV2luQ2FyZHNSDWFmdGVyV2luQ2FyZHMSQAoGcG9pbnRzGAUgAygLMiguZ2FtZV9tZXNzYWdlLkxvc2VQbGF5ZXJTdGF0LlBvaW50c0VudHJ5UgZwb2ludHMaOQoLUG9pbnRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAVSBXZhbHVlOgI4AQ==');
 @$core.Deprecated('Use nextGameDescriptor instead')
 const NextGame$json = const {
   '1': 'NextGame',

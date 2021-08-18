@@ -1,4 +1,7 @@
+
+
 syntax = "proto3";
+import  "tournament_data.proto";
 package game_message;
 
 //import "google/protobuf/timestamp.proto";
@@ -176,12 +179,19 @@ message InActiveRummyPlaterStat {
 }
 message WonPlayerStat {
     int32 round = 1;
+
+    AfterWinCards afterWinCards = 2;
+    map<string,int32> points = 3;
+    
+
 }
 
 message LosePlayerStat {
     int32 round = 1;
     string wonPlayer = 2;
     repeated int32 winningCards = 3;
+    AfterWinCards afterWinCards = 4;
+    map<string,int32> points = 5;
 }
 message NextGame {
     repeated int32 cards = 2;

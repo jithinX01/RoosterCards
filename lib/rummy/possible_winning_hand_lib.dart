@@ -3,7 +3,7 @@ const int JOKER = 52;
 class PossibleMelds {
   var melds = {};
   int count = 0;
-  int points = 130;
+  int pts = 130;
   var deadwood = [];
   void checkFourSet() {
     //sort by points
@@ -14,7 +14,7 @@ class PossibleMelds {
       bm = bm > 10 ? 10 : bm;
       return bm - am;
     });
-    print(deadwood);
+    //print(deadwood);
     //check for the 4th set
     for (var l in deadwood) {
       bool found = false;
@@ -32,7 +32,7 @@ class PossibleMelds {
               deadwood.remove(l);
               int point = (l % 13) + 1;
               point = point > 10 ? 10 : point;
-              points -= point;
+              pts -= point;
               found = true;
               return;
             }
@@ -53,7 +53,7 @@ class PossibleMelds {
               deadwood.remove(l);
               int point = (l % 13) + 1;
               point = point > 10 ? 10 : point;
-              points -= point;
+              pts -= point;
               found = true;
               return;
             }
@@ -67,6 +67,39 @@ class PossibleMelds {
         break;
       }
     }
+  }
+
+  List<int> get sets {
+    List<int> sets = [];
+    Map meld = Map.from(melds);
+    meld.forEach((key, listOfMeld) {
+      listOfMeld.forEach((meld) {
+        meld.forEach((card) {
+          sets.add(card);
+        });
+      });
+    });
+    deadwood.forEach((element) {
+      sets.add(element);
+    });
+    return sets;
+  }
+
+  int get points {
+    if (count > 0) {
+      return pts;
+    }
+
+    pts = 0;
+    deadwood.forEach((val) {
+      int p = (val % 13) + 1;
+      p = p > 10 ? 10 : p;
+      if (val == 52) {
+        p = 0;
+      }
+      pts += p;
+    });
+    return pts;
   }
 }
 
@@ -84,24 +117,63 @@ bool isWinningHand(List<int>? cards) {
   PossibleMelds possibleMelds = PossibleMelds();
   //return winningHand(L, jokers, meld, winningMeld, noOfJokers: jokers.length);
   bool valid = winningHand(L, jokers, meld, winningMeld, possibleMelds,
+      noOfJokers: jokers.length, findPossibleMeld: false);
+  if (valid) {
+    cards?.clear();
+    cards?.addAll(winningMeld);
+  }
+  /* 
+  else {
+    possibleMelds.checkFourSet();
+  }
+  */
+  print(" winning Set $cards");
+  /*
+  print(
+      "FindPossibleMelds c ${possibleMelds.count} m ${possibleMelds.melds} d ${possibleMelds.deadwood} p ${possibleMelds.points}");
+      */
+
+  return valid;
+}
+
+int findPoints(List<int>? cards) {
+  print("findPoints");
+  List<int> L = List.from(cards ?? []);
+  if (L.length != 13) {
+    return 130;
+  }
+  L.sort();
+  print(cards);
+  var jokers = findJokers(L);
+  var meld = {};
+  List<int> winningMeld = [];
+  PossibleMelds possibleMelds = PossibleMelds();
+  //return winningHand(L, jokers, meld, winningMeld, noOfJokers: jokers.length);
+  bool valid = winningHand(L, jokers, meld, winningMeld, possibleMelds,
       noOfJokers: jokers.length, findPossibleMeld: true);
   if (valid) {
     cards?.clear();
     cards?.addAll(winningMeld);
   } else {
-    possibleMelds.checkFourSet();
+    if (possibleMelds.count > 0) {
+      possibleMelds.checkFourSet();
+    } else {
+      possibleMelds.deadwood = L;
+    }
+    cards?.clear();
+    cards?.addAll(possibleMelds.sets);
   }
-  print(" winning Set $cards");
-  print(
-      "FindPossibleMelds c ${possibleMelds.count} m ${possibleMelds.melds} d ${possibleMelds.deadwood} p ${possibleMelds.points}");
 
-  return valid;
+  print(
+      "FindPossibleMelds c ${possibleMelds.count} m ${possibleMelds.melds} d ${possibleMelds.deadwood} p ${possibleMelds.pts}");
+  print("cards ${possibleMelds.sets}");
+  return possibleMelds.points;
 }
 
-void FindPossibleMelds(
+void findPossibleMelds(
     var meld, var deadWood, PossibleMelds meldInfo, int setCount) {
   int points = getPoints(deadWood);
-  if (setCount > meldInfo.count || points < meldInfo.points) {
+  if (setCount > meldInfo.count || points < meldInfo.pts) {
     //print("gt setCount $setCount");
     meldInfo.count = setCount;
     //meldInfo.melds = Map.from(meld);
@@ -114,7 +186,7 @@ void FindPossibleMelds(
       });
     });
     meldInfo.deadwood = List.from(deadWood);
-    meldInfo.points = points;
+    meldInfo.pts = points;
   }
 }
 
@@ -134,7 +206,7 @@ int getPoints(var deadwood) {
 List<int> findRun(List<int> L, int lStart, List<int> jokers,
     {int noOfDeck = 1}) {
   List<int> run = [];
-  List<int> used_jokers = [];
+  List<int> usedJokers = [];
   if (lStart < L.length) {
     int mstart = L[lStart];
     int limit = ((mstart ~/ 13) + 1) * 13;
@@ -155,7 +227,7 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
 		     */
       } else if (run.length > 0 && jokers.length > 0) {
         run.add(jokers.elementAt(0));
-        used_jokers.add(jokers.elementAt(0));
+        usedJokers.add(jokers.elementAt(0));
         jokers.removeAt(0);
       } else {
         break;
@@ -165,8 +237,8 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
   }
   //if dont find run
   //remove jokers and add back to jokers set
-  if (used_jokers.length > 0) {
-    jokers.add(used_jokers.elementAt(0));
+  if (usedJokers.length > 0) {
+    jokers.add(usedJokers.elementAt(0));
     run.removeLast();
   }
   /*
@@ -221,7 +293,7 @@ bool winningHand(List<int> L, List<int> jokers, var meld, var winningMeld,
     bool pureRunFound = false,
     int setCount = 0,
     bool findPossibleMeld = false}) {
-  List<int> L1 = List.from(L);
+  List<int> l1 = List.from(L);
   List<int> jokers1 = List.from(jokers);
   //bool fourFound1 = fourFound;
   bool pureRunFound1 = pureRunFound;
@@ -246,7 +318,7 @@ bool winningHand(List<int> L, List<int> jokers, var meld, var winningMeld,
       meld["run"].add(run);
       //print("meld $meld $L");
       if (findPossibleMeld) {
-        FindPossibleMelds(meld, L, meldInfo, setCount);
+        findPossibleMelds(meld, L, meldInfo, setCount);
       }
 
       bool valid = false;
@@ -285,7 +357,7 @@ bool winningHand(List<int> L, List<int> jokers, var meld, var winningMeld,
       lStart += 1;
       //reset
       L.clear();
-      L.addAll(L1);
+      L.addAll(l1);
       jokers.clear();
       jokers.addAll(jokers1);
       noOfJokers = jokers.length;
@@ -330,7 +402,7 @@ bool winningSet(List<int> L, List<int> jokers, int setCount, bool pureRunFound,
       meld["set"].add(set);
       //print("meld $meld $L");
       if (findPossibleMeld) {
-        FindPossibleMelds(meld, L, meldInfo, setCount);
+        findPossibleMelds(meld, L, meldInfo, setCount);
       }
       bool valid = false;
       if (setCount == 4) {

@@ -29,6 +29,22 @@ class TrophyCard extends StatelessWidget {
           blurRadius: 20.0,
         ),
       ],
+      /*
+      gradient: LinearGradient(
+        // Where the linear gradient begins and ends
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        // Add one stop for each color. Stops should increase from 0 to 1
+        stops: [0.05, 0.2, 0.5, 0.95],
+        colors: [
+          // Colors are easy thanks to Flutter's Colors class.
+          Colors.orange.shade100,
+          Colors.orange.shade100,
+          Colors.orange.shade50,
+          Colors.orange.shade100,
+        ],
+      ),
+      */
     );
   }
 

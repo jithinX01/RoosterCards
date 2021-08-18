@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:rooster_cards/proto/tournament_data.pb.dart';
 
 class GameWinnerCard extends StatelessWidget {
   final String title;
 
   final Color c;
   final IconData icon;
+  final AfterWinCards afterWinCards;
+  final Map points;
   const GameWinnerCard({
     Key? key,
     this.title = "",
     this.c = Colors.green,
     this.icon = Icons.military_tech,
+    required this.afterWinCards,
+    required this.points,
   }) : super(key: key);
 
   Decoration getDecoration({Color c = Colors.grey}) {

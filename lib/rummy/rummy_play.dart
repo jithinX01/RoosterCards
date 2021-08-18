@@ -151,6 +151,8 @@ class _RummyPlayState extends State<RummyPlay> {
     _wl.clear();
     _wl.add(GameWinnerCard(
       title: "Round " + wonPlayerStat.round.toString(),
+      afterWinCards: wonPlayerStat.afterWinCards,
+      points: wonPlayerStat.points,
     ));
     setState(() {});
   }
@@ -162,7 +164,9 @@ class _RummyPlayState extends State<RummyPlay> {
     _tournamentData.cards.addAll(losePlayerStat.winningCards);
     _wl.add(_getPlayingCards());
     _wl.add(GameLoserCard(
-        time: 5,
+        afterWinCards: losePlayerStat.afterWinCards,
+        points: losePlayerStat.points,
+        time: 23,
         player: losePlayerStat.wonPlayer,
         round: "Round " + losePlayerStat.round.toString()));
     setState(() {});
@@ -179,7 +183,7 @@ class _RummyPlayState extends State<RummyPlay> {
     _wl.clear();
     _wl.add(_getPlayingCards());
     _wl.add(_getTimer());
-    _t = Timer(Duration(seconds: 7), () {
+    _t = Timer(Duration(seconds: 25), () {
       setState(() {});
     });
   }
@@ -196,7 +200,7 @@ class _RummyPlayState extends State<RummyPlay> {
             shared: tournamentOver.sharedTrophy,
           ));
     }
-    _t = Timer(Duration(seconds: 7), () {
+    _t = Timer(Duration(seconds: 25), () {
       setState(() {
         _wl.clear();
         _wl.add(TournamentWinnersCard(

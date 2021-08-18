@@ -27,29 +27,31 @@ class _RummyHomePageState extends State<RummyHomePage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            NavigationCard(
-              //w: StartRummyPage(),
-              w: UserDataInfo(
-                  userInfo: UserDataInfo.of(context).userInfo,
-                  child: RummyPageAction(rummyAction: RummyAction.START)),
-              //RummyPageAction(rummyAction: RummyAction.START),
-              title: "Start",
-              icon: Icons.videogame_asset,
-            ),
-            NavigationCard(
-              w: UserDataInfo(
-                  userInfo: UserDataInfo.of(context).userInfo,
-                  child: RummyPageAction(rummyAction: RummyAction.JOIN)),
-              //w: JoinRummyPage(),
-              //w: RummyPageAction(rummyAction: RummyAction.JOIN),
-              title: "Join",
-              c: Colors.amber,
-              icon: Icons.connect_without_contact,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              NavigationCard(
+                //w: StartRummyPage(),
+                w: UserDataInfo(
+                    userInfo: UserDataInfo.of(context).userInfo,
+                    child: RummyPageAction(rummyAction: RummyAction.START)),
+                //RummyPageAction(rummyAction: RummyAction.START),
+                title: "Start",
+                icon: Icons.videogame_asset,
+              ),
+              NavigationCard(
+                w: UserDataInfo(
+                    userInfo: UserDataInfo.of(context).userInfo,
+                    child: RummyPageAction(rummyAction: RummyAction.JOIN)),
+                //w: JoinRummyPage(),
+                //w: RummyPageAction(rummyAction: RummyAction.JOIN),
+                title: "Join",
+                c: Colors.amber,
+                icon: Icons.connect_without_contact,
+              ),
+            ],
+          ),
         ),
       ),
     );

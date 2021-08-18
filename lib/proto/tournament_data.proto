@@ -1,6 +1,6 @@
 
 syntax = "proto3";
-package rummy_data;
+//package tournament_data;
 
 enum RummyState {
     INIT = 0;
@@ -36,8 +36,14 @@ message TournamentData
 message RummyTournamentData {
     
     RummyState state = 1;
+    repeated AfterWinCards winCards = 2;
+    map<string,int32> points = 3;
+    map<string,int32> crPoints = 4;
 }
 
 message PlayerCard {
     repeated int32 cards = 1;
+}
+message AfterWinCards {
+    map<string,PlayerCard> playerCards = 1;
 }
