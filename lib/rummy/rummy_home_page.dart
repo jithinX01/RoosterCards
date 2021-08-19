@@ -27,6 +27,7 @@ class _RummyHomePageState extends State<RummyHomePage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16.0),
+        alignment: Alignment.center,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -41,7 +41,7 @@ class _RummyInitState extends State<RummyInit> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       body: Container(
-        padding: const EdgeInsets.only(top: 64),
+        padding: const EdgeInsets.only(top: 64, left: 16, right: 16),
         child: Form(
           key: _formKey,
           child: Column(

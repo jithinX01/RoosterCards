@@ -272,11 +272,14 @@ AfterWinCards getData() {
   PlayerCard p2 = PlayerCard(
     cards: [41, 42, 43, 11, 23, 25, 48, 50, 8, 19, 3, 1, 27],
   );
+  PlayerCard p3 = PlayerCard(
+    cards: [41, 42, 43, 11, 23, 25, 48, 50, 8, 19, 3, 1, 27],
+  );
 
   Map<String, PlayerCard> mp = {};
   mp["player1"] = p1;
   mp["player2"] = p2;
-
+  mp["player3"] = p3;
   AfterWinCards afterWinCards = AfterWinCards(
     playerCards: mp,
   );
@@ -287,5 +290,6 @@ Map<dynamic, dynamic> getPts() {
   var mp = {};
   mp["player1"] = 0;
   mp["player2"] = 74;
+  mp["player3"] = 23;
   return mp;
 }

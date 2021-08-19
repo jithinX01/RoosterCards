@@ -24,7 +24,7 @@ class _RummyJoinState extends State<RummyJoin> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.only(top: 64),
+        padding: const EdgeInsets.only(top: 64, left: 32, right: 32),
         child: Form(
           key: _formKey,
           child: Column(

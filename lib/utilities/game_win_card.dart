@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 
@@ -125,8 +127,12 @@ class GameWinCard extends StatelessWidget {
   }
 
   Widget _getCardAndPts() {
+    var sortedMap = SplayTreeMap.from(afterWinCards.playerCards, (k1, k2) {
+      return points[k1]!.compareTo(points[k2] ?? 0);
+    });
+
     List<Widget> L = [];
-    afterWinCards.playerCards.forEach((player, playerCard) {
+    Map.from(sortedMap).forEach((player, playerCard) {
       print("${points[player]}Pts");
       print("player");
       L.add(Column(
