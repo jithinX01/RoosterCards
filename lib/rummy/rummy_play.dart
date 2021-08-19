@@ -5,6 +5,7 @@ import 'package:rooster_cards/cards/player_card_stack.dart';
 import 'package:rooster_cards/proto/user_data.pb.dart';
 import 'package:rooster_cards/utilities/file_storage.dart';
 import 'package:rooster_cards/utilities/game_loser_card.dart';
+import 'package:rooster_cards/utilities/game_win_card.dart';
 import 'package:rooster_cards/utilities/game_winner_card.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
@@ -60,7 +61,7 @@ class _RummyPlayState extends State<RummyPlay> {
 
   @override
   void dispose() {
-    if (_t!.isActive) _t!.cancel();
+    if (_t!.isActive) _t?.cancel();
     AutoOrientation.portraitAutoMode();
     super.dispose();
   }
@@ -149,10 +150,11 @@ class _RummyPlayState extends State<RummyPlay> {
 
   void _handleWonPlayerStat(WonPlayerStat wonPlayerStat) {
     _wl.clear();
-    _wl.add(GameWinnerCard(
-      title: "Round " + wonPlayerStat.round.toString(),
+    _wl.add(GameWinCard(
+      round: "Round " + wonPlayerStat.round.toString(),
       afterWinCards: wonPlayerStat.afterWinCards,
       points: wonPlayerStat.points,
+      stat: PlayerStat.WINNER,
     ));
     setState(() {});
   }
@@ -163,10 +165,10 @@ class _RummyPlayState extends State<RummyPlay> {
     _tournamentData.cards.clear();
     _tournamentData.cards.addAll(losePlayerStat.winningCards);
     _wl.add(_getPlayingCards());
-    _wl.add(GameLoserCard(
+    _wl.add(GameWinCard(
         afterWinCards: losePlayerStat.afterWinCards,
         points: losePlayerStat.points,
-        time: 23,
+        stat: PlayerStat.LOSER,
         player: losePlayerStat.wonPlayer,
         round: "Round " + losePlayerStat.round.toString()));
     setState(() {});

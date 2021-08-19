@@ -229,6 +229,9 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
         run.add(jokers.elementAt(0));
         usedJokers.add(jokers.elementAt(0));
         jokers.removeAt(0);
+        if (run.length == 3) {
+          return run;
+        }
       } else {
         break;
       }

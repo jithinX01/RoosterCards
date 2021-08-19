@@ -47,6 +47,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   bool _showPopCard = true;
   bool _newCardTook = false;
   bool _fromInside = false;
+  bool _groupMode = false;
+  String _toggleText = "N";
 
   StackMode _stackMode = StackMode.SWAP_MODE;
   /*
@@ -87,6 +89,9 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     if (_showPopCard && _stackMode == StackMode.REPLACE_MODE)
       wList.add(_getPopCard(widget.nextCard));
     if (_showSwapButton) wList.add(_getControlButton());
+    if (_stackMode == StackMode.SWAP_MODE) {
+      wList.add(_getSwapModeToggle());
+    }
     return Stack(children: wList);
   }
 
@@ -126,18 +131,56 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             ),
           ),
           */
-          label: Icon(Icons.swap_horiz),
+          icon: Icon((_groupMode && _stackMode == StackMode.SWAP_MODE)
+              ? Icons.sort
+              : Icons.swap_horiz),
+          label: Text((_groupMode && _stackMode == StackMode.SWAP_MODE)
+              ? "Group"
+              : "Swap"),
           backgroundColor: Colors.blue,
           foregroundColor: Colors.black,
           heroTag: "swapped",
           onPressed: () {
             if (_stackMode == StackMode.SWAP_MODE) {
-              swap();
+              _groupMode ? group() : swap();
               //setState(() {});
             } else if (_stackMode == StackMode.REPLACE_MODE) {
               replace();
             }
             print(_stackMode);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _getSwapModeToggle() {
+    return Positioned.fill(
+      top: 20,
+      right: 40,
+      child: Align(
+        alignment: Alignment.topRight,
+        child: FloatingActionButton.extended(
+          /*
+          icon: Icon(Icons.swap_horiz),
+          label: Text(
+            widget.startTournament.round.toString(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          */
+          icon: Icon(_groupMode ? Icons.sort : Icons.swap_horiz),
+          label: Text(_toggleText),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.black,
+          heroTag: "togglemode",
+          onPressed: () {
+            _groupMode = !_groupMode;
+            _toggleText = _groupMode ? "G" : "N";
+            _snackBar();
+            setState(() {});
           },
         ),
       ),
@@ -172,6 +215,29 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
 
     widget.cards[_clickList[0]] = widget.cards[_clickList[1]];
     widget.cards[_clickList[1]] = card;
+
+    var action = RummyUserAction(rUserAction: RUserAction.NORMAL_SWAP);
+    action.playerCards.addAll(widget.cards);
+    _clickList.clear();
+    _showSwapButton = false;
+    setState(() {});
+    widget.onUserAction(action);
+  }
+
+  void group() {
+    List<int> cards = [];
+    //get clicked cards
+    _clickList.forEach((index) {
+      cards.add(widget.cards[index]);
+    });
+    //sort group
+    cards.sort();
+    //remove cards from list
+    cards.forEach((card) {
+      widget.cards.remove(card);
+    });
+    //add cards to begining of list
+    widget.cards.insertAll(0, cards);
 
     var action = RummyUserAction(rUserAction: RUserAction.NORMAL_SWAP);
     action.playerCards.addAll(widget.cards);
@@ -276,11 +342,18 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             } else {
               _clickList.remove(index);
             }
+            if (!_groupMode) {
+              if (_clickList.length > 2) {
+                _clickList.removeAt(0);
+              }
 
-            if (_clickList.length > 2) {
-              _clickList.removeAt(0);
+              _showSwapButton = (_clickList.length == 2);
+            } else {
+              _showSwapButton = _clickList.length > 1;
+              if (_clickList.length > 4) {
+                _clickList.removeAt(0);
+              }
             }
-            _showSwapButton = (_clickList.length == 2);
             print(_clickList);
             setState(() {});
           } else if (_stackMode == StackMode.REPLACE_MODE && _newCardTook) {
@@ -352,5 +425,22 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
       }
     });
     return wl;
+  }
+
+  void _snackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(_groupMode ? "Group Mode" : "Swap Mode"),
+        duration: const Duration(seconds: 1),
+        width: 100.0, // Width of the SnackBar.
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0, // Inner padding for SnackBar content.
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    );
   }
 }
