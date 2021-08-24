@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rooster_cards/rummy/computer_rummy_page.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/navigation_card.dart';
 //import 'package:rooster_cards/rummy/join_rummy_page.dart';
@@ -50,6 +51,16 @@ class _RummyHomePageState extends State<RummyHomePage> {
                 title: "Join",
                 c: Colors.amber,
                 icon: Icons.connect_without_contact,
+              ),
+              NavigationCard(
+                w: UserDataInfo(
+                    userInfo: UserDataInfo.of(context).userInfo,
+                    child: ComputerRummyPage()),
+                //w: JoinRummyPage(),
+                //w: RummyPageAction(rummyAction: RummyAction.JOIN),
+                title: "Computer",
+                c: Colors.cyan,
+                icon: Icons.smart_toy,
               ),
             ],
           ),

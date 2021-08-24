@@ -1,12 +1,16 @@
 import 'dart:async';
 
 import 'package:rooster_cards/proto/game_msg.pb.dart';
+import 'package:rooster_cards/rummy/find_melds.dart';
 import 'package:rooster_cards/rummy/rummy_local_client.dart';
+import 'package:rooster_cards/rummy/rummy_user_action.dart';
 
 class ComputerRummyAgent {
   RummyLocalClient? _rummyLocalClient;
   late StreamSubscription _streamSubscription;
   StartTournament _tournamentData = StartTournament();
+  var _meld = {};
+  Timer _t = Timer(Duration(microseconds: 10), () {});
 
   void init() {
     _rummyLocalClient = RummyLocalClient(
@@ -74,11 +78,63 @@ class ComputerRummyAgent {
   void _handleActiveRPS(ActiveRummyPlayerStat activeRummyPlayerStat) {
     print("next card");
     print(activeRummyPlayerStat.nextCard);
+    _tournamentData.nextCard = activeRummyPlayerStat.nextCard;
+    RummyUserAction rummyUserAction =
+        getUserAction(_meld, activeRummyPlayerStat.nextCard);
+    if (_t.isActive) {
+      _t.cancel();
+    }
+    _t = Timer(Duration(seconds: 5), () {
+      _handleUserAction(rummyUserAction);
+      print("after replace $_meld");
+      print(_tournamentData.cards);
+    });
   }
 
   void _handleStartTournament(StartTournament startTournament) {
     _tournamentData = startTournament;
+    findMelds(List.from(_tournamentData.cards), _meld);
+    print(_meld);
   }
 
   void _handleTournamentOver(TournamentOver tournamentOver) {}
+
+  void _handleUserAction(RummyUserAction rummyUserAction) {
+    switch (rummyUserAction.rUserAction) {
+      case RUserAction.DISCARD:
+        print("Discarded ${rummyUserAction.newCard}");
+        GameMessageClient gmc = GameMessageClient(
+          clientGameStat: ClientGameStat(
+            playerId: _tournamentData.yourId,
+            tournamentId: _tournamentData.tournamentId,
+            discardCard: DiscardCard(
+              card: rummyUserAction.newCard,
+            ),
+          ),
+        );
+        _rummyLocalClient?.channel.sink.add(gmc.writeToBuffer());
+        break;
+      case RUserAction.REPLACE:
+        print("before replace $_meld");
+        _tournamentData.cards.remove(rummyUserAction.oldCard);
+        _tournamentData.cards.add(rummyUserAction.newCard);
+        _tournamentData.cards.sort();
+        _meld = {};
+        findMelds(List.from(_tournamentData.cards), _meld);
+
+        GameMessageClient gmc = GameMessageClient(
+          clientGameStat: ClientGameStat(
+            playerId: _tournamentData.yourId,
+            tournamentId: _tournamentData.tournamentId,
+            drawCard: DrawCard(
+              newCard: rummyUserAction.newCard,
+              oldCard: rummyUserAction.oldCard,
+            ),
+          ),
+        );
+        _rummyLocalClient?.channel.sink.add(gmc.writeToBuffer());
+        break;
+      default:
+    }
+  }
 }

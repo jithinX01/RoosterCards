@@ -16,6 +16,7 @@ enum ComputerRummyState {
 }
 
 class ComputerRummyPage extends StatefulWidget {
+  ComputerRummyPage({Key? key}) : super(key: key);
   @override
   _ComputerRummyPageState createState() => _ComputerRummyPageState();
 }
@@ -27,16 +28,17 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
   ComputerRummyAgent _computerRummyAgent = ComputerRummyAgent();
   late StreamSubscription _streamSubscription;
   late StartTournament _startTournament;
+  Timer? _t;
   int _code = 0;
 
   @override
   Widget build(BuildContext context) {
-    return _getScreen();
+    print(_rummyState);
+    return Container(child: _getScreen(_rummyState));
   }
 
   @override
   void initState() {
-    _initSettings();
     super.initState();
   }
 
@@ -46,35 +48,47 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
       _streamSubscription.cancel();
     _rummyLocalClient?.dispose();
     _rummyLocalServer?.dispose();
+    _computerRummyAgent.dispose();
     super.dispose();
     print("dispose");
   }
 
   void _initSettings() {
     _rummyLocalServer = RummyLocalServer();
+
+    //Timer t = Timer(Duration(seconds: 1), () {
     _rummyLocalClient = RummyLocalClient(
         initDiscovery: false,
         onConnected: (val) {
           _rummyState = ComputerRummyState.WAITING;
-          setState(() {});
+          print("Player Client Connected");
           /*
+          setState(() {});
+          
             _rummyLocalClient
                 .sendMessage(_getGameInitMessage().writeToBuffer());
             */
         });
     _computerRummyAgent.init();
+    _t = Timer(Duration(seconds: 1), _callBack);
+    //});
   }
 
-  Widget _getScreen() {
-    switch (_rummyState) {
+  void _callBack() {
+    setState(() {});
+  }
+
+  Widget _getScreen(var state) {
+    switch (state) {
       case ComputerRummyState.INIT:
+        _initSettings();
         return _getLoadingPage();
       case ComputerRummyState.WAITING:
         _rummyLocalClient!.sendMessage(_getGameInitMessage().writeToBuffer());
         _streamSubscription = _rummyLocalClient!.channel.stream.listen(null);
         _streamSubscription.onData(_onData);
 
-        return _getLoadingPage();
+        return _getLoadingPage(msg: "Waking up Robo");
       case ComputerRummyState.PROGRESS:
         return _getRummyPlay();
       default:
@@ -82,7 +96,7 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
     }
   }
 
-  Widget _getLoadingPage() {
+  Widget _getLoadingPage({String msg = "Initializing game"}) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -90,7 +104,7 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
             Container(
                 padding: const EdgeInsets.only(top: 32),
                 child: Text(
-                  "Initializing game",
+                  msg,
                   textAlign: TextAlign.center,
                 )),
             Container(

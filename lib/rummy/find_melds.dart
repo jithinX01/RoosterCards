@@ -176,8 +176,8 @@ void saveVal(var meldInfo, var setLen, var key, var m) {
     meldInfo[setLen + 1] = {};
     meldInfo[setLen + 1][key] = [];
   }
-  if (!meldInfo[setLen].containsKey(key)) {
-    meldInfo[setLen][key] = [];
+  if (!meldInfo[setLen + 1].containsKey(key)) {
+    meldInfo[setLen + 1][key] = [];
   }
   meldInfo[setLen + 1][key].add(m);
 }
