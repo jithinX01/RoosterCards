@@ -20,12 +20,14 @@ class RummyPlay extends StatefulWidget {
   final WebSocketChannel channel;
   final StreamSubscription streamSubscription;
   final StartTournament startTournament;
+  final bool withComputer;
 
   RummyPlay(
       {Key? key,
       required this.channel,
       required this.streamSubscription,
-      required this.startTournament})
+      required this.startTournament,
+      this.withComputer = false})
       : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -189,6 +191,12 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _handleTournamentOver(TournamentOver tournamentOver) {
+    if (widget.withComputer) {
+      _t = Timer(Duration(seconds: 25), () {
+        Navigator.pop(context);
+      });
+      return;
+    }
     //save the info for trophy
     if (tournamentOver.youWon) {
       saveTrophy(

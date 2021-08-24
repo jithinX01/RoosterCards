@@ -204,7 +204,7 @@ int getPoints(var deadwood) {
 }
 
 List<int> findRun(List<int> L, int lStart, List<int> jokers,
-    {int noOfDeck = 1}) {
+    {int noOfDeck = 1, int setLen = 3}) {
   List<int> run = [];
   List<int> usedJokers = [];
   if (lStart < L.length) {
@@ -213,7 +213,7 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
     while (mstart < limit && lStart < L.length) {
       if (mstart == L[lStart]) {
         run.add(L[lStart]);
-        if (run.length == 3) {
+        if (run.length == setLen) {
           return run;
         }
         lStart += 1;
@@ -229,7 +229,7 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
         run.add(jokers.elementAt(0));
         usedJokers.add(jokers.elementAt(0));
         jokers.removeAt(0);
-        if (run.length == 3) {
+        if (run.length == setLen) {
           return run;
         }
       } else {
@@ -250,8 +250,8 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
 
   }
   */
-  if (jokers.length + run.length >= 3) {
-    while (run.length < 3 && jokers.isNotEmpty) {
+  if (jokers.length + run.length >= setLen) {
+    while (run.length < setLen && jokers.isNotEmpty) {
       run.add(jokers.elementAt(0));
       jokers.removeAt(0);
     }
@@ -427,7 +427,8 @@ bool winningSet(List<int> L, List<int> jokers, int setCount, bool pureRunFound,
   return false;
 }
 
-List<int> findSet(List<int> L, List<int> jokers, {int noOfDeck = 1}) {
+List<int> findSet(List<int> L, List<int> jokers,
+    {int noOfDeck = 1, int setLen = 3}) {
   List<int> set = [];
   if (L.length > 0) {
     int index = L[0];
@@ -435,7 +436,7 @@ List<int> findSet(List<int> L, List<int> jokers, {int noOfDeck = 1}) {
       if (L.contains(index)) {
         set.add(index);
         L.remove(index);
-        if (set.length == 3) {
+        if (set.length == setLen) {
           return set;
         }
         if (L.contains(index)) break;
@@ -444,8 +445,8 @@ List<int> findSet(List<int> L, List<int> jokers, {int noOfDeck = 1}) {
     }
   }
 
-  if (jokers.length + set.length >= 3) {
-    while (set.length < 3 && jokers.isNotEmpty) {
+  if (jokers.length + set.length >= setLen) {
+    while (set.length < setLen && jokers.isNotEmpty) {
       set.add(jokers.elementAt(0));
       jokers.removeAt(0);
     }
