@@ -298,6 +298,7 @@ class RummyTournament extends Tournament {
                     arpAction: _data.nextCard == _data.cardStack[0]
                         ? ARPAction.DRAW_CARD
                         : ARPAction.DROP_CARD,
+                    status: _getPlayerName(playerId, previousPlayerId) + status,
                   )
                 : null,
           ),

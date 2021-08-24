@@ -171,6 +171,7 @@ enum ARPAction {
 message ActiveRummyPlayerStat {
     ARPAction arpAction = 1;
     int32 nextCard = 2;
+    string status = 3;
 }
 
 message InActiveRummyPlaterStat {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/player_card_stack.dart';
@@ -61,8 +62,9 @@ class _RummyPlayState extends State<RummyPlay> {
 
   @override
   void dispose() {
-    if (_t!.isActive) _t?.cancel();
     AutoOrientation.portraitAutoMode();
+    if (_t != null && _t!.isActive) _t?.cancel();
+
     super.dispose();
   }
 
@@ -130,6 +132,7 @@ class _RummyPlayState extends State<RummyPlay> {
     _wl.clear();
     _wl.add(_getPlayingCards());
     _wl.add(_getStatusButton(true));
+    _wl.add(_getTimerMessage(activeRummyPlayerStat.status));
     setState(() {});
   }
 
@@ -151,7 +154,9 @@ class _RummyPlayState extends State<RummyPlay> {
   void _handleWonPlayerStat(WonPlayerStat wonPlayerStat) {
     _wl.clear();
     _wl.add(GameWinCard(
-      round: "Round " + wonPlayerStat.round.toString(),
+      round: !widget.withComputer
+          ? "Round " + wonPlayerStat.round.toString()
+          : "Robo Match",
       afterWinCards: wonPlayerStat.afterWinCards,
       points: wonPlayerStat.points,
       stat: PlayerStat.WINNER,
@@ -170,7 +175,9 @@ class _RummyPlayState extends State<RummyPlay> {
         points: losePlayerStat.points,
         stat: PlayerStat.LOSER,
         player: losePlayerStat.wonPlayer,
-        round: "Round " + losePlayerStat.round.toString()));
+        round: !widget.withComputer
+            ? "Round " + losePlayerStat.round.toString()
+            : "Robo Match"));
     setState(() {});
   }
 

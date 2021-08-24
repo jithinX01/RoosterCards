@@ -41,12 +41,15 @@ class NavigationCard extends StatelessWidget {
             icon,
             size: 70,
           ),
-          Text(
-            val,
-            style: TextStyle(
-              fontSize: 52,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold,
+          FittedBox(
+            fit: BoxFit.cover,
+            child: Text(
+              val,
+              style: TextStyle(
+                fontSize: 48,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           )
         ],

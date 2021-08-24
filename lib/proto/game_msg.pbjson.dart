@@ -261,11 +261,12 @@ const ActiveRummyPlayerStat$json = const {
   '2': const [
     const {'1': 'arpAction', '3': 1, '4': 1, '5': 14, '6': '.game_message.ARPAction', '10': 'arpAction'},
     const {'1': 'nextCard', '3': 2, '4': 1, '5': 5, '10': 'nextCard'},
+    const {'1': 'status', '3': 3, '4': 1, '5': 9, '10': 'status'},
   ],
 };
 
 /// Descriptor for `ActiveRummyPlayerStat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List activeRummyPlayerStatDescriptor = $convert.base64Decode('ChVBY3RpdmVSdW1teVBsYXllclN0YXQSNQoJYXJwQWN0aW9uGAEgASgOMhcuZ2FtZV9tZXNzYWdlLkFSUEFjdGlvblIJYXJwQWN0aW9uEhoKCG5leHRDYXJkGAIgASgFUghuZXh0Q2FyZA==');
+final $typed_data.Uint8List activeRummyPlayerStatDescriptor = $convert.base64Decode('ChVBY3RpdmVSdW1teVBsYXllclN0YXQSNQoJYXJwQWN0aW9uGAEgASgOMhcuZ2FtZV9tZXNzYWdlLkFSUEFjdGlvblIJYXJwQWN0aW9uEhoKCG5leHRDYXJkGAIgASgFUghuZXh0Q2FyZBIWCgZzdGF0dXMYAyABKAlSBnN0YXR1cw==');
 @$core.Deprecated('Use inActiveRummyPlaterStatDescriptor instead')
 const InActiveRummyPlaterStat$json = const {
   '1': 'InActiveRummyPlaterStat',

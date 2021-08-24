@@ -1341,6 +1341,7 @@ class ActiveRummyPlayerStat extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ActiveRummyPlayerStat', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
     ..e<ARPAction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arpAction', $pb.PbFieldType.OE, protoName: 'arpAction', defaultOrMaker: ARPAction.DRAW_CARD, valueOf: ARPAction.valueOf, enumValues: ARPAction.values)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextCard', $pb.PbFieldType.O3, protoName: 'nextCard')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status')
     ..hasRequiredFields = false
   ;
 
@@ -1348,6 +1349,7 @@ class ActiveRummyPlayerStat extends $pb.GeneratedMessage {
   factory ActiveRummyPlayerStat({
     ARPAction? arpAction,
     $core.int? nextCard,
+    $core.String? status,
   }) {
     final _result = create();
     if (arpAction != null) {
@@ -1355,6 +1357,9 @@ class ActiveRummyPlayerStat extends $pb.GeneratedMessage {
     }
     if (nextCard != null) {
       _result.nextCard = nextCard;
+    }
+    if (status != null) {
+      _result.status = status;
     }
     return _result;
   }
@@ -1396,6 +1401,15 @@ class ActiveRummyPlayerStat extends $pb.GeneratedMessage {
   $core.bool hasNextCard() => $_has(1);
   @$pb.TagNumber(2)
   void clearNextCard() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get status => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set status($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStatus() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStatus() => clearField(3);
 }
 
 class InActiveRummyPlaterStat extends $pb.GeneratedMessage {

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/find_melds.dart';
 import 'package:rooster_cards/rummy/rummy_local_client.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
+
+List<String> roboNames = ["Rooster", "Robo", "Spider", "Chandler", "Rock"];
 
 class ComputerRummyAgent {
   RummyLocalClient? _rummyLocalClient;
@@ -32,9 +35,9 @@ class ComputerRummyAgent {
 
   GameMessageClient _getGameJoinMessage(var code) {
     GameMessageClient gmc = GameMessageClient();
-
+    roboNames.shuffle();
     gmc.join = Join(
-        playerName: "Computer",
+        playerName: roboNames.first,
         //playerName: "JoinPlayer",
         tournamentId: code);
 
@@ -84,7 +87,7 @@ class ComputerRummyAgent {
     if (_t.isActive) {
       _t.cancel();
     }
-    _t = Timer(Duration(seconds: 5), () {
+    _t = Timer(Duration(seconds: random(10, 20)), () {
       _handleUserAction(rummyUserAction);
       print("after replace $_meld");
       print(_tournamentData.cards);
@@ -95,6 +98,11 @@ class ComputerRummyAgent {
     _tournamentData = startTournament;
     findMelds(List.from(_tournamentData.cards), _meld);
     print(_meld);
+  }
+
+  int random(min, max) {
+    var rn = new Random();
+    return min + rn.nextInt(max - min);
   }
 
   void _handleTournamentOver(TournamentOver tournamentOver) {}
