@@ -406,7 +406,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
       //print((pi / ((index - 6).abs() + 2)) * (index > 6 ? 1 : -1));
 
       //var angle = (pi / ((index - 6).abs() + 2)) * (index > 6 ? 1 : -1);
-      var angle = pi;
+      var angle = 2 * pi;
       if (!vertical) {
         return Positioned(
           //top: (index * 100) + start,
