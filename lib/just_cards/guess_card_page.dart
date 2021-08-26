@@ -235,7 +235,6 @@ class _GuessCardPageState extends State<GuessCardPage> {
       }
       _nextPopUp(c, val);
       setState(() {
-        /*
         _pc.animateToPage(
           0,
           duration: Duration(
@@ -243,7 +242,6 @@ class _GuessCardPageState extends State<GuessCardPage> {
           ),
           curve: ElasticInCurve(),
         );
-        */
       });
     } else {
       _card = _gc.getFound();
@@ -255,7 +253,7 @@ class _GuessCardPageState extends State<GuessCardPage> {
   }
 
   Future _nextPopUp(BuildContext c, String val) async {
-    bool? next = await showDialog<bool>(
+    await showDialog<bool>(
         context: c,
         builder: (BuildContext context) {
           return SimpleDialog(

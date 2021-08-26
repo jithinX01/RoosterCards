@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
-import 'package:rooster_cards/cards/playing_card.dart';
 import 'package:rooster_cards/proto/tournament_data.pb.dart';
-import 'dart:math';
 
 class GameLoserCard extends StatefulWidget {
   final int time;
@@ -185,7 +183,7 @@ class _GameLoserCardState extends State<GameLoserCard> {
       ),
     );
   }
-
+  /*
   String _getUTFCards(List<int> cards) {
     String scards = " ";
     cards.forEach((card) {
@@ -194,6 +192,7 @@ class _GameLoserCardState extends State<GameLoserCard> {
     print(scards);
     return scards;
   }
+  */
 
   Color _getColor(Suit suit) {
     if (suit == Suit.SPADE || suit == Suit.CLUB) {

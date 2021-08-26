@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rooster_cards/just_cards/card_picker.dart';
-import 'package:rooster_cards/just_cards/hand.dart';
+import 'package:rooster_cards/just_cards/cards_home_page.dart';
 import 'package:rooster_cards/trophy/trophy_cabinet.dart';
-import 'package:rooster_cards/utilities/game_loser_card.dart';
-import 'package:rooster_cards/utilities/game_win_card.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/navigation_card.dart';
 import 'package:rooster_cards/rummy/rummy_home_page.dart';
@@ -78,26 +75,13 @@ class _AppHomePageState extends State<AppHomePage> {
                 c: Colors.orange,
                 icon: Icons.cabin),
             NavigationCard(
-                w: CardPicker(),
+                w: UserDataInfo(
+                    userInfo: UserDataInfo.of(context).userInfo,
+                    child: CardsHomePage()),
                 //w: Hand(),
-                title: "Just Cards",
+                title: "Cards",
                 c: Colors.pink,
                 icon: Icons.card_giftcard),
-            /*
-            NavigationCard(
-                w: GameWinCard(
-                  time: 60,
-                  player: "P",
-                  round: "1",
-                  afterWinCards: getData(),
-                  points: getPts(),
-                  stat: PlayerStat.WINNER,
-                ),
-                //w: Hand(),
-                title: "Temp",
-                c: Colors.cyan,
-                icon: Icons.card_giftcard),
-            */
           ],
         ),
       ),
