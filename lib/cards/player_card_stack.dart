@@ -81,6 +81,9 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
 
   Widget _getScreen() {
     List<Widget> wList = List.empty(growable: true);
+    if (!_newCardTook && _showPopCard && _stackMode == StackMode.REPLACE_MODE) {
+      _clickList.clear();
+    }
     wList.add(createScrollableStack(widget.cards, vertical: widget.vertical));
 
     print("getScreen");
@@ -254,6 +257,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     //not a proper way but it works
     if (!_newCardTook) {
       _clickList.clear();
+      _showSwapButton = false;
       wl.add(Positioned(
         right: 55,
         //bottom: 170,
