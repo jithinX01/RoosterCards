@@ -96,6 +96,8 @@ class SuitIcon extends StatelessWidget {
         return 'images/diamond.png';
       case Suit.SPADE:
         return 'images/spade.png';
+      case Suit.JOKER:
+        return 'images/joker.png';
       default:
         return 'images/spade.png';
     }
