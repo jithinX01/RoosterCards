@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rooster_cards/cards/player_card_stack.dart';
 import 'package:rooster_cards/proto/user_data.pb.dart';
 import 'package:rooster_cards/utilities/file_storage.dart';
@@ -12,8 +13,6 @@ import 'package:rooster_cards/utilities/timer_button.dart';
 import 'package:rooster_cards/utilities/timer_message.dart';
 import 'package:rooster_cards/utilities/tournament_winners_card.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:auto_orientation/auto_orientation.dart';
-
 //import 'package:rooster_cards/rummy/waiting_screen.dart';
 
 class RummyPlay extends StatefulWidget {
@@ -61,7 +60,13 @@ class _RummyPlayState extends State<RummyPlay> {
 
   @override
   void dispose() {
-    AutoOrientation.portraitAutoMode();
+    //AutoOrientation.portraitAutoMode();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     if (_t != null && _t!.isActive) _t?.cancel();
 
     super.dispose();
@@ -70,7 +75,12 @@ class _RummyPlayState extends State<RummyPlay> {
   @override
   Widget build(BuildContext context) {
     //return WaitingScreen();
-    AutoOrientation.landscapeAutoMode();
+    //AutoOrientation.landscapeAutoMode();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       body: Container(
         child: _getScreen(),

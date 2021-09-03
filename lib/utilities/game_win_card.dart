@@ -39,12 +39,19 @@ class GameWinCard extends StatelessWidget {
             alignment: Alignment.center,
             child: Container(
               //height: 400,
+              //decoration: _getDecoration(c: c),
               child: _getCard(),
             )));
   }
 
   Decoration _getDecoration({Color c = Colors.grey}) {
     return BoxDecoration(
+      /*
+      image: DecorationImage(
+        image: AssetImage("images/win_background.png"),
+        fit: BoxFit.cover,
+      ),
+      */
       color: c,
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(7.0),

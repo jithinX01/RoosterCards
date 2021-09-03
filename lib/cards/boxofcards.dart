@@ -173,5 +173,5 @@ const PACK = <PCardInfo>[
   PCardInfo("J", Suit.SPADE),
   PCardInfo("Q", Suit.SPADE),
   PCardInfo("K", Suit.SPADE),
-  PCardInfo("joker", Suit.JOKER)
+  PCardInfo("JOKER", Suit.JOKER)
 ];

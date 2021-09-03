@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:auto_orientation/auto_orientation.dart';
+//import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/proto/tournament_data.pb.dart';
@@ -45,7 +45,7 @@ class _GameLoserCardState extends State<GameLoserCard> {
 
   @override
   Widget build(BuildContext context) {
-    AutoOrientation.landscapeAutoMode();
+    //AutoOrientation.landscapeAutoMode();
     if (!_fromTimer) {
       _visible = true;
       _t = Timer(Duration(seconds: widget.time), () {

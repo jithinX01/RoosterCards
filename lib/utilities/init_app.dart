@@ -7,6 +7,7 @@ import 'package:rooster_cards/utilities/file_storage.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/init_login.dart';
 import 'package:rooster_cards/utilities/rooster_splash.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class InitApp extends StatefulWidget {
   final UserData userData;
@@ -66,6 +67,7 @@ Future<UserData> loadUserData() async {
     list.forEach((element) {});
   }
   */
+  await _initGoogleMobileAds();
   return userData;
 }
 
@@ -80,4 +82,8 @@ Widget futureBuilder(BuildContext buildContext, AsyncSnapshot snapshot) {
   } else {
     return RoosterSplash();
   }
+}
+
+Future<InitializationStatus> _initGoogleMobileAds() {
+  return MobileAds.instance.initialize();
 }

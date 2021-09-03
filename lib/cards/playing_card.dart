@@ -20,12 +20,14 @@ class CardText extends StatelessWidget {
   final double size;
   final double width;
   final Color color;
+  final TextAlign textAlign;
   CardText({
     Key? key,
     required this.val,
     required this.size,
     required this.color,
     this.width = 50.0,
+    this.textAlign = TextAlign.left,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class CardText extends StatelessWidget {
           fontSize: size,
           color: color,
         ),
-        textAlign: TextAlign.left,
+        textAlign: textAlign,
       ),
     );
   }
@@ -104,6 +106,16 @@ class SuitIcon extends StatelessWidget {
   }
 }
 
+Color getColor(Suit suit) {
+  if (suit == Suit.SPADE || suit == Suit.CLUB) {
+    return Colors.black;
+  } else if (suit == Suit.HEART || suit == Suit.DIAMOND) {
+    return Colors.red;
+  } else {
+    return Colors.black;
+  }
+}
+
 class TextIcon extends StatelessWidget {
   final Suit suit;
   final String val;
@@ -121,15 +133,28 @@ class TextIcon extends StatelessWidget {
       SuitIcon(suit, width, 2.7, Alignment.centerLeft),
     ]);
   }
+}
 
-  Color getColor(Suit suit) {
-    if (suit == Suit.SPADE || suit == Suit.CLUB) {
-      return Colors.black;
-    } else if (suit == Suit.HEART || suit == Suit.DIAMOND) {
-      return Colors.red;
-    } else {
-      return Colors.black;
-    }
+class JokerTextIcon extends StatelessWidget {
+  final Suit suit;
+  final String val;
+  final double width;
+  JokerTextIcon(this.suit, this.val, {this.width = 50.0});
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Align(
+          alignment: Alignment.centerLeft,
+          //width: 300,
+          child: CardText(
+            val: val,
+            size: 24,
+            color: getColor(suit),
+            width: 16,
+            textAlign: TextAlign.center,
+          )),
+      //SuitIcon(suit, width, 2.7, Alignment.centerLeft),
+    ]);
   }
 }
 
@@ -158,22 +183,52 @@ class PlayingCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextIcon(
-            pCardInfo.suit,
-            pCardInfo.val,
-            width: 300,
-          ),
-          SuitIcon(pCardInfo.suit, 300, 1, Alignment.center),
-          Invert(TextIcon(
-            pCardInfo.suit,
-            pCardInfo.val,
-            width: 300,
-          )),
-        ],
-      ),
+      child: _getCard(),
     );
+  }
+
+  Widget _getNormalCard() {
+    return Stack(
+      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TextIcon(
+          pCardInfo.suit,
+          pCardInfo.val,
+          width: 300,
+        ),
+        SuitIcon(pCardInfo.suit, 300, 1, Alignment.center),
+        Invert(TextIcon(
+          pCardInfo.suit,
+          pCardInfo.val,
+          width: 300,
+        )),
+      ],
+    );
+  }
+
+  Widget _getJokerCard() {
+    return Stack(
+      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        JokerTextIcon(
+          pCardInfo.suit,
+          pCardInfo.val,
+          width: 300,
+        ),
+        SuitIcon(pCardInfo.suit, 300, 1, Alignment.center),
+        Invert(JokerTextIcon(
+          pCardInfo.suit,
+          pCardInfo.val,
+          width: 300,
+        )),
+      ],
+    );
+  }
+
+  Widget _getCard() {
+    if (pCardInfo.suit == Suit.JOKER) {
+      return _getJokerCard();
+    }
+    return _getNormalCard();
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:rooster_cards/ads/ad_helper.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/cards/playing_card.dart';
 import 'package:rooster_cards/just_cards/guess_card.dart';
@@ -24,9 +26,40 @@ class _GuessCardPageState extends State<GuessCardPage> {
   GuessState _guessState = GuessState.INIT;
   GuessCard _gc = GuessCard();
   PageController _pc = PageController();
-  int _deck = 0;
+  int _deck = 1;
   Color _c = Colors.orange;
   int _card = 52;
+
+  InterstitialAd? _interstitialAd;
+  bool _isInterstitialAdReady = false;
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          this._interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setState(() {
+                _gc = GuessCard();
+                _guessState = GuessState.INIT;
+              });
+            },
+          );
+
+          _isInterstitialAdReady = true;
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          _isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +70,7 @@ class _GuessCardPageState extends State<GuessCardPage> {
   Widget _getScreen() {
     switch (_guessState) {
       case GuessState.INIT:
+        _loadInterstitialAd();
         return _getInitGuessCard();
       case GuessState.PROGRESS:
         return _getGuessGame();
@@ -159,10 +193,21 @@ class _GuessCardPageState extends State<GuessCardPage> {
             label: Text("Play Again!"),
             heroTag: "_playAgain",
             onPressed: () {
+              /*
               setState(() {
                 _gc = GuessCard();
                 _guessState = GuessState.INIT;
               });
+              */
+
+              if (_isInterstitialAdReady) {
+                _interstitialAd?.show();
+              } else {
+                setState(() {
+                  _gc = GuessCard();
+                  _guessState = GuessState.INIT;
+                });
+              }
             },
           ),
         ),

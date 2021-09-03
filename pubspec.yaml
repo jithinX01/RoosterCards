@@ -32,9 +32,9 @@ dependencies:
   shelf_web_socket: ^1.0.1
   bonsoir: ^1.0.0+1
   protobuf: ^2.0.0
-  auto_orientation: ^2.0.2
   path_provider: ^2.0.2
   path: ^1.8.0
+  google_mobile_ads: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +56,10 @@ flutter:
     - images/heart.png
     - images/spade.png
     - images/trophy.png
+    - images/win_background.png
+    - images/win_background_2.png
+    - images/joker.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
