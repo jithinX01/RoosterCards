@@ -169,6 +169,7 @@ class _RummyPlayState extends State<RummyPlay> {
       afterWinCards: wonPlayerStat.afterWinCards,
       points: wonPlayerStat.points,
       stat: PlayerStat.WINNER,
+      computerGame: widget.withComputer,
     ));
     setState(() {});
   }
@@ -180,6 +181,7 @@ class _RummyPlayState extends State<RummyPlay> {
     _tournamentData.cards.addAll(losePlayerStat.winningCards);
     _wl.add(_getPlayingCards());
     _wl.add(GameWinCard(
+        computerGame: widget.withComputer,
         afterWinCards: losePlayerStat.afterWinCards,
         points: losePlayerStat.points,
         stat: PlayerStat.LOSER,
@@ -208,9 +210,11 @@ class _RummyPlayState extends State<RummyPlay> {
 
   void _handleTournamentOver(TournamentOver tournamentOver) {
     if (widget.withComputer) {
+      /*
       _t = Timer(Duration(seconds: 25), () {
         Navigator.pop(context);
       });
+      */
       return;
     }
     //save the info for trophy
@@ -234,9 +238,11 @@ class _RummyPlayState extends State<RummyPlay> {
           c: Colors.orangeAccent,
         ));
       });
+      /*
       _t = Timer(Duration(seconds: 7), () {
         Navigator.pop(context);
       });
+      */
     });
   }
 

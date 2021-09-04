@@ -17,6 +17,7 @@ class TimerMessage extends StatefulWidget {
 class _TimerMessageState extends State<TimerMessage> {
   bool _visible = true;
   bool _fromTimer = false;
+  Timer? _t;
   /*
   @override
   initState() {
@@ -27,7 +28,7 @@ class _TimerMessageState extends State<TimerMessage> {
   Widget build(BuildContext context) {
     if (!_fromTimer) {
       _visible = true;
-      Timer(Duration(seconds: widget.time), () {
+      _t = Timer(Duration(seconds: widget.time), () {
         setState(() {
           _visible = false;
           _fromTimer = true;
@@ -47,5 +48,12 @@ class _TimerMessageState extends State<TimerMessage> {
           heroTag: "btnc_timer_message",
           //shape: CircleBorder() ,
         ));
+  }
+
+  @override
+  void dispose() {
+    if (_t != null) _t?.cancel();
+
+    super.dispose();
   }
 }

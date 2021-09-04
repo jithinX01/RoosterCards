@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:rooster_cards/ads/ad_helper.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 
 import 'package:rooster_cards/proto/tournament_data.pb.dart';
@@ -10,7 +12,7 @@ enum PlayerStat {
   LOSER,
 }
 
-class GameWinCard extends StatelessWidget {
+class GameWinCard extends StatefulWidget {
   final int time;
   final String player;
   final String round;
@@ -19,6 +21,7 @@ class GameWinCard extends StatelessWidget {
   final AfterWinCards afterWinCards;
   final Map points;
   final PlayerStat stat;
+  final bool computerGame;
 
   GameWinCard({
     required this.stat,
@@ -29,29 +32,99 @@ class GameWinCard extends StatelessWidget {
     this.icon = Icons.military_tech,
     required this.afterWinCards,
     required this.points,
+    this.computerGame = false,
   });
+  @override
+  _GameWinCardState createState() => _GameWinCardState();
+}
+
+class _GameWinCardState extends State<GameWinCard> {
+  InterstitialAd? _interstitialAd;
+
+  bool _isInterstitialAdReady = false;
+
+  @override
+  void initState() {
+    _loadInterstitialAd();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
+  }
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          this._interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              Navigator.pop(context);
+            },
+          );
+
+          _isInterstitialAdReady = true;
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          _isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         //top: 20,
+        child: Stack(
+      children: [
+        _winBanner(),
+        if (widget.computerGame) _closeButton(),
+      ],
+    ));
+  }
+
+  Widget _winBanner() {
+    return Container(
+        //top: 20,
         child: Align(
             alignment: Alignment.center,
             child: Container(
-              //height: 400,
+              //height: 2048,
               //decoration: _getDecoration(c: c),
               child: _getCard(),
             )));
   }
 
+  Widget _closeButton() {
+    return Container(
+        padding: EdgeInsets.all(16.0),
+        child: Align(
+            alignment: Alignment.bottomCenter,
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  if (_isInterstitialAdReady) {
+                    _interstitialAd?.show();
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                label: Text("CLOSE"))));
+  }
+
   Decoration _getDecoration({Color c = Colors.grey}) {
     return BoxDecoration(
-      /*
       image: DecorationImage(
         image: AssetImage("images/win_background.png"),
         fit: BoxFit.cover,
       ),
-      */
       color: c,
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(7.0),
@@ -68,10 +141,10 @@ class GameWinCard extends StatelessWidget {
     return SingleChildScrollView(
         child: Container(
       width: 500,
-      //height: 500,
+      height: 512 + widget.afterWinCards.playerCards.length * 120,
       padding: EdgeInsets.all(16.0),
       alignment: Alignment.center,
-      decoration: _getDecoration(c: c),
+      decoration: _getDecoration(c: widget.c),
       child: Column(
         //clipBehavior: Clip.none,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -84,11 +157,11 @@ class GameWinCard extends StatelessWidget {
     List<Widget> wl = [];
     wl.addAll([
       Icon(
-        icon,
+        widget.icon,
         size: 64,
       ),
       Text(
-        round,
+        widget.round,
         style: TextStyle(
           fontSize: 24,
           fontStyle: FontStyle.normal,
@@ -97,7 +170,7 @@ class GameWinCard extends StatelessWidget {
       ),
     ]);
 
-    if (stat == PlayerStat.WINNER) {
+    if (widget.stat == PlayerStat.WINNER) {
       wl.addAll([
         Text(
           "WINNER WINNER ROOSTER DINNER",
@@ -108,10 +181,10 @@ class GameWinCard extends StatelessWidget {
           ),
         )
       ]);
-    } else if (stat == PlayerStat.LOSER) {
+    } else if (widget.stat == PlayerStat.LOSER) {
       wl.addAll([
         Text(
-          player,
+          widget.player,
           style: TextStyle(
             fontSize: 32,
             fontStyle: FontStyle.normal,
@@ -134,13 +207,14 @@ class GameWinCard extends StatelessWidget {
   }
 
   Widget _getCardAndPts() {
-    var sortedMap = SplayTreeMap.from(afterWinCards.playerCards, (k1, k2) {
-      return points[k1]!.compareTo(points[k2] ?? 0);
+    var sortedMap =
+        SplayTreeMap.from(widget.afterWinCards.playerCards, (k1, k2) {
+      return widget.points[k1]!.compareTo(widget.points[k2] ?? 0);
     });
 
     List<Widget> L = [];
     Map.from(sortedMap).forEach((player, playerCard) {
-      print("${points[player]}Pts");
+      print("${widget.points[player]}Pts");
       print("player");
       L.add(Column(
         children: [
@@ -150,7 +224,7 @@ class GameWinCard extends StatelessWidget {
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.bold,
               )),
-          Text("${points[player]}Pts",
+          Text("${widget.points[player]}Pts",
               style: TextStyle(
                 fontSize: 24,
                 fontStyle: FontStyle.normal,

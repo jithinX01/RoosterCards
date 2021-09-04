@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:rooster_cards/ads/ad_helper.dart';
 
-class TournamentWinnersCard extends StatelessWidget {
+class TournamentWinnersCard extends StatefulWidget {
   final String tournamentName;
   final bool sharedTrophy;
   final List<String> wonPlayers;
@@ -15,6 +17,51 @@ class TournamentWinnersCard extends StatelessWidget {
     this.sharedTrophy = false,
     required this.wonPlayers,
   }) : super(key: key);
+
+  @override
+  _TournamentWinnersCardState createState() => _TournamentWinnersCardState();
+}
+
+class _TournamentWinnersCardState extends State<TournamentWinnersCard> {
+  InterstitialAd? _interstitialAd;
+
+  bool _isInterstitialAdReady = false;
+
+  @override
+  void initState() {
+    _loadInterstitialAd();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
+  }
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          this._interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              Navigator.pop(context);
+            },
+          );
+
+          _isInterstitialAdReady = true;
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          _isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
 
   Decoration _getDecoration({Color c = Colors.grey}) {
     return BoxDecoration(
@@ -57,7 +104,7 @@ class TournamentWinnersCard extends StatelessWidget {
         scale: 1,
       ),
       Text(
-        tournamentName,
+        widget.tournamentName,
         style: TextStyle(
           fontSize: 16,
           fontStyle: FontStyle.normal,
@@ -65,7 +112,7 @@ class TournamentWinnersCard extends StatelessWidget {
         ),
       ),
       Text(
-        this.sharedTrophy ? "WINNERS" : "WINNER",
+        widget.sharedTrophy ? "WINNERS" : "WINNER",
         style: TextStyle(
           fontSize: 32,
           fontStyle: FontStyle.normal,
@@ -73,7 +120,7 @@ class TournamentWinnersCard extends StatelessWidget {
         ),
       )
     ];
-    this.wonPlayers.forEach((player) {
+    widget.wonPlayers.forEach((player) {
       wl.add(Text(
         player,
         style: TextStyle(
@@ -88,11 +135,47 @@ class TournamentWinnersCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*
     return Container(
         //top: 20,
         child: Align(
       alignment: Alignment.center,
-      child: _getCard(this.tournamentName, this.c, this.icon),
+      child: _getCard(widget.tournamentName, widget.c, widget.icon),
     ));
+    */
+
+    return Container(
+        //top: 20,
+        child: Stack(
+      children: [
+        _winBanner(),
+        _closeButton(),
+      ],
+    ));
+  }
+
+  Widget _winBanner() {
+    return Container(
+        //top: 20,
+        child: Align(
+      alignment: Alignment.center,
+      child: _getCard(widget.tournamentName, widget.c, widget.icon),
+    ));
+  }
+
+  Widget _closeButton() {
+    return Container(
+        padding: EdgeInsets.all(16.0),
+        child: Align(
+            alignment: Alignment.bottomCenter,
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  if (_isInterstitialAdReady) {
+                    _interstitialAd?.show();
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                label: Text("CLOSE"))));
   }
 }

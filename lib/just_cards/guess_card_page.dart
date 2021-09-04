@@ -375,4 +375,10 @@ class _GuessCardPageState extends State<GuessCardPage> {
       default:
     }
   }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
+  }
 }

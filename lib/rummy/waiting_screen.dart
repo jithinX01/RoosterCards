@@ -174,7 +174,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
       Container(
           padding: const EdgeInsets.only(top: 64),
           child: Text(
-            _tournamentId.toString(),
+            "Game Code " + _tournamentId.toString(),
             textAlign: TextAlign.center,
           )),
     ];

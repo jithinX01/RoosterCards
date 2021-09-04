@@ -30,6 +30,7 @@ class ComputerRummyAgent {
   }
 
   void dispose() {
+    _t.cancel();
     _rummyLocalClient?.dispose();
   }
 
