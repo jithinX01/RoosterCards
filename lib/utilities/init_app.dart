@@ -45,7 +45,7 @@ class _InitAppState extends State<InitApp> {
 Future<UserData> loadUserData() async {
   var rfs = RoosterFileStorage("user.data");
   UserData userData = UserData();
-  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 3));
   if (await rfs.fileExist) {
     var data = rfs.readFile();
     userData = UserData.fromBuffer(data);

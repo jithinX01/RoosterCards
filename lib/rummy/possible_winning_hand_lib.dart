@@ -461,7 +461,7 @@ bool winningSet(List<int> L, List<int> jokers, int setCount, bool pureRunFound,
       meld["set"].add(set);
       //print("meld $meld $L");
       if (findPossibleMeld) {
-        findPossibleMelds(meld, L, meldInfo, setCount, jokers);
+        findPossibleMelds(meld, remainList + L, meldInfo, setCount, jokers);
       }
       bool valid = false;
       if (setCount == 4) {

@@ -100,6 +100,8 @@ class SuitIcon extends StatelessWidget {
         return 'images/spade.png';
       case Suit.JOKER:
         return 'images/joker.png';
+      case Suit.ROOSTER:
+        return 'images/rooster.png';
       default:
         return 'images/spade.png';
     }
@@ -226,7 +228,7 @@ class PlayingCard extends StatelessWidget {
   }
 
   Widget _getCard() {
-    if (pCardInfo.suit == Suit.JOKER) {
+    if (pCardInfo.suit == Suit.JOKER || pCardInfo.suit == Suit.ROOSTER) {
       return _getJokerCard();
     }
     return _getNormalCard();

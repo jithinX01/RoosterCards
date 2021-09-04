@@ -10,6 +10,7 @@ enum Suit {
   HEART,
   SPADE,
   JOKER,
+  ROOSTER,
 }
 const List<String> UTFPACK = [
   "🃑",
