@@ -59,7 +59,7 @@ Future<UserData> loadUserData() async {
   userData.trophyDir = '$dirPath/trophy';
   /*
   var list = Directory('$dirPath/trophy').listSync();
-  print("files $list");
+ //rprint("files $list");
 
   
   else {

@@ -56,7 +56,7 @@ class _TournamentWinnersCardState extends State<TournamentWinnersCard> {
           _isInterstitialAdReady = true;
         },
         onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial ad: ${err.message}');
+          //rprint('Failed to load an interstitial ad: ${err.message}');
           _isInterstitialAdReady = false;
         },
       ),

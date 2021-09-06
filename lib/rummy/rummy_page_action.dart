@@ -78,7 +78,7 @@ class _RummyPageActionState extends State<RummyPageAction> {
     _rummyLocalClient?.dispose();
     if (widget.rummyAction == RummyAction.START) _rummyLocalServer?.dispose();
     super.dispose();
-    print("dispose");
+    //rprint("dispose");
   }
 
   Widget _getScreen(var state) {
@@ -101,20 +101,20 @@ class _RummyPageActionState extends State<RummyPageAction> {
         });
       case RummyState.JOIN:
         return RummyJoin(onChanged: (val) {
-          print("count $val");
+          //rprint("count $val");
           _code = val;
 
           _rummyLocalClient = RummyLocalClient(
-              initDiscovery: false,
+              //initDiscovery: false,
               onConnected: (val) {
-                print(val);
-                //print(_rummyLocalClient);
-                _rummyState = RummyState.WAITING;
+            //rprint(val);
+            //print(_rummyLocalClient);
+            _rummyState = RummyState.WAITING;
 
-                //_rummyLocalClient
-                //    .sendMessage(_getGameJoinMessage().writeToBuffer());
-                setState(() {});
-              });
+            //_rummyLocalClient
+            //    .sendMessage(_getGameJoinMessage().writeToBuffer());
+            setState(() {});
+          });
         });
       case RummyState.WAITING:
         _rummyLocalClient!.sendMessage(_getMessage().writeToBuffer());
@@ -123,7 +123,7 @@ class _RummyPageActionState extends State<RummyPageAction> {
           onGameStart: (val) {
             _startTournament = val;
             //print("Game is ready to start");
-            print(_startTournament.cards);
+            //rprint(_startTournament.cards);
             _rummyState = RummyState.PROGRESS;
             setState(() {});
           },

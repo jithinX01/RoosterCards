@@ -22,7 +22,7 @@ class _TimerButtonState extends State<TimerButton> {
     super.initState();
 
     Timer.periodic(Duration(seconds: 1), (timer) {
-      print(_timeLeft);
+      //rprint(_timeLeft);
       if (_timeLeft <= 0) {
         timer.cancel();
         widget.onEnd();

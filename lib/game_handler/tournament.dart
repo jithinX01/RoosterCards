@@ -38,7 +38,7 @@ class Tournament {
   void _sendInitStat(WebSocketChannel wc) {
     InitStartStat initStartStat = InitStartStat(
         playerId: _data.currentPlayerId, tournamentId: _data.tournamentId);
-    print("ServerSending Data");
+    //rprint("ServerSending Data");
     GameMessageServer gms = GameMessageServer();
     gms.initStartStat = initStartStat;
     wc.sink.add(gms.writeToBuffer());
@@ -274,7 +274,7 @@ class RummyTournament extends Tournament {
     _data.playerCards[playerId]?.cards.remove(oldCard);
     _data.playerCards[playerId]?.cards.add(newCard);
     if (isWinningHand(_data.playerCards[playerId]?.cards)) {
-      print("$playerId won");
+      //rprint("$playerId won");
       _handleGameWin(playerId);
     } else {
       _sendGameUpdate(status: status, previousPlayerId: playerId);
@@ -326,7 +326,7 @@ class RummyTournament extends Tournament {
       _sendNextGameUpdate();
       //Timer(Duration(seconds: 5), _sendNextGameUpdate);
     } else {
-      print("Tournament Over");
+      //rprint("Tournament Over");
       _handleTournamentEnd();
     }
   }

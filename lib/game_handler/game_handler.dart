@@ -15,7 +15,7 @@ class GameHandler {
 
   void handleMessage(var message, WebSocketChannel wc) {
     GameMessageClient gmc = GameMessageClient.fromBuffer(message);
-    print(gmc.whichPayLoad());
+    //rprint(gmc.whichPayLoad());
     switch (gmc.whichPayLoad()) {
       case GameMessageClient_PayLoad.initStart:
         _handlInitStart(gmc.initStart, wc);
@@ -31,7 +31,7 @@ class GameHandler {
   }
 
   void _handlInitStart(InitStart initStart, WebSocketChannel wc) {
-    print(initStart.gameType);
+    //rprint(initStart.gameType);
     var tournamentId = random(1000, 9999);
     while (tournamentMap.containsKey(tournamentId)) {
       tournamentId = random(1000, 9999);
@@ -41,7 +41,7 @@ class GameHandler {
   }
 
   void _handleJoin(Join join, WebSocketChannel wc) {
-    print(join.tournamentId);
+    //rprint(join.tournamentId);
     if (tournamentMap.containsKey(join.tournamentId)) {
       tournamentMap[join.tournamentId]?.handleJoin(join, wc);
     } else {

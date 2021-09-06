@@ -19,7 +19,7 @@ class ComputerRummyAgent {
     _rummyLocalClient = RummyLocalClient(
         initDiscovery: false,
         onConnected: (val) {
-          print("Agent connected");
+          //rprint("Agent connected");
         });
   }
 
@@ -72,16 +72,16 @@ class ComputerRummyAgent {
           _handleActiveRPS(gmUpdate.rummyPlayerStat.activeRPS);
           break;
         default:
-          print(gmUpdate.whichUpdate());
+        //rprint(gmUpdate.whichUpdate());
       }
     } else {
-      print("Something wrong with Rummy gms update");
+      //rprint("Something wrong with Rummy gms update");
     }
   }
 
   void _handleActiveRPS(ActiveRummyPlayerStat activeRummyPlayerStat) {
-    print("next card");
-    print(activeRummyPlayerStat.nextCard);
+    //rprint("next card");
+    //rprint(activeRummyPlayerStat.nextCard);
     _tournamentData.nextCard = activeRummyPlayerStat.nextCard;
     RummyUserAction rummyUserAction =
         getUserAction(_meld, activeRummyPlayerStat.nextCard);
@@ -90,15 +90,15 @@ class ComputerRummyAgent {
     }
     _t = Timer(Duration(seconds: random(10, 20)), () {
       _handleUserAction(rummyUserAction);
-      print("after replace $_meld");
-      print(_tournamentData.cards);
+      //rprint("after replace $_meld");
+      //rprint(_tournamentData.cards);
     });
   }
 
   void _handleStartTournament(StartTournament startTournament) {
     _tournamentData = startTournament;
     findMelds(List.from(_tournamentData.cards), _meld);
-    print(_meld);
+    //rprint(_meld);
   }
 
   int random(min, max) {
@@ -111,7 +111,7 @@ class ComputerRummyAgent {
   void _handleUserAction(RummyUserAction rummyUserAction) {
     switch (rummyUserAction.rUserAction) {
       case RUserAction.DISCARD:
-        print("Discarded ${rummyUserAction.newCard}");
+        //rprint("Discarded ${rummyUserAction.newCard}");
         GameMessageClient gmc = GameMessageClient(
           clientGameStat: ClientGameStat(
             playerId: _tournamentData.yourId,
@@ -124,7 +124,7 @@ class ComputerRummyAgent {
         _rummyLocalClient?.channel.sink.add(gmc.writeToBuffer());
         break;
       case RUserAction.REPLACE:
-        print("before replace $_meld");
+        //rprint("before replace $_meld");
         _tournamentData.cards.remove(rummyUserAction.oldCard);
         _tournamentData.cards.add(rummyUserAction.newCard);
         _tournamentData.cards.sort();

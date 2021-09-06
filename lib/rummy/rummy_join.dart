@@ -58,7 +58,7 @@ class _RummyJoinState extends State<RummyJoin> {
                 /*
                 onChanged: (String? value) {
                   //ts.tournamentName = value ?? ts.tournamentName;
-                  print(value);
+                 //rprint(value);
                   code = int.parse(value ?? "0");
                 },
                 */
@@ -67,7 +67,7 @@ class _RummyJoinState extends State<RummyJoin> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      print(code);
+                      //rprint(code);
                       widget.onChanged(code);
                     }
                   },

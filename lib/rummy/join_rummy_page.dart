@@ -51,21 +51,21 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
     _rummyLocalClient.dispose();
 
     super.dispose();
-    print("dispose");
+    //rprint("dispose");
   }
 
   Widget _getScreen(var state) {
     switch (state) {
       case RummyState.INIT_JOIN:
         return RummyJoin(onChanged: (val) {
-          print("count $val");
+          //rprint("count $val");
           _code = val;
 
           _rummyLocalClient = RummyLocalClient(
               initDiscovery: false,
               onConnected: (val) {
-                print(val);
-                print(_rummyLocalClient);
+                //rprint(val);
+                //rprint(_rummyLocalClient);
                 _rummyState = RummyState.WAITING;
 
                 //_rummyLocalClient
@@ -80,7 +80,7 @@ class _JoinRummyPageState extends State<JoinRummyPage> {
           onGameStart: (val) {
             _startTournament = val;
             //print("Game is ready to start");
-            print(_startTournament.cards);
+            //rprint(_startTournament.cards);
             _rummyState = RummyState.PROGRESS;
             setState(() {});
           },

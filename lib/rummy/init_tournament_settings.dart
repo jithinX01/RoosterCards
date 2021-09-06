@@ -3,8 +3,10 @@ class InitTournamentSettings {
   String tournamentName = "Home League";
   int trophyId = 0;
   void logInfo() {
-    print(
+    /*
+   print(
         "Tournament info ${cs.noOfDeck}, ${cs.noOfPlayers}, " + tournamentName);
+   */
   }
 }
 

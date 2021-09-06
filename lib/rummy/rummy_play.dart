@@ -90,7 +90,7 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _onData(data) {
-    print("onData Rummy Play");
+    //rprint("onData Rummy Play");
     GameMessageServer gms = GameMessageServer.fromBuffer(data);
     _handleServerMessage(gms);
   }
@@ -128,13 +128,13 @@ class _RummyPlayState extends State<RummyPlay> {
         default:
       }
     } else {
-      print("Something wrong with Rummy gms update");
+      //rprint("Something wrong with Rummy gms update");
     }
   }
 
   void _handleActiveRPS(ActiveRummyPlayerStat activeRummyPlayerStat) {
-    print("next card");
-    print(activeRummyPlayerStat.nextCard);
+    //rprint("next card");
+    //rprint(activeRummyPlayerStat.nextCard);
     _tournamentData.youStart = true;
     _tournamentData.nextCard = activeRummyPlayerStat.nextCard;
     _mode = StackMode.REPLACE_MODE;
@@ -146,8 +146,8 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _handleInActiveRPS(InActiveRummyPlaterStat inActiveRummyPlaterStat) {
-    print("handleInActive");
-    print(inActiveRummyPlaterStat.status);
+    //rprint("handleInActive");
+    //rprint(inActiveRummyPlaterStat.status);
     _tournamentData.youStart = false;
     int activePlayerId = inActiveRummyPlaterStat.activePlayerId;
     String activePlayer = _tournamentData.playerMap[activePlayerId] ?? "";
@@ -260,7 +260,7 @@ class _RummyPlayState extends State<RummyPlay> {
       mode: _mode,
       nextCard: _tournamentData.nextCard,
       onUserAction: (val) {
-        print(val.rUserAction);
+        //rprint(val.rUserAction);
         _handleUserAction(val);
         //setState(() {});
       },
@@ -270,8 +270,8 @@ class _RummyPlayState extends State<RummyPlay> {
   void _handleUserAction(RummyUserAction rummyUserAction) {
     switch (rummyUserAction.rUserAction) {
       case RUserAction.DISCARD:
-        print(rummyUserAction.newCard);
-        print("Discarded");
+        //rprint(rummyUserAction.newCard);
+        //rprint("Discarded");
         _mode = StackMode.SWAP_MODE;
         /*
         _tournamentData.cards.clear();
@@ -296,13 +296,13 @@ class _RummyPlayState extends State<RummyPlay> {
       case RUserAction.NORMAL_SWAP:
         _tournamentData.cards.clear();
         _tournamentData.cards.addAll(rummyUserAction.cards);
-        print("Normal Swap");
+        //rprint("Normal Swap");
         break;
       case RUserAction.REPLACE:
         _mode = StackMode.SWAP_MODE;
         _tournamentData.cards.clear();
         _tournamentData.cards.addAll(rummyUserAction.cards);
-        print(rummyUserAction.cards);
+        //rprint(rummyUserAction.cards);
         _wl.clear();
         _wl.add(_getPlayingCards());
         _wl.add(_getStatusButton(false));
@@ -319,7 +319,7 @@ class _RummyPlayState extends State<RummyPlay> {
           ),
         );
         widget.channel.sink.add(gmc.writeToBuffer());
-        print("replace");
+        //rprint("replace");
 
         break;
       default:
@@ -343,7 +343,7 @@ class _RummyPlayState extends State<RummyPlay> {
         foregroundColor: Colors.black,
         heroTag: "ggbb_status",
         onPressed: () {
-          print("pressed");
+          //rprint("pressed");
         },
       ),
     );

@@ -61,7 +61,7 @@ class NavigationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(this.title);
+        //rprint(this.title);
         Navigator.push(
           context,
           MaterialPageRoute(

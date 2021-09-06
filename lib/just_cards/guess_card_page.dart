@@ -53,7 +53,7 @@ class _GuessCardPageState extends State<GuessCardPage> {
           _isInterstitialAdReady = true;
         },
         onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial ad: ${err.message}');
+          //rprint('Failed to load an interstitial ad: ${err.message}');
           _isInterstitialAdReady = false;
         },
       ),
@@ -112,7 +112,7 @@ class _GuessCardPageState extends State<GuessCardPage> {
             heroTag: "_gbaner",
             label: Text("Remeber A Card From Deck"),
             onPressed: () {
-              print("pressed");
+              //rprint("pressed");
             },
           ),
         ),
@@ -125,7 +125,7 @@ class _GuessCardPageState extends State<GuessCardPage> {
       PageView(
         controller: _pc,
         onPageChanged: (page) {
-          print("page $page");
+          //rprint("page $page");
           setState(() {
             _deck = page + 1;
             _c = _getColor(_deck);
@@ -153,8 +153,8 @@ class _GuessCardPageState extends State<GuessCardPage> {
           foregroundColor: Colors.black,
           heroTag: "_ggdeck_",
           onPressed: () {
-            print("pressed");
-            print("${_pc.page}");
+            //rprint("pressed");
+            //rprint("${_pc.page}");
             _askUser(context);
           },
         ),
@@ -167,8 +167,8 @@ class _GuessCardPageState extends State<GuessCardPage> {
           label: Text("Help  "),
           heroTag: "_gghelp_",
           onPressed: () {
-            print("pressed");
-            print("${_pc.page}");
+            //rprint("pressed");
+            //rprint("${_pc.page}");
             _nextPopUp(context, instructions);
           },
         ),
@@ -220,7 +220,7 @@ class _GuessCardPageState extends State<GuessCardPage> {
             heroTag: "_card_",
             label: Text("Your Card !"),
             onPressed: () {
-              print("pressed");
+              //rprint("pressed");
             },
           ),
         ),
@@ -290,7 +290,7 @@ class _GuessCardPageState extends State<GuessCardPage> {
       });
     } else {
       _card = _gc.getFound();
-      print(_card);
+      //rprint(_card);
       setState(() {
         _guessState = GuessState.FOUND;
       });
@@ -363,13 +363,13 @@ class _GuessCardPageState extends State<GuessCardPage> {
         })) {
       case Answers.YES:
         {
-          print("Yes");
+          //rprint("Yes");
           _nextRound(c);
           break;
         }
       case Answers.NO:
         {
-          print("No");
+          //rprint("No");
           break;
         }
       default:

@@ -56,7 +56,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   void initState() {
     super.initState();
     _stackMode = widget.mode;
-    print("Inited");
+   //rprint("Inited");
     _cards = List.from(widget.cards);
   }
   */
@@ -71,7 +71,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     }
     */
     if (!_fromInside) {
-      print("Not From Inside");
+      //rprint("Not From Inside");
       _stackMode = widget.mode;
     } else {
       _fromInside = false;
@@ -86,9 +86,9 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     }
     wList.add(createScrollableStack(widget.cards, vertical: widget.vertical));
 
-    print("getScreen");
-    print(widget.cards);
-    print(_stackMode);
+    //rprint("getScreen");
+    //rprint(widget.cards);
+    //rprint(_stackMode);
     if (_showPopCard && _stackMode == StackMode.REPLACE_MODE)
       wList.add(_getPopCard(widget.nextCard));
     if (_showSwapButton) wList.add(_getControlButton());
@@ -150,7 +150,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             } else if (_stackMode == StackMode.REPLACE_MODE) {
               replace();
             }
-            print(_stackMode);
+            //rprint(_stackMode);
           },
         ),
       ),
@@ -338,8 +338,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   Widget getAt(int card, int index) {
     return InkWell(
         onTap: () {
-          print(card);
-          print(index);
+          //rprint(card);
+          //rprint(index);
           if (_stackMode == StackMode.SWAP_MODE) {
             if (!_clickList.contains(index)) {
               _clickList.add(index);
@@ -358,7 +358,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
                 _clickList.removeAt(0);
               }
             }
-            print(_clickList);
+            //rprint(_clickList);
             setState(() {});
           } else if (_stackMode == StackMode.REPLACE_MODE && _newCardTook) {
             if (!_clickList.contains(index))
@@ -369,7 +369,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
               _clickList.removeAt(0);
             }
             _showSwapButton = (_clickList.length == 1);
-            print(_clickList);
+            //rprint(_clickList);
             setState(() {});
           }
         },

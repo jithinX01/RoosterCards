@@ -16,6 +16,7 @@ class RummyLocalClient {
     } else {
       //to test locally
       connectToServer("0.0.0.0", "8080");
+      //connectToServer("10.0.2.2", "8080");
 
       //onConnected(true);
     }
@@ -31,7 +32,7 @@ class RummyLocalClient {
 
       if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
         var serviceData = event.service?.toJson();
-        print('Service found : $serviceData');
+        //rprint('Service found : $serviceData');
         var host = (serviceData ?? const {})['service.ip'] ?? "localhost";
         var port = (serviceData ?? const {})['service.port'] ?? "8080";
 
@@ -39,19 +40,19 @@ class RummyLocalClient {
         onConnected(true);
       } else if (event.type ==
           BonsoirDiscoveryEventType.DISCOVERY_SERVICE_LOST) {
-        print('Service lost : ${event.service?.toJson()}');
+        //rprint('Service lost : ${event.service?.toJson()}');
       }
     });
   }
 
   void connectToServer(String host, String port) {
-    print("connecting $host:$port");
+    //rprint("connecting $host:$port");
     _channel = WebSocketChannel.connect(
       Uri.parse('ws://' + host + ':' + port),
       //Uri.parse('ws://localhost:8080'),
     );
 
-    print(_channel);
+    //rprint(_channel);
     onConnected(true);
   }
 
@@ -61,7 +62,7 @@ class RummyLocalClient {
   }
 
   void sendMessage(dynamic data) {
-    print(data);
+    //rprint(data);
     _channel.sink.add(data);
   }
 }

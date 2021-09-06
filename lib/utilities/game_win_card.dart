@@ -72,7 +72,7 @@ class _GameWinCardState extends State<GameWinCard> {
           _isInterstitialAdReady = true;
         },
         onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial ad: ${err.message}');
+          //rprint('Failed to load an interstitial ad: ${err.message}');
           _isInterstitialAdReady = false;
         },
       ),
@@ -214,8 +214,8 @@ class _GameWinCardState extends State<GameWinCard> {
 
     List<Widget> L = [];
     Map.from(sortedMap).forEach((player, playerCard) {
-      print("${widget.points[player]}Pts");
-      print("player");
+      //rprint("${widget.points[player]}Pts");
+      //rprint("player");
       L.add(Column(
         children: [
           Text(player,

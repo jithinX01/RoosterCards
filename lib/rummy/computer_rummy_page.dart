@@ -33,7 +33,7 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_rummyState);
+    //rprint(_rummyState);
     return Container(child: _getScreen(_rummyState));
   }
 
@@ -50,7 +50,7 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
     _rummyLocalServer?.dispose();
     _computerRummyAgent.dispose();
     super.dispose();
-    print("dispose");
+    //rprint("dispose");
   }
 
   void _initSettings() {
@@ -61,7 +61,7 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
         initDiscovery: false,
         onConnected: (val) {
           _rummyState = ComputerRummyState.WAITING;
-          print("Player Client Connected");
+          //rprint("Player Client Connected");
           /*
           setState(() {});
           

@@ -38,7 +38,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
           children: <Widget>[
             NumButton(
               onChanged: (val) {
-                print("current state $val");
+                //rprint("current state $val");
                 _cs.noOfDeck = val;
                 setState(() {
                   //_shuffle = val;
@@ -51,7 +51,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
             ),
             NumButton(
               onChanged: (val) {
-                print("current state $val");
+                //rprint("current state $val");
                 _cs.noOfPlayers = val;
                 setState(() {
                   //_shuffle = val;
@@ -64,7 +64,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
             ),
             NumButton(
               onChanged: (val) {
-                print("current state $val");
+                //rprint("current state $val");
                 _cs.noOfRounds = val;
                 setState(() {
                   //_shuffle = val;

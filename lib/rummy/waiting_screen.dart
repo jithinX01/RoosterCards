@@ -98,7 +98,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
 
       widget.onGameStart(startTournament);
     });
-    print(startTournament.playerMap);
+    //rprint(startTournament.playerMap);
 
     //_subscription.cancel();
     return _initWidget(msg: "Starting");

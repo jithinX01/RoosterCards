@@ -21,11 +21,11 @@ class GuessCard {
   //pos should be greater than 0
   //for deck1, deck2, deck3
   List<int> getDeck(int pos) {
-    print("Deck $pos");
+    //rprint("Deck $pos");
     List<int> l = [];
     for (var i = (pos - 1); i < count; i = i + 3) {
       l.add(_deck[i]);
-      print(_deck[i]);
+      //rprint(_deck[i]);
     }
     return l;
   }
@@ -38,9 +38,9 @@ class GuessCard {
     _iteration++;
 
     if (_iteration == 3) {
-      print("found");
+      //rprint("found");
       List<int> ch = getDeck(chosen);
-      print(ch[ch.length ~/ 2]);
+      //rprint(ch[ch.length ~/ 2]);
       _found = ch[ch.length ~/ 2];
       return true;
     }

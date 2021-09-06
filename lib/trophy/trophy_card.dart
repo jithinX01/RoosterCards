@@ -77,13 +77,14 @@ class TrophyCard extends StatelessWidget {
       Text(
         tournamentName,
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 24,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.bold,
         ),
       ),
       Text(
-        this.sharedTrophy ? "WINNERS" : "WINNER",
+        //this.sharedTrophy ? "WINNERS" : "WINNER",
+        "WIN",
         style: TextStyle(
           fontSize: 32,
           fontStyle: FontStyle.normal,
@@ -91,6 +92,7 @@ class TrophyCard extends StatelessWidget {
         ),
       )
     ];
+    /*
     this.wonPlayers.forEach((player) {
       wl.add(Text(
         player,
@@ -101,6 +103,7 @@ class TrophyCard extends StatelessWidget {
         ),
       ));
     });
+    */
     return wl;
   }
 

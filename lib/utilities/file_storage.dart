@@ -13,7 +13,7 @@ class RoosterFileStorage {
 
   void _initLocalPath() async {
     path = await localPath;
-    print("file $path/$filename");
+    //rprint("file $path/$filename");
   }
 
   Future<String> get localPath async {

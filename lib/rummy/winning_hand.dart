@@ -1,13 +1,13 @@
 const int JOKER = 52;
 
 bool isWinningHand(List<int>? cards) {
-  print("isWinningHand");
+  //rprint("isWinningHand");
   List<int> L = List.from(cards ?? []);
   if (L.length != 13) {
     return false;
   }
   L.sort();
-  print(cards);
+  //rprint(cards);
   var jokers = findJokers(L);
   var meld = {};
   List<int> winningMeld = [];
@@ -18,7 +18,7 @@ bool isWinningHand(List<int>? cards) {
     cards?.clear();
     cards?.addAll(winningMeld);
   }
-  print(" winning Set $cards");
+  //rprint(" winning Set $cards");
   return valid;
 }
 

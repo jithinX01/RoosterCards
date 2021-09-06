@@ -39,8 +39,8 @@ class _InitLoginState extends State<InitLogin> {
                       labelText: 'Name *',
                     ),
                     onSaved: (String? value) {
-                      print("OnSaved");
-                      print(value);
+                      //rprint("OnSaved");
+                      //rprint(value);
                       if (value != null) {
                         _userData.name = value;
                       }
@@ -99,10 +99,10 @@ class _InitLoginState extends State<InitLogin> {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        print("User Data ");
-                        print(_userData.name);
+                        //rprint("User Data ");
+                        //rprint(_userData.name);
 
-                        print("$_userData");
+                        //rprint("$_userData");
                         _userData.initDone = true;
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.

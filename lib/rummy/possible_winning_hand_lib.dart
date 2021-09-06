@@ -135,13 +135,13 @@ class PossibleMelds {
 }
 
 bool isWinningHand(List<int>? cards) {
-  print("isWinningHand");
+  //rprint("isWinningHand");
   List<int> L = List.from(cards ?? []);
   if (L.length != 13) {
     return false;
   }
   L.sort();
-  print(cards);
+  //rprint(cards);
   var jokers = findJokers(L);
   List<int> unmodJokers = List.unmodifiable(jokers);
   var meld = {};
@@ -160,9 +160,9 @@ bool isWinningHand(List<int>? cards) {
     possibleMelds.checkFourSet();
   }
   */
-  print(" winning Set $cards");
+  //rprint(" winning Set $cards");
   /*
-  print(
+ //rprint(
       "FindPossibleMelds c ${possibleMelds.count} m ${possibleMelds.melds} d ${possibleMelds.deadwood} p ${possibleMelds.points}");
       */
 
@@ -170,13 +170,13 @@ bool isWinningHand(List<int>? cards) {
 }
 
 int findPoints(List<int>? cards) {
-  print("findPoints");
+  //rprint("findPoints");
   List<int> L = List.from(cards ?? []);
   if (L.length != 13) {
     return 130;
   }
   L.sort();
-  print(cards);
+  //rprint(cards);
   var jokers = findJokers(L);
   List<int> unmodJokers = List.unmodifiable(jokers);
   var meld = {};
@@ -199,10 +199,11 @@ int findPoints(List<int>? cards) {
     cards?.clear();
     cards?.addAll(possibleMelds.sets);
   }
-
-  print(
+/*
+ print(
       "FindPossibleMelds c ${possibleMelds.mCount} m ${possibleMelds.mMelds} d ${possibleMelds.mDeadwood} p ${possibleMelds.mPts}");
-  print("cards ${possibleMelds.sets}");
+      */
+  //rprint("cards ${possibleMelds.sets}");
   return possibleMelds.points;
 }
 
@@ -300,7 +301,7 @@ List<int> findRun(List<int> L, int lStart, List<int> jokers,
 
 bool fourthMeldFound(
     Map meld, List<int> L, List<int> jokers, List<int> unmodJokers) {
-  print("fourth $meld $L $jokers");
+  //rprint("fourth $meld $L $jokers");
   if (jokers.length == 1) {
     for (var item in meld.entries) {
       for (List m in item.value) {

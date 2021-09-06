@@ -51,7 +51,7 @@ class _StartRummyPageState extends State<StartRummyPage> {
     _rummyLocalClient.dispose();
     _rummyLocalServer.dispose();
     super.dispose();
-    print("dispose");
+    //rprint("dispose");
   }
 
   Widget _getScreen(var state) {
@@ -76,7 +76,7 @@ class _StartRummyPageState extends State<StartRummyPage> {
           onGameStart: (val) {
             _startTournament = val;
             //print("Game is ready to start");
-            print(_startTournament.cards);
+            //rprint(_startTournament.cards);
             _rummyState = RummyState.PROGRESS;
             setState(() {});
           },
