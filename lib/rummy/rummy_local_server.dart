@@ -48,28 +48,28 @@ class RummyLocalServer {
 
   void _initServer() async {
     var handler = webSocketHandler((webSocket) {
-      print(webSocket.hashCode);
+      //rprint(webSocket.hashCode);
       //print(webSocket.closeCode);
       _clients.add(webSocket);
-      print(_clients.length);
+      //rprint(_clients.length);
       webSocket.stream.listen((dynamic message) {
-        print(message);
+        //rprint(message);
         _gameHandler.handleMessage(message, webSocket);
         //webSocket.sink.add("echo $message");
       }, onDone: () {
-        print("ws channel closed");
+        //rprint("ws channel closed");
         _clients.remove(webSocket);
         //print(webSocket.closeCode);
       }, onError: (error) {
-        print("Error");
+        //rprint("Error");
       });
     });
 
     _handler = handler;
-    print("Starting Server");
+    //rprint("Starting Server");
     await shelf_io.serve(_handler, '0.0.0.0', 8080).then((server) {
       _server = server;
-      print('Serving at ws://${server.address.host}:${server.port}');
+      //rprint('Serving at ws://${server.address.host}:${server.port}');
     });
   }
 }

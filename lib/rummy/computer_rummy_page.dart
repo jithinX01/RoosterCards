@@ -50,6 +50,9 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
     _rummyLocalServer?.dispose();
     _computerRummyAgent.dispose();
     super.dispose();
+    if (_t != null) {
+      _t?.cancel();
+    }
     //rprint("dispose");
   }
 

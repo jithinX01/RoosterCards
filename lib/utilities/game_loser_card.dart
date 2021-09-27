@@ -135,8 +135,8 @@ class _GameLoserCardState extends State<GameLoserCard> {
   Widget _getCardAndPts() {
     List<Widget> L = [];
     widget.afterWinCards.playerCards.forEach((player, playerCard) {
-      print("${widget.points[player]}Pts");
-      print("player");
+      //rprint("${widget.points[player]}Pts");
+      //rprint("player");
       L.add(Column(
         children: [
           Text(player,
@@ -189,7 +189,7 @@ class _GameLoserCardState extends State<GameLoserCard> {
     cards.forEach((card) {
       scards += UTFPACK[card];
     });
-    print(scards);
+   //rprint(scards);
     return scards;
   }
   */
