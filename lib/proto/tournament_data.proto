@@ -31,6 +31,8 @@ message TournamentData
     repeated int32 winCount = 16;
     int32 maxWinCount = 17;
     bool done = 18;
+    int32 coins = 19;
+    repeated int32 playerIdOut = 20;
 }
 
 message RummyTournamentData {
@@ -39,6 +41,8 @@ message RummyTournamentData {
     repeated AfterWinCards winCards = 2;
     map<string,int32> points = 3;
     map<string,int32> crPoints = 4;
+    bool maxPointGame = 5;
+    int32 maxPoint = 6;
 }
 
 message PlayerCard {

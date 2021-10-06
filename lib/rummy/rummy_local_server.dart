@@ -59,9 +59,10 @@ class RummyLocalServer {
       }, onDone: () {
         //rprint("ws channel closed");
         _clients.remove(webSocket);
-        //print(webSocket.closeCode);
+        _gameHandler.handleWSDone(webSocket);
+        //rprint("websocket closed");
       }, onError: (error) {
-        //rprint("Error");
+        print("Error");
       });
     });
 

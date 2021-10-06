@@ -44,9 +44,10 @@ class GameHandler {
     //rprint(join.tournamentId);
     if (tournamentMap.containsKey(join.tournamentId)) {
       tournamentMap[join.tournamentId]?.handleJoin(join, wc);
+      connectionMap[wc] = join.tournamentId;
     } else {
       //error case
-      _handleError(wc, 101, "No Tournament Found");
+      _sendError(wc, 101, "No Tournament Found");
     }
   }
 
@@ -57,11 +58,11 @@ class GameHandler {
           ?.handleClientGameStat(clientGameStat, wc);
     } else {
       //error case
-      _handleError(wc, 101, "No Tournament Found");
+      _sendError(wc, 101, "No Tournament Found");
     }
   }
 
-  void _handleError(WebSocketChannel wc, int errorCode, String errorMessage) {
+  void _sendError(WebSocketChannel wc, int errorCode, String errorMessage) {
     GameMessageServer gms = GameMessageServer(
         errorStat: ErrorStat(errorCode: errorCode, errorMessage: errorMessage));
     wc.sink.add(gms.writeToBuffer());
@@ -76,4 +77,13 @@ class GameHandler {
         return Tournament(initStart, wc, tournamentId);
     }
   }
+
+  void handleWSDone(WebSocketChannel wc) {
+    if (connectionMap.containsKey(wc) &&
+        tournamentMap.containsKey(connectionMap[wc])) {
+      tournamentMap[connectionMap[wc]]?.handleWSDisconnect(wc);
+    } else {}
+  }
+
+  void handleWSError(WebSocketChannel wc) {}
 }

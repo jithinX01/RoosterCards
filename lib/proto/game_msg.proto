@@ -43,7 +43,15 @@ message InitStart {
     int32 noOfPlayers = 5;
     int32 noOfRounds = 6;
     int32 trophyId = 7;
+    int32 coins=8;
+    oneof gameTypeInit {
+        RummyInitData rummyInitData = 10;
+    }
+}
 
+message RummyInitData {
+    bool maxPointGame = 1;
+    int32 maxPoint = 2;
 }
 
 message Join {
@@ -158,8 +166,7 @@ message RummyPlayerStat
         WonPlayerStat WonPlayerStat = 3;
         LosePlayerStat LosePlayerStat = 4;
         NextGame NextGame = 5;
-        
-        
+        Eliminated Eliminated = 6;
     }
 }
 
@@ -200,6 +207,11 @@ message NextGame {
     int32 activePlayerId = 4;
     int32 round = 5;
     int32 nextCard = 9;
+}
+
+message Eliminated {
+    int32 round = 1;
+    map<string,int32> totalPoints = 2;
 }
 message TournamentOver {
     bool sharedTrophy = 1;

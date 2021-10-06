@@ -17,6 +17,7 @@ class UserData extends $pb.GeneratedMessage {
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'email')
     ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initDone', protoName: 'initDone')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyDir', protoName: 'trophyDir')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coins', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -28,6 +29,7 @@ class UserData extends $pb.GeneratedMessage {
     $core.String? email,
     $core.bool? initDone,
     $core.String? trophyDir,
+    $core.int? coins,
   }) {
     final _result = create();
     if (name != null) {
@@ -47,6 +49,9 @@ class UserData extends $pb.GeneratedMessage {
     }
     if (trophyDir != null) {
       _result.trophyDir = trophyDir;
+    }
+    if (coins != null) {
+      _result.coins = coins;
     }
     return _result;
   }
@@ -124,6 +129,15 @@ class UserData extends $pb.GeneratedMessage {
   $core.bool hasTrophyDir() => $_has(5);
   @$pb.TagNumber(6)
   void clearTrophyDir() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get coins => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set coins($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasCoins() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearCoins() => clearField(7);
 }
 
 class TrophyData extends $pb.GeneratedMessage {

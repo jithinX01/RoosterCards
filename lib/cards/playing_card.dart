@@ -180,8 +180,9 @@ class PlayingCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue,
-            blurRadius: 10.0,
+            color: Colors.indigo.shade300,
+            blurRadius: 7.0,
+            spreadRadius: 1.0,
           ),
         ],
       ),

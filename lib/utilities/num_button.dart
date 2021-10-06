@@ -7,12 +7,14 @@ class NumButton extends StatefulWidget {
   final minValue;
   final maxValue;
   final String name;
+  final int step;
   NumButton(
       {required this.onChanged,
       required this.name,
       this.value,
       this.minValue,
-      this.maxValue});
+      this.maxValue,
+      this.step = 1});
   @override
   _NumButtonState createState() => _NumButtonState();
 }
@@ -49,6 +51,7 @@ class _NumButtonState extends State<NumButton> {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.black26),
               ),
+              step: widget.step,
             ),
             FloatingActionButton.extended(
               onPressed: () {},

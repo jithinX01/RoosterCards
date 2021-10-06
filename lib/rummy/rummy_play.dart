@@ -47,6 +47,7 @@ class _RummyPlayState extends State<RummyPlay> {
   StartTournament _tournamentData = StartTournament();
   StackMode _mode = StackMode.SWAP_MODE;
   Timer? _t;
+  bool _tournamentOver = false;
   //late List<int> _playerCards;
   @override
   void initState() {
@@ -81,12 +82,40 @@ class _RummyPlayState extends State<RummyPlay> {
       DeviceOrientation.landscapeRight,
     ]);
     SystemChrome.setEnabledSystemUIOverlays([]);
-    return Scaffold(
-      body: Container(
-        child: _getScreen(),
-        //padding: const EdgeInsets.only(top: 32),
+
+    return WillPopScope(
+      child: Scaffold(
+        body: Container(
+          child: _getScreen(),
+          //padding: const EdgeInsets.only(top: 32),
+        ),
       ),
+      onWillPop: _willPop,
     );
+  }
+
+  Future<bool> _willPop() async {
+    bool willLeave = _tournamentOver;
+    if (!_tournamentOver) {
+      // show the confirm dialog
+      await showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: Text('Exit Game?'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        willLeave = true;
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Yes')),
+                  ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('No'))
+                ],
+              ));
+    }
+    return willLeave;
   }
 
   void _onData(data) {
@@ -209,6 +238,7 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _handleTournamentOver(TournamentOver tournamentOver) {
+    _tournamentOver = true;
     if (widget.withComputer) {
       /*
       _t = Timer(Duration(seconds: 25), () {

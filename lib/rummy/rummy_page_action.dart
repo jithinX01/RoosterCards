@@ -105,16 +105,16 @@ class _RummyPageActionState extends State<RummyPageAction> {
           _code = val;
 
           _rummyLocalClient = RummyLocalClient(
-              //initDiscovery: false,
+              initDiscovery: false,
               onConnected: (val) {
-            //rprint(val);
-            //print(_rummyLocalClient);
-            _rummyState = RummyState.WAITING;
+                //rprint(val);
+                //print(_rummyLocalClient);
+                _rummyState = RummyState.WAITING;
 
-            //_rummyLocalClient
-            //    .sendMessage(_getGameJoinMessage().writeToBuffer());
-            setState(() {});
-          });
+                //_rummyLocalClient
+                //    .sendMessage(_getGameJoinMessage().writeToBuffer());
+                setState(() {});
+              });
         });
       case RummyState.WAITING:
         _rummyLocalClient!.sendMessage(_getMessage().writeToBuffer());
@@ -162,6 +162,8 @@ class _RummyPageActionState extends State<RummyPageAction> {
     initStart.noOfDeck = _ts.cs.noOfDeck;
     initStart.noOfPlayers = _ts.cs.noOfPlayers;
     initStart.noOfRounds = _ts.cs.noOfRounds;
+    initStart.rummyInitData.maxPoint = _ts.cs.maxPoints;
+    initStart.rummyInitData.maxPointGame = _ts.cs.maxPointGame;
     gmc.initStart = initStart;
     return gmc;
   }

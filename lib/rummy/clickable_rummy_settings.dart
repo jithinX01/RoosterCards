@@ -57,24 +57,47 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
                   //_shuffle = val;
                 });
               },
-              name: "Player",
+              name: "Players",
               value: _cs.noOfPlayers,
               minValue: 2,
-              maxValue: 4,
+              maxValue: 8,
             ),
-            NumButton(
-              onChanged: (val) {
-                //rprint("current state $val");
-                _cs.noOfRounds = val;
-                setState(() {
-                  //_shuffle = val;
-                });
-              },
-              name: "Round",
-              value: _cs.noOfRounds,
-              minValue: 1,
-              maxValue: 7,
-            ),
+            if (!_cs.maxPointGame)
+              NumButton(
+                onChanged: (val) {
+                  //rprint("current state $val");
+                  _cs.noOfRounds = val;
+                  setState(() {
+                    //_shuffle = val;
+                  });
+                },
+                name: "Round",
+                value: _cs.noOfRounds,
+                minValue: 1,
+                maxValue: 7,
+              ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text("Max Point Game"),
+              Switch(
+                  value: _cs.maxPointGame,
+                  onChanged: (val) {
+                    setState(() {
+                      _cs.maxPointGame = val;
+                    });
+                  }),
+            ]),
+            if (_cs.maxPointGame)
+              NumButton(
+                onChanged: (val) {
+                  _cs.maxPoints = val;
+                  setState(() {});
+                },
+                value: _cs.maxPoints,
+                minValue: 120,
+                maxValue: 500,
+                name: "Points",
+                step: 20,
+              ),
           ],
         ),
       ),

@@ -70,11 +70,27 @@ const InitStart$json = const {
     const {'1': 'noOfPlayers', '3': 5, '4': 1, '5': 5, '10': 'noOfPlayers'},
     const {'1': 'noOfRounds', '3': 6, '4': 1, '5': 5, '10': 'noOfRounds'},
     const {'1': 'trophyId', '3': 7, '4': 1, '5': 5, '10': 'trophyId'},
+    const {'1': 'coins', '3': 8, '4': 1, '5': 5, '10': 'coins'},
+    const {'1': 'rummyInitData', '3': 10, '4': 1, '5': 11, '6': '.game_message.RummyInitData', '9': 0, '10': 'rummyInitData'},
+  ],
+  '8': const [
+    const {'1': 'gameTypeInit'},
   ],
 };
 
 /// Descriptor for `InitStart`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List initStartDescriptor = $convert.base64Decode('CglJbml0U3RhcnQSMgoIZ2FtZVR5cGUYASABKA4yFi5nYW1lX21lc3NhZ2UuR2FtZVR5cGVSCGdhbWVUeXBlEh4KCnBsYXllck5hbWUYAiABKAlSCnBsYXllck5hbWUSJgoOdG91cm5hbWVudE5hbWUYAyABKAlSDnRvdXJuYW1lbnROYW1lEhoKCG5vT2ZEZWNrGAQgASgFUghub09mRGVjaxIgCgtub09mUGxheWVycxgFIAEoBVILbm9PZlBsYXllcnMSHgoKbm9PZlJvdW5kcxgGIAEoBVIKbm9PZlJvdW5kcxIaCgh0cm9waHlJZBgHIAEoBVIIdHJvcGh5SWQ=');
+final $typed_data.Uint8List initStartDescriptor = $convert.base64Decode('CglJbml0U3RhcnQSMgoIZ2FtZVR5cGUYASABKA4yFi5nYW1lX21lc3NhZ2UuR2FtZVR5cGVSCGdhbWVUeXBlEh4KCnBsYXllck5hbWUYAiABKAlSCnBsYXllck5hbWUSJgoOdG91cm5hbWVudE5hbWUYAyABKAlSDnRvdXJuYW1lbnROYW1lEhoKCG5vT2ZEZWNrGAQgASgFUghub09mRGVjaxIgCgtub09mUGxheWVycxgFIAEoBVILbm9PZlBsYXllcnMSHgoKbm9PZlJvdW5kcxgGIAEoBVIKbm9PZlJvdW5kcxIaCgh0cm9waHlJZBgHIAEoBVIIdHJvcGh5SWQSFAoFY29pbnMYCCABKAVSBWNvaW5zEkMKDXJ1bW15SW5pdERhdGEYCiABKAsyGy5nYW1lX21lc3NhZ2UuUnVtbXlJbml0RGF0YUgAUg1ydW1teUluaXREYXRhQg4KDGdhbWVUeXBlSW5pdA==');
+@$core.Deprecated('Use rummyInitDataDescriptor instead')
+const RummyInitData$json = const {
+  '1': 'RummyInitData',
+  '2': const [
+    const {'1': 'maxPointGame', '3': 1, '4': 1, '5': 8, '10': 'maxPointGame'},
+    const {'1': 'maxPoint', '3': 2, '4': 1, '5': 5, '10': 'maxPoint'},
+  ],
+};
+
+/// Descriptor for `RummyInitData`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List rummyInitDataDescriptor = $convert.base64Decode('Cg1SdW1teUluaXREYXRhEiIKDG1heFBvaW50R2FtZRgBIAEoCFIMbWF4UG9pbnRHYW1lEhoKCG1heFBvaW50GAIgASgFUghtYXhQb2ludA==');
 @$core.Deprecated('Use joinDescriptor instead')
 const Join$json = const {
   '1': 'Join',
@@ -247,6 +263,7 @@ const RummyPlayerStat$json = const {
     const {'1': 'WonPlayerStat', '3': 3, '4': 1, '5': 11, '6': '.game_message.WonPlayerStat', '9': 0, '10': 'WonPlayerStat'},
     const {'1': 'LosePlayerStat', '3': 4, '4': 1, '5': 11, '6': '.game_message.LosePlayerStat', '9': 0, '10': 'LosePlayerStat'},
     const {'1': 'NextGame', '3': 5, '4': 1, '5': 11, '6': '.game_message.NextGame', '9': 0, '10': 'NextGame'},
+    const {'1': 'Eliminated', '3': 6, '4': 1, '5': 11, '6': '.game_message.Eliminated', '9': 0, '10': 'Eliminated'},
   ],
   '8': const [
     const {'1': 'stat'},
@@ -254,7 +271,7 @@ const RummyPlayerStat$json = const {
 };
 
 /// Descriptor for `RummyPlayerStat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List rummyPlayerStatDescriptor = $convert.base64Decode('Cg9SdW1teVBsYXllclN0YXQSQwoJYWN0aXZlUlBTGAEgASgLMiMuZ2FtZV9tZXNzYWdlLkFjdGl2ZVJ1bW15UGxheWVyU3RhdEgAUglhY3RpdmVSUFMSSQoLaW5hY3RpdmVSUFMYAiABKAsyJS5nYW1lX21lc3NhZ2UuSW5BY3RpdmVSdW1teVBsYXRlclN0YXRIAFILaW5hY3RpdmVSUFMSQwoNV29uUGxheWVyU3RhdBgDIAEoCzIbLmdhbWVfbWVzc2FnZS5Xb25QbGF5ZXJTdGF0SABSDVdvblBsYXllclN0YXQSRgoOTG9zZVBsYXllclN0YXQYBCABKAsyHC5nYW1lX21lc3NhZ2UuTG9zZVBsYXllclN0YXRIAFIOTG9zZVBsYXllclN0YXQSNAoITmV4dEdhbWUYBSABKAsyFi5nYW1lX21lc3NhZ2UuTmV4dEdhbWVIAFIITmV4dEdhbWVCBgoEc3RhdA==');
+final $typed_data.Uint8List rummyPlayerStatDescriptor = $convert.base64Decode('Cg9SdW1teVBsYXllclN0YXQSQwoJYWN0aXZlUlBTGAEgASgLMiMuZ2FtZV9tZXNzYWdlLkFjdGl2ZVJ1bW15UGxheWVyU3RhdEgAUglhY3RpdmVSUFMSSQoLaW5hY3RpdmVSUFMYAiABKAsyJS5nYW1lX21lc3NhZ2UuSW5BY3RpdmVSdW1teVBsYXRlclN0YXRIAFILaW5hY3RpdmVSUFMSQwoNV29uUGxheWVyU3RhdBgDIAEoCzIbLmdhbWVfbWVzc2FnZS5Xb25QbGF5ZXJTdGF0SABSDVdvblBsYXllclN0YXQSRgoOTG9zZVBsYXllclN0YXQYBCABKAsyHC5nYW1lX21lc3NhZ2UuTG9zZVBsYXllclN0YXRIAFIOTG9zZVBsYXllclN0YXQSNAoITmV4dEdhbWUYBSABKAsyFi5nYW1lX21lc3NhZ2UuTmV4dEdhbWVIAFIITmV4dEdhbWUSOgoKRWxpbWluYXRlZBgGIAEoCzIYLmdhbWVfbWVzc2FnZS5FbGltaW5hdGVkSABSCkVsaW1pbmF0ZWRCBgoEc3RhdA==');
 @$core.Deprecated('Use activeRummyPlayerStatDescriptor instead')
 const ActiveRummyPlayerStat$json = const {
   '1': 'ActiveRummyPlayerStat',
@@ -340,6 +357,28 @@ const NextGame$json = const {
 
 /// Descriptor for `NextGame`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List nextGameDescriptor = $convert.base64Decode('CghOZXh0R2FtZRIUCgVjYXJkcxgCIAMoBVIFY2FyZHMSGgoIeW91U3RhcnQYAyABKAhSCHlvdVN0YXJ0EiYKDmFjdGl2ZVBsYXllcklkGAQgASgFUg5hY3RpdmVQbGF5ZXJJZBIUCgVyb3VuZBgFIAEoBVIFcm91bmQSGgoIbmV4dENhcmQYCSABKAVSCG5leHRDYXJk');
+@$core.Deprecated('Use eliminatedDescriptor instead')
+const Eliminated$json = const {
+  '1': 'Eliminated',
+  '2': const [
+    const {'1': 'round', '3': 1, '4': 1, '5': 5, '10': 'round'},
+    const {'1': 'totalPoints', '3': 2, '4': 3, '5': 11, '6': '.game_message.Eliminated.TotalPointsEntry', '10': 'totalPoints'},
+  ],
+  '3': const [Eliminated_TotalPointsEntry$json],
+};
+
+@$core.Deprecated('Use eliminatedDescriptor instead')
+const Eliminated_TotalPointsEntry$json = const {
+  '1': 'TotalPointsEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 5, '10': 'value'},
+  ],
+  '7': const {'7': true},
+};
+
+/// Descriptor for `Eliminated`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List eliminatedDescriptor = $convert.base64Decode('CgpFbGltaW5hdGVkEhQKBXJvdW5kGAEgASgFUgVyb3VuZBJLCgt0b3RhbFBvaW50cxgCIAMoCzIpLmdhbWVfbWVzc2FnZS5FbGltaW5hdGVkLlRvdGFsUG9pbnRzRW50cnlSC3RvdGFsUG9pbnRzGj4KEFRvdGFsUG9pbnRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAVSBXZhbHVlOgI4AQ==');
 @$core.Deprecated('Use tournamentOverDescriptor instead')
 const TournamentOver$json = const {
   '1': 'TournamentOver',

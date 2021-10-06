@@ -13,6 +13,7 @@ class Tournament {
   //late int _tournamentId;
   int _joinedPlayers = 0;
   var playerConnections = Map<int, WebSocketChannel>();
+  List<int> _roundEliminated = [];
 
   Tournament(InitStart initStart, WebSocketChannel wc, int tournamentId) {
     _data = TournamentData(
@@ -94,16 +95,9 @@ class Tournament {
     }
   }
 
-  void _handleTournamentEnd() {
-    var winList = [];
-    for (var i = 0; i < _data.winCount.length; i++) {
-      if (_data.winCount[i] == _data.maxWinCount) winList.add(i);
-    }
-    bool sharedTrophy = winList.length > 1;
-    _sendTournamentOver(sharedTrophy, winList);
-  }
+  //void _handleTournamentEnd() {}
 
-  void _sendTournamentOver(bool sharedTrophy, var winList) {
+  void _sendTournamentOver(var winList, {bool sharedTrophy = false}) {
     playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
         tournamentOver: TournamentOver(
@@ -127,6 +121,28 @@ class Tournament {
     }
     return winPlayers;
   }
+
+  void handleWSDisconnect(WebSocketChannel wc) {
+    print("handleWSDisconnect");
+    for (var item in playerConnections.entries) {
+      if (item.value == wc) {
+        var player = _data.players[item.key];
+        print("$player disconnected");
+        //playerConnections.remove(item.key);
+      }
+    }
+  }
+
+  int _nextPlayerId(int playerId) {
+    int nextPlayerId =
+        (playerId + 1) % (_data.noOfPlayers + _data.playerIdOut.length);
+    while (_data.playerIdOut.contains(nextPlayerId)) {
+      playerId = nextPlayerId;
+      nextPlayerId =
+          (playerId + 1) % (_data.noOfPlayers + _data.playerIdOut.length);
+    }
+    return nextPlayerId;
+  }
 }
 
 class RummyTournament extends Tournament {
@@ -136,11 +152,19 @@ class RummyTournament extends Tournament {
   @override
   void _gameTypeInit(InitStart initStart) {
     _data.rummyData = RummyTournamentData(state: RummyState.INIT);
+    _data.rummyData.maxPointGame = initStart.rummyInitData.maxPointGame;
+    _data.rummyData.maxPoint = initStart.rummyInitData.maxPoint;
   }
 
   @override
   void _startTournament() {
     _data.currentRound = 1;
+
+    _data.players.forEach((player) {
+      List<int> a = List.empty(growable: true);
+      _data.playerCards[_data.players.indexOf(player)] = PlayerCard(cards: a);
+    });
+
     _shuffleDeckAndDeal();
   }
 
@@ -166,6 +190,26 @@ class RummyTournament extends Tournament {
     });
   }
 
+  //@override
+  void _handleTournamentEnd() {
+    var winList = [];
+    /*
+    for (var i = 0; i < _data.winCount.length; i++) {
+      if (_data.winCount[i] == _data.maxWinCount) winList.add(i);
+    }
+    */
+
+    var min = 100000000;
+    _data.rummyData.points.forEach((player, pts) {
+      if (pts <= min) {
+        winList.add(_data.players.indexOf(player));
+        min = pts;
+      }
+    });
+    bool sharedTrophy = winList.length > 1;
+    _sendTournamentOver(winList, sharedTrophy: sharedTrophy);
+  }
+
   void _shuffleDeckAndDeal() {
     //no  of  stacked cards =  53* noOfDeck
     var stack = List<int>.generate(
@@ -174,7 +218,7 @@ class RummyTournament extends Tournament {
     stack.shuffle();
 
     //deal cards
-
+    /*
     //var playerCards = Map<int, List<int>>();
     for (var i = 0; i < NO_OF_RUMMY_CARDS * _data.noOfPlayers; i++) {
       //if (!playerCards.containsKey(i % _data.noOfPlayers)) {
@@ -192,6 +236,16 @@ class RummyTournament extends Tournament {
         //playerCards[i % _data.noOfPlayers]?.add(stack[i]);
       }
     }
+    */
+    var playerids = _data.playerCards.keys.toList();
+    for (var i = 0;
+        i < NO_OF_RUMMY_CARDS * _data.noOfPlayers;
+        i = i + _data.noOfPlayers) {
+      for (var j = 0; j < _data.noOfPlayers; j++) {
+        _data.playerCards[playerids[j]]?.cards.add(stack[i + j]);
+      }
+    }
+
     //remove the dealed cards from stack.
 
     stack.removeRange(0, NO_OF_RUMMY_CARDS * _data.noOfPlayers);
@@ -220,7 +274,8 @@ class RummyTournament extends Tournament {
   void _handleDiscardCard(ClientGameStat clientGameStat) {
     int card = clientGameStat.discardCard.card;
     int playerId = clientGameStat.playerId;
-    _data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
+    //_data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
+    _data.currentPlayerId = _nextPlayerId(playerId);
     bool fromDeck = false;
     if (card == _data.cardStack[0]) {
       //from deck
@@ -247,8 +302,8 @@ class RummyTournament extends Tournament {
   void _handleDrawCard(ClientGameStat clientGameStat) {
     int playerId = clientGameStat.playerId;
     //next player
-    _data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
-
+    //_data.currentPlayerId = (playerId + 1) % _data.noOfPlayers;
+    _data.currentPlayerId = _nextPlayerId(playerId);
     int oldCard = clientGameStat.drawCard.oldCard;
     int newCard = clientGameStat.drawCard.newCard;
     //next card
@@ -316,9 +371,55 @@ class RummyTournament extends Tournament {
     }
     calulatePoints(winnerId);
     _sendGameWonUpdate(winnerId);
+    /*
+    if (_data.currentRound + 1 < _data.noOfRounds) {
+      _data.currentRound += 1;
+      _startNextGame();
+      //winner starts next game.
+      _data.currentPlayerId = winnerId;
+      //after 5 seconds
+      _sendNextGameUpdate();
+      //Timer(Duration(seconds: 5), _sendNextGameUpdate);
+    } else {
+      //rprint("Tournament Over");
+      _handleTournamentEnd();
+    }
+    */
 
-    _data.currentRound += 1;
-    if (_data.currentRound < _data.noOfRounds + 1) {
+    if (_data.rummyData.maxPointGame) {
+      _handleNextRoundMPGame(winnerId);
+    } else {
+      _handleNextRoundNormal(winnerId);
+    }
+  }
+
+  void _handleNextRoundMPGame(var winnerId) {
+    if (_data.noOfPlayers - _roundEliminated.length == 1) {
+      _sendTournamentOver([winnerId]);
+    } else {
+      if (_roundEliminated.isNotEmpty) {
+        GameMessageServer gms = GameMessageServer(
+            gameServerUpdate: GameServerUpdate(
+                rummyPlayerStat: RummyPlayerStat(
+                    eliminated: Eliminated(
+          round: _data.currentRound,
+          totalPoints: _data.rummyData.points,
+        ))));
+
+        _roundEliminated.forEach((playerId) {
+          //add to removed list
+          _data.playerIdOut.add(playerId);
+          _data.noOfPlayers--;
+          playerConnections[playerId]!.sink.add(gms.writeToBuffer());
+        });
+      }
+      _data.currentRound += 1;
+    }
+  }
+
+  void _handleNextRoundNormal(var winnerId) {
+    if (_data.currentRound + 1 < _data.noOfRounds) {
+      _data.currentRound += 1;
       _startNextGame();
       //winner starts next game.
       _data.currentPlayerId = winnerId;
@@ -350,9 +451,33 @@ class RummyTournament extends Tournament {
         _data.rummyData.crPoints[_data.players[key]] = 0;
       }
       afterWinCards.playerCards[_data.players[key]] = value;
+
+      //for max points elimination.
+      if (_data.rummyData.maxPointGame &&
+          _data.rummyData.points[_data.players[key]]! >
+              _data.rummyData.maxPoint) {
+        _roundEliminated.add(key);
+      }
     });
 
     _data.rummyData.winCards.add(afterWinCards);
+    _sortByPoints();
+  }
+
+  void _sortByPoints() {
+    //current points
+    var crMapEntries = _data.rummyData.crPoints.entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
+
+    _data.rummyData.points
+      ..clear()
+      ..addEntries(crMapEntries);
+    //total points
+    var mapEntries = _data.rummyData.points.entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
+    _data.rummyData.points
+      ..clear()
+      ..addEntries(mapEntries);
   }
 
   void _sendGameWonUpdate(int winnerId) {

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:auto_orientation/auto_orientation.dart';
+//import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
@@ -16,7 +16,7 @@ class _HandState extends State<Hand> {
   ScrollController _controller = new ScrollController();
   @override
   Widget build(BuildContext context) {
-    AutoOrientation.landscapeAutoMode();
+    //AutoOrientation.landscapeAutoMode();
 
     return Scaffold(
       body: Container(
@@ -37,7 +37,7 @@ class _HandState extends State<Hand> {
     double start = 50;
     List<Widget> wl = List<Widget>.generate(_cards.length, (int index) {
       var angle = -pi / (180 / (65 - (index * 10)));
-      print("Angle $angle");
+      //rprint("Angle $angle");
       return Positioned(
           left: (1 * 500) + start,
           bottom: -150,
@@ -83,7 +83,7 @@ class _RotateCardsState extends State<RotateCards> {
     return AnimatedBuilder(
         animation: widget.controller,
         builder: (BuildContext context, Widget? child) {
-          print("offset $offset");
+          //rprint("offset $offset");
           return Transform.rotate(
               alignment: Alignment.bottomCenter,
               //origin: Offset(100, 0),

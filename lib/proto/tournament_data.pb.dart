@@ -43,6 +43,8 @@ class TournamentData extends $pb.GeneratedMessage {
     ..p<$core.int>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winCount', $pb.PbFieldType.P3, protoName: 'winCount')
     ..a<$core.int>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxWinCount', $pb.PbFieldType.O3, protoName: 'maxWinCount')
     ..aOB(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'done')
+    ..a<$core.int>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coins', $pb.PbFieldType.O3)
+    ..p<$core.int>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerIdOut', $pb.PbFieldType.P3, protoName: 'playerIdOut')
     ..hasRequiredFields = false
   ;
 
@@ -66,6 +68,8 @@ class TournamentData extends $pb.GeneratedMessage {
     $core.Iterable<$core.int>? winCount,
     $core.int? maxWinCount,
     $core.bool? done,
+    $core.int? coins,
+    $core.Iterable<$core.int>? playerIdOut,
   }) {
     final _result = create();
     if (noOfPlayers != null) {
@@ -121,6 +125,12 @@ class TournamentData extends $pb.GeneratedMessage {
     }
     if (done != null) {
       _result.done = done;
+    }
+    if (coins != null) {
+      _result.coins = coins;
+    }
+    if (playerIdOut != null) {
+      _result.playerIdOut.addAll(playerIdOut);
     }
     return _result;
   }
@@ -275,6 +285,18 @@ class TournamentData extends $pb.GeneratedMessage {
   $core.bool hasDone() => $_has(17);
   @$pb.TagNumber(18)
   void clearDone() => clearField(18);
+
+  @$pb.TagNumber(19)
+  $core.int get coins => $_getIZ(18);
+  @$pb.TagNumber(19)
+  set coins($core.int v) { $_setSignedInt32(18, v); }
+  @$pb.TagNumber(19)
+  $core.bool hasCoins() => $_has(18);
+  @$pb.TagNumber(19)
+  void clearCoins() => clearField(19);
+
+  @$pb.TagNumber(20)
+  $core.List<$core.int> get playerIdOut => $_getList(19);
 }
 
 class RummyTournamentData extends $pb.GeneratedMessage {
@@ -283,6 +305,8 @@ class RummyTournamentData extends $pb.GeneratedMessage {
     ..pc<AfterWinCards>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winCards', $pb.PbFieldType.PM, protoName: 'winCards', subBuilder: AfterWinCards.create)
     ..m<$core.String, $core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'points', entryClassName: 'RummyTournamentData.PointsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.O3)
     ..m<$core.String, $core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'crPoints', protoName: 'crPoints', entryClassName: 'RummyTournamentData.CrPointsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.O3)
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxPointGame', protoName: 'maxPointGame')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxPoint', $pb.PbFieldType.O3, protoName: 'maxPoint')
     ..hasRequiredFields = false
   ;
 
@@ -292,6 +316,8 @@ class RummyTournamentData extends $pb.GeneratedMessage {
     $core.Iterable<AfterWinCards>? winCards,
     $core.Map<$core.String, $core.int>? points,
     $core.Map<$core.String, $core.int>? crPoints,
+    $core.bool? maxPointGame,
+    $core.int? maxPoint,
   }) {
     final _result = create();
     if (state != null) {
@@ -305,6 +331,12 @@ class RummyTournamentData extends $pb.GeneratedMessage {
     }
     if (crPoints != null) {
       _result.crPoints.addAll(crPoints);
+    }
+    if (maxPointGame != null) {
+      _result.maxPointGame = maxPointGame;
+    }
+    if (maxPoint != null) {
+      _result.maxPoint = maxPoint;
     }
     return _result;
   }
@@ -346,6 +378,24 @@ class RummyTournamentData extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(4)
   $core.Map<$core.String, $core.int> get crPoints => $_getMap(3);
+
+  @$pb.TagNumber(5)
+  $core.bool get maxPointGame => $_getBF(4);
+  @$pb.TagNumber(5)
+  set maxPointGame($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMaxPointGame() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMaxPointGame() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get maxPoint => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set maxPoint($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasMaxPoint() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearMaxPoint() => clearField(6);
 }
 
 class PlayerCard extends $pb.GeneratedMessage {

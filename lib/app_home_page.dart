@@ -82,6 +82,27 @@ class _AppHomePageState extends State<AppHomePage> {
                 title: "Cards",
                 c: Colors.pink,
                 icon: Icons.card_giftcard),
+            /*
+            NavigationCard(
+                w: Scaffold(
+                    body: Container(
+                  alignment: Alignment.center,
+                  /*
+                        child: GameWinCard(
+                          stat: PlayerStat.WINNER,
+                          round: "Robo Match",
+                          afterWinCards: getData(),
+                          points: getPts(),
+                          computerGame: true,
+                        )
+                        */
+                  child: TournamentWinnersCard(wonPlayers: ["Jithin"]),
+                )),
+                //w: Hand(),
+                title: "Temp",
+                c: Colors.pink,
+                icon: Icons.card_giftcard),
+                */
           ],
         ),
       ),

@@ -207,13 +207,16 @@ class _GameWinCardState extends State<GameWinCard> {
   }
 
   Widget _getCardAndPts() {
+    /*
     var sortedMap =
         SplayTreeMap.from(widget.afterWinCards.playerCards, (k1, k2) {
       return widget.points[k1]!.compareTo(widget.points[k2] ?? 0);
     });
+    */
 
     List<Widget> L = [];
-    Map.from(sortedMap).forEach((player, playerCard) {
+    //Map.from(sortedMap).forEach((player, playerCard) {
+    widget.points.forEach((player, pts) {
       //rprint("${widget.points[player]}Pts");
       //rprint("player");
       L.add(Column(
@@ -224,7 +227,7 @@ class _GameWinCardState extends State<GameWinCard> {
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.bold,
               )),
-          Text("${widget.points[player]}Pts",
+          Text("$pts Pts",
               style: TextStyle(
                 fontSize: 24,
                 fontStyle: FontStyle.normal,
@@ -234,7 +237,8 @@ class _GameWinCardState extends State<GameWinCard> {
               child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Container(
-              child: _getCardStack(playerCard.cards),
+              child: _getCardStack(
+                  widget.afterWinCards.playerCards[player]!.cards),
             ),
           )),
         ],
