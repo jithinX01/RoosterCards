@@ -15,9 +15,10 @@ class InitLogin extends StatefulWidget {
 
 class _InitLoginState extends State<InitLogin> {
   final _formKey = GlobalKey<FormState>();
+  /*
   final RegExp _emailRegex = new RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
-
+  */
   UserData _userData = UserData();
   @override
   Widget build(BuildContext context) {
@@ -30,13 +31,14 @@ class _InitLoginState extends State<InitLogin> {
         child: Center(
           child: Form(
               key: _formKey,
-              child: ListView(
+              child: Column(
                 children: [
                   TextFormField(
                     decoration: const InputDecoration(
                       icon: Icon(Icons.person),
                       hintText: 'What do people call you?',
-                      labelText: 'Name *',
+                      labelText: 'Name',
+                      border: const OutlineInputBorder(),
                     ),
                     onSaved: (String? value) {
                       //rprint("OnSaved");
@@ -45,15 +47,20 @@ class _InitLoginState extends State<InitLogin> {
                         _userData.name = value;
                       }
                     },
+                    textAlign: TextAlign.center,
                     validator: (String? value) {
-                      return (value != null && value.contains('@'))
-                          ? 'Do not use the @ char.'
-                          : null;
+                      if (value != null && value.isEmpty) {
+                        return 'Please enter name';
+                      } else if (value!.length < 2) {
+                        return ' minimum 2 characters required';
+                      }
+                      return null;
                     },
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(15),
                     ],
                   ),
+                  /*
                   TextFormField(
                     decoration: const InputDecoration(
                         icon: const Icon(Icons.email),
@@ -94,6 +101,7 @@ class _InitLoginState extends State<InitLogin> {
                       }
                     },
                   ),
+                  */
                   ElevatedButton(
                     onPressed: () {
                       // Validate returns true if the form is valid, or false otherwise.
@@ -106,15 +114,17 @@ class _InitLoginState extends State<InitLogin> {
                         _userData.initDone = true;
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
+                        /*
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Processing Data')),
                         );
+                        */
                         _saveUserData().then((v) {
                           widget.onDone(_userData);
                         });
                       }
                     },
-                    child: const Text('SignUp'),
+                    child: const Text('Save'),
                   ),
                 ],
               )),

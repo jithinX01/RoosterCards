@@ -33,7 +33,9 @@ class _RummyInitState extends State<RummyInit> {
           ts.cs = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ClickableRummySettings(),
+                  builder: (context) => ClickableRummySettings(
+                    cs: ts.cs,
+                  ),
                 ),
               ) ??
               ClickSettings();

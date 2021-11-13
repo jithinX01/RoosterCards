@@ -46,6 +46,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
   }
 
   void _onData(data) {
+    //rprint(data);
     GameMessageServer gms = GameMessageServer.fromBuffer(data);
     _w = _handleServerMessage(gms);
     setState(() {});

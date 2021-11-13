@@ -15,5 +15,5 @@ class ClickSettings {
   int noOfPlayers = 2;
   int noOfRounds = 1;
   bool maxPointGame = false;
-  int maxPoints = 120;
+  int maxPoints = 90;
 }

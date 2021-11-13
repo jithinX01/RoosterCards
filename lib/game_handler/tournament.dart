@@ -12,7 +12,8 @@ class Tournament {
   late TournamentData _data;
   //late int _tournamentId;
   int _joinedPlayers = 0;
-  var playerConnections = Map<int, WebSocketChannel>();
+  var _playerConnections = Map<int, WebSocketChannel>();
+  var _exPlayerConnections = Map<int, WebSocketChannel>();
   List<int> _roundEliminated = [];
 
   Tournament(InitStart initStart, WebSocketChannel wc, int tournamentId) {
@@ -30,7 +31,7 @@ class Tournament {
     _data.maxWinCount = 0;
     _data.players.add(initStart.playerName);
     _data.currentPlayerId = _joinedPlayers;
-    playerConnections[_joinedPlayers] = wc;
+    _playerConnections[_joinedPlayers] = wc;
     ++_joinedPlayers;
     _data.tournamentId = tournamentId;
     _gameTypeInit(initStart);
@@ -52,7 +53,7 @@ class Tournament {
   void handleJoin(Join join, WebSocketChannel wc) {
     _data.players.add(join.playerName);
     int connectedPlayerId = _joinedPlayers;
-    playerConnections[connectedPlayerId] = wc;
+    _playerConnections[connectedPlayerId] = wc;
     ++_joinedPlayers;
     _sendJoinStat(wc, connectedPlayerId);
     if (_joinedPlayers == _data.noOfPlayers) {
@@ -74,7 +75,7 @@ class Tournament {
         joinProgress: JoinProgress(players: _data.players.skipWhile((value) {
       return _data.players.indexOf(value) == connectedPlayerId;
     })));
-    playerConnections.forEach((key, value) {
+    _playerConnections.forEach((key, value) {
       value.sink.add(gms.writeToBuffer());
     });
   }
@@ -98,7 +99,7 @@ class Tournament {
   //void _handleTournamentEnd() {}
 
   void _sendTournamentOver(var winList, {bool sharedTrophy = false}) {
-    playerConnections.forEach((playerId, channel) {
+    _playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
         tournamentOver: TournamentOver(
           sharedTrophy: sharedTrophy,
@@ -124,7 +125,7 @@ class Tournament {
 
   void handleWSDisconnect(WebSocketChannel wc) {
     print("handleWSDisconnect");
-    for (var item in playerConnections.entries) {
+    for (var item in _playerConnections.entries) {
       if (item.value == wc) {
         var player = _data.players[item.key];
         print("$player disconnected");
@@ -171,7 +172,7 @@ class RummyTournament extends Tournament {
   @override
   void _sendStartTournament() {
     _data.nextCard = _data.cardStack[0];
-    playerConnections.forEach((key, channel) {
+    _playerConnections.forEach((key, channel) {
       //value.sink.add(gms.writeToBuffer());
       GameMessageServer gms = GameMessageServer(
           startTournament: StartTournament(
@@ -337,7 +338,7 @@ class RummyTournament extends Tournament {
   }
 
   void _sendGameUpdate({String status = ":)", required int previousPlayerId}) {
-    playerConnections.forEach((playerId, channel) {
+    _playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
         gameServerUpdate: GameServerUpdate(
           rummyPlayerStat: RummyPlayerStat(
@@ -410,15 +411,26 @@ class RummyTournament extends Tournament {
           //add to removed list
           _data.playerIdOut.add(playerId);
           _data.noOfPlayers--;
-          playerConnections[playerId]!.sink.add(gms.writeToBuffer());
+          _playerConnections[playerId]!.sink.add(gms.writeToBuffer());
+          _exPlayerConnections[playerId] = _playerConnections[playerId]!;
+          _playerConnections.remove(playerId);
+          _data.playerCards.remove(playerId);
+          _data.rummyData.crPoints.remove(_data.players.elementAt(playerId));
+          _data.rummyData.points.remove(_data.players.elementAt(playerId));
         });
+        _roundEliminated.clear();
       }
       _data.currentRound += 1;
+      _startNextGame();
+      //winner starts next game.
+      _data.currentPlayerId = winnerId;
+      //after 5 seconds
+      _sendNextGameUpdate();
     }
   }
 
   void _handleNextRoundNormal(var winnerId) {
-    if (_data.currentRound + 1 < _data.noOfRounds) {
+    if (_data.currentRound < _data.noOfRounds) {
       _data.currentRound += 1;
       _startNextGame();
       //winner starts next game.
@@ -434,32 +446,32 @@ class RummyTournament extends Tournament {
 
   void calulatePoints(int winnerId) {
     AfterWinCards afterWinCards = AfterWinCards();
-    _data.playerCards.forEach((key, value) {
-      if (winnerId != key) {
-        var point = findPoints(value.cards);
-        _data.rummyData.crPoints[_data.players[key]] = point;
+    _data.playerCards.forEach((playerId, playercards) {
+      if (winnerId != playerId) {
+        var point = findPoints(playercards.cards);
+        //print("$playerId -- $point -- ${playercards.cards}");
+        _data.rummyData.crPoints[_data.players[playerId]] = point;
 
-        if (_data.rummyData.points.containsKey(_data.players[key])) {
-          _data.rummyData.points[_data.players[key]] =
-              _data.rummyData.points[_data.players[key]] ?? 0 + point;
+        if (_data.rummyData.points.containsKey(_data.players[playerId])) {
+          _data.rummyData.points[_data.players[playerId]] =
+              _data.rummyData.points[_data.players[playerId]]! + point;
         } else {
-          _data.rummyData.points[_data.players[key]] = point;
+          _data.rummyData.points[_data.players[playerId]] = point;
         }
       } else {
-        if (!_data.rummyData.points.containsKey(_data.players[key]))
-          _data.rummyData.points[_data.players[key]] = 0;
-        _data.rummyData.crPoints[_data.players[key]] = 0;
+        if (!_data.rummyData.points.containsKey(_data.players[playerId]))
+          _data.rummyData.points[_data.players[playerId]] = 0;
+        _data.rummyData.crPoints[_data.players[playerId]] = 0;
       }
-      afterWinCards.playerCards[_data.players[key]] = value;
+      afterWinCards.playerCards[_data.players[playerId]] = playercards;
 
       //for max points elimination.
       if (_data.rummyData.maxPointGame &&
-          _data.rummyData.points[_data.players[key]]! >
+          _data.rummyData.points[_data.players[playerId]]! >
               _data.rummyData.maxPoint) {
-        _roundEliminated.add(key);
+        _roundEliminated.add(playerId);
       }
     });
-
     _data.rummyData.winCards.add(afterWinCards);
     _sortByPoints();
   }
@@ -469,7 +481,7 @@ class RummyTournament extends Tournament {
     var crMapEntries = _data.rummyData.crPoints.entries.toList()
       ..sort((a, b) => a.value.compareTo(b.value));
 
-    _data.rummyData.points
+    _data.rummyData.crPoints
       ..clear()
       ..addEntries(crMapEntries);
     //total points
@@ -481,7 +493,7 @@ class RummyTournament extends Tournament {
   }
 
   void _sendGameWonUpdate(int winnerId) {
-    playerConnections.forEach((playerId, channel) {
+    _playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
         gameServerUpdate: GameServerUpdate(
           rummyPlayerStat: RummyPlayerStat(
@@ -522,7 +534,7 @@ class RummyTournament extends Tournament {
   }
 
   void _sendNextGameUpdate() {
-    playerConnections.forEach((playerId, channel) {
+    _playerConnections.forEach((playerId, channel) {
       GameMessageServer gms = GameMessageServer(
         gameServerUpdate: GameServerUpdate(
           rummyPlayerStat: RummyPlayerStat(

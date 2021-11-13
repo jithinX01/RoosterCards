@@ -26,7 +26,7 @@ class _NumButtonState extends State<NumButton> {
   void initState() {
     super.initState();
     _count = widget.value;
-    _s = _count.toString() + " " + widget.name;
+    _s = /* _count.toString() + " " + */ widget.name;
   }
 
   @override
@@ -35,6 +35,7 @@ class _NumButtonState extends State<NumButton> {
         padding: const EdgeInsets.only(top: 32),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //mainAxisSize: MainAxisSize.max,
           children: [
             NumberPicker(
               minValue: widget.minValue,
@@ -44,7 +45,7 @@ class _NumButtonState extends State<NumButton> {
               //axis: Axis.horizontal,
               onChanged: (value) => setState(() {
                 _count = value;
-                _s = _count.toString() + " " + widget.name;
+                _s = /*_count.toString() + " " + */ widget.name;
                 widget.onChanged(_count);
               }),
               decoration: BoxDecoration(
@@ -52,6 +53,7 @@ class _NumButtonState extends State<NumButton> {
                 border: Border.all(color: Colors.black26),
               ),
               step: widget.step,
+              //itemHeight: 25,
             ),
             FloatingActionButton.extended(
               onPressed: () {},

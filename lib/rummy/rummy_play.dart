@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rooster_cards/cards/player_card_stack.dart';
 import 'package:rooster_cards/proto/user_data.pb.dart';
+import 'package:rooster_cards/utilities/elimination_card.dart';
 import 'package:rooster_cards/utilities/file_storage.dart';
 import 'package:rooster_cards/utilities/game_win_card.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
@@ -154,6 +155,9 @@ class _RummyPlayState extends State<RummyPlay> {
         case RummyPlayerStat_Stat.losePlayerStat:
           _handleLosePlayerStat(gmUpdate.rummyPlayerStat.losePlayerStat);
           break;
+        case RummyPlayerStat_Stat.eliminated:
+          _handleEliminated(gmUpdate.rummyPlayerStat.eliminated);
+          break;
         default:
       }
     } else {
@@ -229,10 +233,10 @@ class _RummyPlayState extends State<RummyPlay> {
     _tournamentData.nextCard = nextGame.nextCard;
     _tournamentData.round = nextGame.round;
 
-    _wl.clear();
-    _wl.add(_getPlayingCards());
-    _wl.add(_getTimer());
     _t = Timer(Duration(seconds: 25), () {
+      _wl.clear();
+      _wl.add(_getPlayingCards());
+      _wl.add(_getTimer());
       setState(() {});
     });
   }
@@ -273,6 +277,18 @@ class _RummyPlayState extends State<RummyPlay> {
         Navigator.pop(context);
       });
       */
+    });
+  }
+
+  void _handleEliminated(Eliminated eliminated) {
+    _t = Timer(Duration(seconds: 25), () {
+      setState(() {
+        _wl.clear();
+        _wl.add(EliminationCard(
+          points: eliminated.totalPoints,
+          round: "Round " + eliminated.round.toString(),
+        ));
+      });
     });
   }
 

@@ -3,8 +3,8 @@ import 'package:rooster_cards/rummy/init_tournament_settings.dart';
 import 'package:rooster_cards/utilities/num_button.dart';
 
 class ClickableRummySettings extends StatefulWidget {
-  ClickableRummySettings({Key? key}) : super(key: key);
-
+  ClickableRummySettings({Key? key, required this.cs}) : super(key: key);
+  final ClickSettings cs;
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -20,6 +20,12 @@ class ClickableRummySettings extends StatefulWidget {
 
 class _ClickableRummySettingsState extends State<ClickableRummySettings> {
   ClickSettings _cs = ClickSettings();
+  @override
+  void initState() {
+    _cs = widget.cs;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +99,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
                   setState(() {});
                 },
                 value: _cs.maxPoints,
-                minValue: 120,
+                minValue: 80,
                 maxValue: 500,
                 name: "Points",
                 step: 20,

@@ -189,9 +189,9 @@ class _GuessCardPageState extends State<GuessCardPage> {
           right: 50,
           left: 50,
           child: FloatingActionButton.extended(
-            icon: Icon(Icons.replay),
-            label: Text("Play Again!"),
-            heroTag: "_playAgain",
+            icon: Icon(Icons.close),
+            label: Text("Close"),
+            heroTag: "_close_gc",
             onPressed: () {
               /*
               setState(() {
@@ -203,10 +203,13 @@ class _GuessCardPageState extends State<GuessCardPage> {
               if (_isInterstitialAdReady) {
                 _interstitialAd?.show();
               } else {
+                Navigator.pop(context);
+                /*
                 setState(() {
                   _gc = GuessCard();
                   _guessState = GuessState.INIT;
                 });
+                */
               }
             },
           ),

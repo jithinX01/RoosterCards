@@ -90,7 +90,9 @@ class _RummyPageActionState extends State<RummyPageAction> {
           _ts.logInfo();
 
           _initLocalServer();
-          _rummyLocalClient = RummyLocalClient(onConnected: (val) {
+          _rummyLocalClient = RummyLocalClient(
+              //initDiscovery: false,
+              onConnected: (val) {
             _rummyState = RummyState.WAITING;
             setState(() {});
             /*
@@ -162,6 +164,7 @@ class _RummyPageActionState extends State<RummyPageAction> {
     initStart.noOfDeck = _ts.cs.noOfDeck;
     initStart.noOfPlayers = _ts.cs.noOfPlayers;
     initStart.noOfRounds = _ts.cs.noOfRounds;
+    initStart.rummyInitData = RummyInitData();
     initStart.rummyInitData.maxPoint = _ts.cs.maxPoints;
     initStart.rummyInitData.maxPointGame = _ts.cs.maxPointGame;
     gmc.initStart = initStart;
