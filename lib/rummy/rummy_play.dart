@@ -262,6 +262,8 @@ class _RummyPlayState extends State<RummyPlay> {
             shared: tournamentOver.sharedTrophy,
           ));
     }
+    UserDataInfo.of(context).userInfo.coins += tournamentOver.coinTransaction;
+    saveUserData(UserDataInfo.of(context).userInfo);
     _t = Timer(Duration(seconds: 25), () {
       setState(() {
         _wl.clear();
@@ -281,6 +283,8 @@ class _RummyPlayState extends State<RummyPlay> {
   }
 
   void _handleEliminated(Eliminated eliminated) {
+    UserDataInfo.of(context).userInfo.coins += eliminated.coinTransaction;
+    saveUserData(UserDataInfo.of(context).userInfo);
     _t = Timer(Duration(seconds: 25), () {
       setState(() {
         _wl.clear();

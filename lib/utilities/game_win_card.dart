@@ -211,10 +211,14 @@ class _GameWinCardState extends State<GameWinCard> {
       return widget.points[k1]!.compareTo(widget.points[k2] ?? 0);
     });
     */
+    var mapEntries = widget.points.entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
+    var pointMap = Map();
+    pointMap.addEntries(mapEntries);
 
     List<Widget> L = [];
     //Map.from(sortedMap).forEach((player, playerCard) {
-    widget.points.forEach((player, pts) {
+    pointMap.forEach((player, pts) {
       //rprint("${widget.points[player]}Pts");
       //rprint("player");
       L.add(Column(

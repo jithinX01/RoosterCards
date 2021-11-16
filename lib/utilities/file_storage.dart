@@ -41,6 +41,12 @@ class RoosterFileStorage {
   }
 }
 
+Future<void> saveUserData(UserData userData) async {
+  var rfs = RoosterFileStorage("user.data");
+  await rfs.fileExist;
+  rfs.writeFile(userData.writeToBuffer());
+}
+
 void saveTrophy(String trophyDir, TrophyData trophyData) {
   var now = DateTime.now();
   final file = File(

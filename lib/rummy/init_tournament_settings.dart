@@ -16,4 +16,5 @@ class ClickSettings {
   int noOfRounds = 1;
   bool maxPointGame = false;
   int maxPoints = 90;
+  int coins = 10;
 }

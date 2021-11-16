@@ -100,8 +100,8 @@ class _EliminationCardState extends State<EliminationCard> {
   Widget _getCard() {
     return SingleChildScrollView(
         child: Container(
-      width: 500,
-      height: 512 + widget.points.length * 60,
+      width: 400,
+      height: 400 + widget.points.length * 60,
       padding: EdgeInsets.all(16.0),
       alignment: Alignment.center,
       decoration: _getDecoration(c: widget.c),

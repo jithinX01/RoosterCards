@@ -212,9 +212,11 @@ message NextGame {
 message Eliminated {
     int32 round = 1;
     map<string,int32> totalPoints = 2;
+    int32 coinTransaction = 4;
 }
 message TournamentOver {
     bool sharedTrophy = 1;
     repeated string trophyWinners = 2;
     bool youWon = 3;
+    int32 coinTransaction = 4;
 }

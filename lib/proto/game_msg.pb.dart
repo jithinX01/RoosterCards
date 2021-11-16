@@ -1860,6 +1860,7 @@ class Eliminated extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Eliminated', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'game_message'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'round', $pb.PbFieldType.O3)
     ..m<$core.String, $core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalPoints', protoName: 'totalPoints', entryClassName: 'Eliminated.TotalPointsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.O3, packageName: const $pb.PackageName('game_message'))
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coinTransaction', $pb.PbFieldType.O3, protoName: 'coinTransaction')
     ..hasRequiredFields = false
   ;
 
@@ -1867,6 +1868,7 @@ class Eliminated extends $pb.GeneratedMessage {
   factory Eliminated({
     $core.int? round,
     $core.Map<$core.String, $core.int>? totalPoints,
+    $core.int? coinTransaction,
   }) {
     final _result = create();
     if (round != null) {
@@ -1874,6 +1876,9 @@ class Eliminated extends $pb.GeneratedMessage {
     }
     if (totalPoints != null) {
       _result.totalPoints.addAll(totalPoints);
+    }
+    if (coinTransaction != null) {
+      _result.coinTransaction = coinTransaction;
     }
     return _result;
   }
@@ -1909,6 +1914,15 @@ class Eliminated extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.Map<$core.String, $core.int> get totalPoints => $_getMap(1);
+
+  @$pb.TagNumber(4)
+  $core.int get coinTransaction => $_getIZ(2);
+  @$pb.TagNumber(4)
+  set coinTransaction($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasCoinTransaction() => $_has(2);
+  @$pb.TagNumber(4)
+  void clearCoinTransaction() => clearField(4);
 }
 
 class TournamentOver extends $pb.GeneratedMessage {
@@ -1916,6 +1930,7 @@ class TournamentOver extends $pb.GeneratedMessage {
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sharedTrophy', protoName: 'sharedTrophy')
     ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyWinners', protoName: 'trophyWinners')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'youWon', protoName: 'youWon')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coinTransaction', $pb.PbFieldType.O3, protoName: 'coinTransaction')
     ..hasRequiredFields = false
   ;
 
@@ -1924,6 +1939,7 @@ class TournamentOver extends $pb.GeneratedMessage {
     $core.bool? sharedTrophy,
     $core.Iterable<$core.String>? trophyWinners,
     $core.bool? youWon,
+    $core.int? coinTransaction,
   }) {
     final _result = create();
     if (sharedTrophy != null) {
@@ -1934,6 +1950,9 @@ class TournamentOver extends $pb.GeneratedMessage {
     }
     if (youWon != null) {
       _result.youWon = youWon;
+    }
+    if (coinTransaction != null) {
+      _result.coinTransaction = coinTransaction;
     }
     return _result;
   }
@@ -1978,5 +1997,14 @@ class TournamentOver extends $pb.GeneratedMessage {
   $core.bool hasYouWon() => $_has(2);
   @$pb.TagNumber(3)
   void clearYouWon() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get coinTransaction => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set coinTransaction($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasCoinTransaction() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCoinTransaction() => clearField(4);
 }
 

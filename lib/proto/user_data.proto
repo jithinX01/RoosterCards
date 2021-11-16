@@ -9,6 +9,7 @@ message UserData {
     bool initDone = 5;
     string trophyDir=6;
     int32 coins = 7;
+    string last_login = 8;
 }
 
 message TrophyData {

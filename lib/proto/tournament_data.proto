@@ -31,8 +31,11 @@ message TournamentData
     repeated int32 winCount = 16;
     int32 maxWinCount = 17;
     bool done = 18;
+    //coin per player
     int32 coins = 19;
     repeated int32 playerIdOut = 20;
+    //total coin for the tournament
+    int32 rewardCoins = 21;
 }
 
 message RummyTournamentData {

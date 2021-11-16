@@ -1,7 +1,14 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rooster_cards/proto/user_data.pbserver.dart';
 import 'package:rooster_cards/utilities/file_storage.dart';
+import 'package:rooster_cards/vault/coin_card.dart';
+
+enum LoginState {
+  LOGIN,
+  SHOW_BONUS,
+}
 
 class InitLogin extends StatefulWidget {
   final ValueChanged<UserData> onDone;
@@ -15,6 +22,15 @@ class InitLogin extends StatefulWidget {
 
 class _InitLoginState extends State<InitLogin> {
   final _formKey = GlobalKey<FormState>();
+  LoginState _loginState = LoginState.LOGIN;
+  Timer? _t;
+
+  @override
+  void dispose() {
+    if (_t != null && _t!.isActive) _t?.cancel();
+    super.dispose();
+  }
+
   /*
   final RegExp _emailRegex = new RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
@@ -26,6 +42,29 @@ class _InitLoginState extends State<InitLogin> {
   }
 
   Widget _getWidget() {
+    switch (_loginState) {
+      case LoginState.LOGIN:
+        return _getLoginWidget();
+      case LoginState.SHOW_BONUS:
+        return _getBonusWidget();
+      default:
+        return Container();
+    }
+  }
+
+  Widget _getBonusWidget() {
+    _t = Timer(Duration(seconds: 5), () {
+      widget.onDone(_userData);
+    });
+    return Container(
+      child: CoindCard(
+        coins: _userData.coins,
+        msg: "Join Bonus",
+      ),
+    );
+  }
+
+  Widget _getLoginWidget() {
     return Container(
         padding: EdgeInsets.only(top: 64, right: 10, left: 10),
         child: Center(
@@ -47,7 +86,7 @@ class _InitLoginState extends State<InitLogin> {
                         _userData.name = value;
                       }
                     },
-                    textAlign: TextAlign.center,
+                    //textAlign: TextAlign.center,
                     validator: (String? value) {
                       if (value != null && value.isEmpty) {
                         return 'Please enter name';
@@ -112,6 +151,8 @@ class _InitLoginState extends State<InitLogin> {
 
                         //rprint("$_userData");
                         _userData.initDone = true;
+                        _userData.coins = 1000;
+                        _userData.lastLogin = DateTime.now().toString();
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
                         /*
@@ -119,8 +160,12 @@ class _InitLoginState extends State<InitLogin> {
                           const SnackBar(content: Text('Processing Data')),
                         );
                         */
-                        _saveUserData().then((v) {
-                          widget.onDone(_userData);
+
+                        saveUserData(_userData).then((v) {
+                          setState(() {
+                            _loginState = LoginState.SHOW_BONUS;
+                          });
+                          //widget.onDone(_userData);
                         });
                       }
                     },
@@ -130,10 +175,11 @@ class _InitLoginState extends State<InitLogin> {
               )),
         ));
   }
-
+  /*
   Future<void> _saveUserData() async {
     var rfs = RoosterFileStorage("user.data");
     await rfs.fileExist;
     rfs.writeFile(_userData.writeToBuffer());
   }
+  */
 }

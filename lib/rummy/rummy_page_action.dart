@@ -164,6 +164,7 @@ class _RummyPageActionState extends State<RummyPageAction> {
     initStart.noOfDeck = _ts.cs.noOfDeck;
     initStart.noOfPlayers = _ts.cs.noOfPlayers;
     initStart.noOfRounds = _ts.cs.noOfRounds;
+    initStart.coins = _ts.cs.coins;
     initStart.rummyInitData = RummyInitData();
     initStart.rummyInitData.maxPoint = _ts.cs.maxPoints;
     initStart.rummyInitData.maxPointGame = _ts.cs.maxPointGame;

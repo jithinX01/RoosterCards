@@ -8,13 +8,15 @@ class NumButton extends StatefulWidget {
   final maxValue;
   final String name;
   final int step;
+  final Icon icon;
   NumButton(
       {required this.onChanged,
       required this.name,
       this.value,
       this.minValue,
       this.maxValue,
-      this.step = 1});
+      this.step = 1,
+      this.icon = const Icon(Icons.confirmation_number)});
   @override
   _NumButtonState createState() => _NumButtonState();
 }

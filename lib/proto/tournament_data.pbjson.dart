@@ -45,6 +45,7 @@ const TournamentData$json = const {
     const {'1': 'done', '3': 18, '4': 1, '5': 8, '10': 'done'},
     const {'1': 'coins', '3': 19, '4': 1, '5': 5, '10': 'coins'},
     const {'1': 'playerIdOut', '3': 20, '4': 3, '5': 5, '10': 'playerIdOut'},
+    const {'1': 'rewardCoins', '3': 21, '4': 1, '5': 5, '10': 'rewardCoins'},
   ],
   '3': const [TournamentData_PlayerCardsEntry$json],
   '8': const [
@@ -63,7 +64,7 @@ const TournamentData_PlayerCardsEntry$json = const {
 };
 
 /// Descriptor for `TournamentData`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List tournamentDataDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50RGF0YRIgCgtub09mUGxheWVycxgBIAEoBVILbm9PZlBsYXllcnMSHgoKbm9PZlJvdW5kcxgCIAEoBVIKbm9PZlJvdW5kcxIaCghub09mRGVjaxgDIAEoBVIIbm9PZkRlY2sSGAoHcGxheWVycxgEIAMoCVIHcGxheWVycxIcCgljYXJkU3RhY2sYBSADKAVSCWNhcmRTdGFjaxJCCgtwbGF5ZXJDYXJkcxgGIAMoCzIgLlRvdXJuYW1lbnREYXRhLlBsYXllckNhcmRzRW50cnlSC3BsYXllckNhcmRzEigKD2N1cnJlbnRQbGF5ZXJJZBgHIAEoBVIPY3VycmVudFBsYXllcklkEiYKDnRvdXJuYW1lbnROYW1lGAggASgJUg50b3VybmFtZW50TmFtZRIaCgh0cm9waHlJZBgJIAEoBVIIdHJvcGh5SWQSNQoKcnVtbXlfZGF0YRgKIAEoCzIULlJ1bW15VG91cm5hbWVudERhdGFIAFIJcnVtbXlEYXRhEiYKDmRpc2NhcmRlZENhcmRzGAsgAygFUg5kaXNjYXJkZWRDYXJkcxIiCgxjdXJyZW50Um91bmQYDCABKAVSDGN1cnJlbnRSb3VuZBIiCgx0b3VybmFtZW50SWQYDSABKAVSDHRvdXJuYW1lbnRJZBIaCghuZXh0Q2FyZBgOIAEoBVIIbmV4dENhcmQSIAoLcm91bmRXaW5uZXIYDyADKAVSC3JvdW5kV2lubmVyEhoKCHdpbkNvdW50GBAgAygFUgh3aW5Db3VudBIgCgttYXhXaW5Db3VudBgRIAEoBVILbWF4V2luQ291bnQSEgoEZG9uZRgSIAEoCFIEZG9uZRIUCgVjb2lucxgTIAEoBVIFY29pbnMSIAoLcGxheWVySWRPdXQYFCADKAVSC3BsYXllcklkT3V0GksKEFBsYXllckNhcmRzRW50cnkSEAoDa2V5GAEgASgFUgNrZXkSIQoFdmFsdWUYAiABKAsyCy5QbGF5ZXJDYXJkUgV2YWx1ZToCOAFCBgoEdHlwZQ==');
+final $typed_data.Uint8List tournamentDataDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50RGF0YRIgCgtub09mUGxheWVycxgBIAEoBVILbm9PZlBsYXllcnMSHgoKbm9PZlJvdW5kcxgCIAEoBVIKbm9PZlJvdW5kcxIaCghub09mRGVjaxgDIAEoBVIIbm9PZkRlY2sSGAoHcGxheWVycxgEIAMoCVIHcGxheWVycxIcCgljYXJkU3RhY2sYBSADKAVSCWNhcmRTdGFjaxJCCgtwbGF5ZXJDYXJkcxgGIAMoCzIgLlRvdXJuYW1lbnREYXRhLlBsYXllckNhcmRzRW50cnlSC3BsYXllckNhcmRzEigKD2N1cnJlbnRQbGF5ZXJJZBgHIAEoBVIPY3VycmVudFBsYXllcklkEiYKDnRvdXJuYW1lbnROYW1lGAggASgJUg50b3VybmFtZW50TmFtZRIaCgh0cm9waHlJZBgJIAEoBVIIdHJvcGh5SWQSNQoKcnVtbXlfZGF0YRgKIAEoCzIULlJ1bW15VG91cm5hbWVudERhdGFIAFIJcnVtbXlEYXRhEiYKDmRpc2NhcmRlZENhcmRzGAsgAygFUg5kaXNjYXJkZWRDYXJkcxIiCgxjdXJyZW50Um91bmQYDCABKAVSDGN1cnJlbnRSb3VuZBIiCgx0b3VybmFtZW50SWQYDSABKAVSDHRvdXJuYW1lbnRJZBIaCghuZXh0Q2FyZBgOIAEoBVIIbmV4dENhcmQSIAoLcm91bmRXaW5uZXIYDyADKAVSC3JvdW5kV2lubmVyEhoKCHdpbkNvdW50GBAgAygFUgh3aW5Db3VudBIgCgttYXhXaW5Db3VudBgRIAEoBVILbWF4V2luQ291bnQSEgoEZG9uZRgSIAEoCFIEZG9uZRIUCgVjb2lucxgTIAEoBVIFY29pbnMSIAoLcGxheWVySWRPdXQYFCADKAVSC3BsYXllcklkT3V0EiAKC3Jld2FyZENvaW5zGBUgASgFUgtyZXdhcmRDb2lucxpLChBQbGF5ZXJDYXJkc0VudHJ5EhAKA2tleRgBIAEoBVIDa2V5EiEKBXZhbHVlGAIgASgLMgsuUGxheWVyQ2FyZFIFdmFsdWU6AjgBQgYKBHR5cGU=');
 @$core.Deprecated('Use rummyTournamentDataDescriptor instead')
 const RummyTournamentData$json = const {
   '1': 'RummyTournamentData',

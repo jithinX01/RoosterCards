@@ -19,11 +19,12 @@ const UserData$json = const {
     const {'1': 'initDone', '3': 5, '4': 1, '5': 8, '10': 'initDone'},
     const {'1': 'trophyDir', '3': 6, '4': 1, '5': 9, '10': 'trophyDir'},
     const {'1': 'coins', '3': 7, '4': 1, '5': 5, '10': 'coins'},
+    const {'1': 'last_login', '3': 8, '4': 1, '5': 9, '10': 'lastLogin'},
   ],
 };
 
 /// Descriptor for `UserData`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userDataDescriptor = $convert.base64Decode('CghVc2VyRGF0YRISCgRuYW1lGAEgASgJUgRuYW1lEhYKBnVzZXJJZBgCIAEoCVIGdXNlcklkEhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZBIUCgVlbWFpbBgEIAEoCVIFZW1haWwSGgoIaW5pdERvbmUYBSABKAhSCGluaXREb25lEhwKCXRyb3BoeURpchgGIAEoCVIJdHJvcGh5RGlyEhQKBWNvaW5zGAcgASgFUgVjb2lucw==');
+final $typed_data.Uint8List userDataDescriptor = $convert.base64Decode('CghVc2VyRGF0YRISCgRuYW1lGAEgASgJUgRuYW1lEhYKBnVzZXJJZBgCIAEoCVIGdXNlcklkEhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZBIUCgVlbWFpbBgEIAEoCVIFZW1haWwSGgoIaW5pdERvbmUYBSABKAhSCGluaXREb25lEhwKCXRyb3BoeURpchgGIAEoCVIJdHJvcGh5RGlyEhQKBWNvaW5zGAcgASgFUgVjb2lucxIdCgpsYXN0X2xvZ2luGAggASgJUglsYXN0TG9naW4=');
 @$core.Deprecated('Use trophyDataDescriptor instead')
 const TrophyData$json = const {
   '1': 'TrophyData',

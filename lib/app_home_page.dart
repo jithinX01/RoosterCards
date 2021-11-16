@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/just_cards/cards_home_page.dart';
-import 'package:rooster_cards/trophy/trophy_cabinet.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/navigation_card.dart';
 import 'package:rooster_cards/rummy/rummy_home_page.dart';
+import 'package:rooster_cards/vault/vault_home_page.dart';
 
 class AppHomePage extends StatefulWidget {
   AppHomePage({Key? key, required this.title}) : super(key: key);
@@ -70,8 +70,8 @@ class _AppHomePageState extends State<AppHomePage> {
             NavigationCard(
                 w: UserDataInfo(
                     userInfo: UserDataInfo.of(context).userInfo,
-                    child: TrophyCabinet()),
-                title: "Trophy",
+                    child: VaultHomePage()),
+                title: "Vault",
                 c: Colors.orange,
                 icon: Icons.cabin),
             NavigationCard(
@@ -84,21 +84,20 @@ class _AppHomePageState extends State<AppHomePage> {
                 icon: Icons.card_giftcard),
             /*
             NavigationCard(
-                w: Scaffold(
-                    body: Container(
-                  alignment: Alignment.center,
-                  /*
-                        child: GameWinCard(
-                          stat: PlayerStat.WINNER,
-                          round: "Robo Match",
-                          afterWinCards: getData(),
-                          points: getPts(),
-                          computerGame: true,
-                        )
-                        */
-                  child: TournamentWinnersCard(wonPlayers: ["Jithin"]),
-                )),
-                //w: Hand(),
+              w: Scaffold(
+                  body: Container(
+                alignment: Alignment.center,
+                child: CoindCard(
+                  coins: 1000,
+                  msg: "Bonus",
+                ),
+              )),
+              title: "Test",
+            ),
+            */
+
+            //w: Hand(),
+            /*
                 title: "Temp",
                 c: Colors.pink,
                 icon: Icons.card_giftcard),

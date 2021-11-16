@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/proto/user_data.pbserver.dart';
-import 'package:rooster_cards/trophy/trophy_card.dart';
+import 'package:rooster_cards/vault/trophy_card.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 
 class TrophyCabinet extends StatefulWidget {
@@ -63,7 +63,7 @@ class _TrophyCabinetState extends State<TrophyCabinet> {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.all(16.0),
-      child: Text("No Trophies, Play to Win"),
+      child: Text("No Trophy, Play Tournament to Win One"),
     );
   }
 

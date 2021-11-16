@@ -23,6 +23,8 @@ class Tournament {
       noOfRounds: initStart.noOfRounds,
       trophyId: initStart.trophyId,
       tournamentName: initStart.tournamentName,
+      coins: initStart.coins,
+      rewardCoins: initStart.coins * initStart.noOfPlayers,
     );
     //initialise
     for (var i = 0; i < _data.noOfPlayers; i++) {
@@ -105,6 +107,9 @@ class Tournament {
           sharedTrophy: sharedTrophy,
           trophyWinners: _getWinPlayerNames(playerId, winList),
           youWon: winList.contains(playerId),
+          coinTransaction: winList.contains(playerId)
+              ? (_data.rewardCoins - _data.coins)
+              : -(_data.coins),
         ),
       );
 
@@ -405,6 +410,7 @@ class RummyTournament extends Tournament {
                     eliminated: Eliminated(
           round: _data.currentRound,
           totalPoints: _data.rummyData.points,
+          coinTransaction: -(_data.coins),
         ))));
 
         _roundEliminated.forEach((playerId) {

@@ -18,6 +18,7 @@ class UserData extends $pb.GeneratedMessage {
     ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initDone', protoName: 'initDone')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trophyDir', protoName: 'trophyDir')
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coins', $pb.PbFieldType.O3)
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastLogin')
     ..hasRequiredFields = false
   ;
 
@@ -30,6 +31,7 @@ class UserData extends $pb.GeneratedMessage {
     $core.bool? initDone,
     $core.String? trophyDir,
     $core.int? coins,
+    $core.String? lastLogin,
   }) {
     final _result = create();
     if (name != null) {
@@ -52,6 +54,9 @@ class UserData extends $pb.GeneratedMessage {
     }
     if (coins != null) {
       _result.coins = coins;
+    }
+    if (lastLogin != null) {
+      _result.lastLogin = lastLogin;
     }
     return _result;
   }
@@ -138,6 +143,15 @@ class UserData extends $pb.GeneratedMessage {
   $core.bool hasCoins() => $_has(6);
   @$pb.TagNumber(7)
   void clearCoins() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get lastLogin => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set lastLogin($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasLastLogin() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearLastLogin() => clearField(8);
 }
 
 class TrophyData extends $pb.GeneratedMessage {

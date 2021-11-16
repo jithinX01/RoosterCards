@@ -363,6 +363,7 @@ const Eliminated$json = const {
   '2': const [
     const {'1': 'round', '3': 1, '4': 1, '5': 5, '10': 'round'},
     const {'1': 'totalPoints', '3': 2, '4': 3, '5': 11, '6': '.game_message.Eliminated.TotalPointsEntry', '10': 'totalPoints'},
+    const {'1': 'coinTransaction', '3': 4, '4': 1, '5': 5, '10': 'coinTransaction'},
   ],
   '3': const [Eliminated_TotalPointsEntry$json],
 };
@@ -378,7 +379,7 @@ const Eliminated_TotalPointsEntry$json = const {
 };
 
 /// Descriptor for `Eliminated`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List eliminatedDescriptor = $convert.base64Decode('CgpFbGltaW5hdGVkEhQKBXJvdW5kGAEgASgFUgVyb3VuZBJLCgt0b3RhbFBvaW50cxgCIAMoCzIpLmdhbWVfbWVzc2FnZS5FbGltaW5hdGVkLlRvdGFsUG9pbnRzRW50cnlSC3RvdGFsUG9pbnRzGj4KEFRvdGFsUG9pbnRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAVSBXZhbHVlOgI4AQ==');
+final $typed_data.Uint8List eliminatedDescriptor = $convert.base64Decode('CgpFbGltaW5hdGVkEhQKBXJvdW5kGAEgASgFUgVyb3VuZBJLCgt0b3RhbFBvaW50cxgCIAMoCzIpLmdhbWVfbWVzc2FnZS5FbGltaW5hdGVkLlRvdGFsUG9pbnRzRW50cnlSC3RvdGFsUG9pbnRzEigKD2NvaW5UcmFuc2FjdGlvbhgEIAEoBVIPY29pblRyYW5zYWN0aW9uGj4KEFRvdGFsUG9pbnRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAVSBXZhbHVlOgI4AQ==');
 @$core.Deprecated('Use tournamentOverDescriptor instead')
 const TournamentOver$json = const {
   '1': 'TournamentOver',
@@ -386,8 +387,9 @@ const TournamentOver$json = const {
     const {'1': 'sharedTrophy', '3': 1, '4': 1, '5': 8, '10': 'sharedTrophy'},
     const {'1': 'trophyWinners', '3': 2, '4': 3, '5': 9, '10': 'trophyWinners'},
     const {'1': 'youWon', '3': 3, '4': 1, '5': 8, '10': 'youWon'},
+    const {'1': 'coinTransaction', '3': 4, '4': 1, '5': 5, '10': 'coinTransaction'},
   ],
 };
 
 /// Descriptor for `TournamentOver`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List tournamentOverDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50T3ZlchIiCgxzaGFyZWRUcm9waHkYASABKAhSDHNoYXJlZFRyb3BoeRIkCg10cm9waHlXaW5uZXJzGAIgAygJUg10cm9waHlXaW5uZXJzEhYKBnlvdVdvbhgDIAEoCFIGeW91V29u');
+final $typed_data.Uint8List tournamentOverDescriptor = $convert.base64Decode('Cg5Ub3VybmFtZW50T3ZlchIiCgxzaGFyZWRUcm9waHkYASABKAhSDHNoYXJlZFRyb3BoeRIkCg10cm9waHlXaW5uZXJzGAIgAygJUg10cm9waHlXaW5uZXJzEhYKBnlvdVdvbhgDIAEoCFIGeW91V29uEigKD2NvaW5UcmFuc2FjdGlvbhgEIAEoBVIPY29pblRyYW5zYWN0aW9u');

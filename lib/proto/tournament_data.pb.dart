@@ -45,6 +45,7 @@ class TournamentData extends $pb.GeneratedMessage {
     ..aOB(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'done')
     ..a<$core.int>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coins', $pb.PbFieldType.O3)
     ..p<$core.int>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerIdOut', $pb.PbFieldType.P3, protoName: 'playerIdOut')
+    ..a<$core.int>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rewardCoins', $pb.PbFieldType.O3, protoName: 'rewardCoins')
     ..hasRequiredFields = false
   ;
 
@@ -70,6 +71,7 @@ class TournamentData extends $pb.GeneratedMessage {
     $core.bool? done,
     $core.int? coins,
     $core.Iterable<$core.int>? playerIdOut,
+    $core.int? rewardCoins,
   }) {
     final _result = create();
     if (noOfPlayers != null) {
@@ -131,6 +133,9 @@ class TournamentData extends $pb.GeneratedMessage {
     }
     if (playerIdOut != null) {
       _result.playerIdOut.addAll(playerIdOut);
+    }
+    if (rewardCoins != null) {
+      _result.rewardCoins = rewardCoins;
     }
     return _result;
   }
@@ -297,6 +302,15 @@ class TournamentData extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(20)
   $core.List<$core.int> get playerIdOut => $_getList(19);
+
+  @$pb.TagNumber(21)
+  $core.int get rewardCoins => $_getIZ(20);
+  @$pb.TagNumber(21)
+  set rewardCoins($core.int v) { $_setSignedInt32(20, v); }
+  @$pb.TagNumber(21)
+  $core.bool hasRewardCoins() => $_has(20);
+  @$pb.TagNumber(21)
+  void clearRewardCoins() => clearField(21);
 }
 
 class RummyTournamentData extends $pb.GeneratedMessage {

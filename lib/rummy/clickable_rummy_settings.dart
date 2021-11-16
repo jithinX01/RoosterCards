@@ -29,84 +29,99 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.arrow_back,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            Navigator.pop(context, _cs);
+          },
         ),
-        onPressed: () {
-          Navigator.pop(context, _cs);
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      body: Container(
-        padding: const EdgeInsets.only(top: 64),
-        child: Column(
-          children: <Widget>[
-            NumButton(
-              onChanged: (val) {
-                //rprint("current state $val");
-                _cs.noOfDeck = val;
-                setState(() {
-                  //_shuffle = val;
-                });
-              },
-              name: "Deck",
-              value: _cs.noOfDeck,
-              minValue: 1,
-              maxValue: 5,
-            ),
-            NumButton(
-              onChanged: (val) {
-                //rprint("current state $val");
-                _cs.noOfPlayers = val;
-                setState(() {
-                  //_shuffle = val;
-                });
-              },
-              name: "Players",
-              value: _cs.noOfPlayers,
-              minValue: 2,
-              maxValue: 8,
-            ),
-            if (!_cs.maxPointGame)
-              NumButton(
-                onChanged: (val) {
-                  //rprint("current state $val");
-                  _cs.noOfRounds = val;
-                  setState(() {
-                    //_shuffle = val;
-                  });
-                },
-                name: "Round",
-                value: _cs.noOfRounds,
-                minValue: 1,
-                maxValue: 7,
-              ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text("Max Point Game"),
-              Switch(
-                  value: _cs.maxPointGame,
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        body: Container(
+          padding: const EdgeInsets.only(top: 64),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                NumButton(
                   onChanged: (val) {
+                    //rprint("current state $val");
+                    _cs.noOfDeck = val;
                     setState(() {
-                      _cs.maxPointGame = val;
+                      //_shuffle = val;
                     });
-                  }),
-            ]),
-            if (_cs.maxPointGame)
-              NumButton(
-                onChanged: (val) {
-                  _cs.maxPoints = val;
-                  setState(() {});
-                },
-                value: _cs.maxPoints,
-                minValue: 80,
-                maxValue: 500,
-                name: "Points",
-                step: 20,
-              ),
-          ],
-        ),
-      ),
-    );
+                  },
+                  name: "Deck",
+                  value: _cs.noOfDeck,
+                  minValue: 1,
+                  maxValue: 5,
+                ),
+                NumButton(
+                  onChanged: (val) {
+                    //rprint("current state $val");
+                    _cs.noOfPlayers = val;
+                    setState(() {
+                      //_shuffle = val;
+                    });
+                  },
+                  name: "Players",
+                  value: _cs.noOfPlayers,
+                  minValue: 2,
+                  maxValue: 8,
+                ),
+                NumButton(
+                  onChanged: (val) {
+                    //rprint("current state $val");
+                    _cs.coins = val;
+                    setState(() {
+                      //_shuffle = val;
+                    });
+                  },
+                  name: "Coins",
+                  value: _cs.coins,
+                  minValue: 10,
+                  maxValue: 1000,
+                  step: 10,
+                ),
+                if (!_cs.maxPointGame)
+                  NumButton(
+                    onChanged: (val) {
+                      //rprint("current state $val");
+                      _cs.noOfRounds = val;
+                      setState(() {
+                        //_shuffle = val;
+                      });
+                    },
+                    name: "Round",
+                    value: _cs.noOfRounds,
+                    minValue: 1,
+                    maxValue: 7,
+                  ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text("Max Point Game"),
+                  Switch(
+                      value: _cs.maxPointGame,
+                      onChanged: (val) {
+                        setState(() {
+                          _cs.maxPointGame = val;
+                        });
+                      }),
+                ]),
+                if (_cs.maxPointGame)
+                  NumButton(
+                    onChanged: (val) {
+                      _cs.maxPoints = val;
+                      setState(() {});
+                    },
+                    value: _cs.maxPoints,
+                    minValue: 80,
+                    maxValue: 500,
+                    name: "Points",
+                    step: 10,
+                  ),
+              ],
+            ),
+          ),
+        ));
   }
 }
