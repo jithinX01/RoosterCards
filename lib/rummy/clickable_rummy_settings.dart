@@ -55,6 +55,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
                   value: _cs.noOfDeck,
                   minValue: 1,
                   maxValue: 5,
+                  icon: Icon(Icons.reorder),
                 ),
                 NumButton(
                   onChanged: (val) {
@@ -68,6 +69,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
                   value: _cs.noOfPlayers,
                   minValue: 2,
                   maxValue: 8,
+                  icon: Icon(Icons.group),
                 ),
                 NumButton(
                   onChanged: (val) {
@@ -82,6 +84,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
                   minValue: 10,
                   maxValue: 1000,
                   step: 10,
+                  icon: Icon(Icons.monetization_on),
                 ),
                 if (!_cs.maxPointGame)
                   NumButton(
@@ -96,6 +99,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
                     value: _cs.noOfRounds,
                     minValue: 1,
                     maxValue: 7,
+                    icon: Icon(Icons.sync),
                   ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text("Max Point Game"),
@@ -118,6 +122,7 @@ class _ClickableRummySettingsState extends State<ClickableRummySettings> {
                     maxValue: 500,
                     name: "Points",
                     step: 10,
+                    icon: Icon(Icons.star),
                   ),
               ],
             ),

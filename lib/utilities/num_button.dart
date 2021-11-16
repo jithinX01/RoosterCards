@@ -60,7 +60,7 @@ class _NumButtonState extends State<NumButton> {
             FloatingActionButton.extended(
               onPressed: () {},
               //isExtended: true,
-              icon: Icon(Icons.confirmation_number),
+              icon: widget.icon,
               label: Text(_s),
               heroTag: "btnc" + widget.name,
               //shape: CircleBorder() ,
