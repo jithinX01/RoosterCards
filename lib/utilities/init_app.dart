@@ -26,7 +26,7 @@ class _InitAppState extends State<InitApp> {
   }
 
   Widget _getWidget(BuildContext context) {
-    if (widget.userData.initDone) {
+    if (widget.userData.initDone && widget.userData.hasLastLogin()) {
       return UserDataInfo(
           userInfo: widget.userData,
           child: AppHomePage(

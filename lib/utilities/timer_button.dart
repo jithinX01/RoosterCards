@@ -16,12 +16,13 @@ class TimerButton extends StatefulWidget {
 
 class _TimerButtonState extends State<TimerButton> {
   late int _timeLeft = widget.time;
+  Timer? _t;
 
   @override
   initState() {
     super.initState();
 
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    _t = Timer.periodic(Duration(seconds: 1), (timer) {
       //rprint(_timeLeft);
       if (_timeLeft <= 0) {
         timer.cancel();
@@ -31,6 +32,12 @@ class _TimerButtonState extends State<TimerButton> {
         setState(() {});
       }
     });
+  }
+
+  @override
+  void dispose() {
+    if (_t != null && _t!.isActive) _t?.cancel();
+    super.dispose();
   }
 
   @override

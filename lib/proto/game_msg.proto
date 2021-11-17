@@ -148,6 +148,7 @@ message StartTournament {
     int32 yourId = 8;
     int32 nextCard = 9;
     int32 tournamentId = 10;
+    ARPAction arpAction = 11;
 }
 
 message GameServerUpdate

@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:rooster_cards/rummy/rummy_user_action.dart';
 import 'dart:math';
 
+import 'package:rooster_cards/utilities/timer_message.dart';
+
 enum StackMode {
   SWAP_MODE,
+  MINIMISE_MODE,
   REPLACE_MODE,
   VIEW_MODE,
 }
@@ -48,7 +51,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   bool _newCardTook = false;
   bool _fromInside = false;
   bool _groupMode = false;
-  String _toggleText = "N";
+  String _toggleText = "S";
+  int _in_cards = 0;
 
   StackMode _stackMode = StackMode.SWAP_MODE;
   /*
@@ -89,10 +93,15 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     //rprint("getScreen");
     //rprint(widget.cards);
     //rprint(_stackMode);
-    if (_showPopCard && _stackMode == StackMode.REPLACE_MODE)
+    if (_showPopCard && _stackMode == StackMode.REPLACE_MODE) {
       wList.add(_getPopCard(widget.nextCard));
+    }
+    if (_stackMode == StackMode.MINIMISE_MODE) {
+      wList.add(_getMinimiseCard(widget.nextCard));
+    }
     if (_showSwapButton) wList.add(_getControlButton());
-    if (_stackMode == StackMode.SWAP_MODE) {
+    if (_stackMode == StackMode.SWAP_MODE ||
+        _stackMode == StackMode.MINIMISE_MODE) {
       wList.add(_getSwapModeToggle());
     }
     return Stack(children: wList);
@@ -134,17 +143,22 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
             ),
           ),
           */
-          icon: Icon((_groupMode && _stackMode == StackMode.SWAP_MODE)
+          icon: Icon((_groupMode &&
+                  (_stackMode == StackMode.SWAP_MODE ||
+                      _stackMode == StackMode.MINIMISE_MODE))
               ? Icons.sort
               : Icons.swap_horiz),
-          label: Text((_groupMode && _stackMode == StackMode.SWAP_MODE)
+          label: Text((_groupMode &&
+                  (_stackMode == StackMode.SWAP_MODE ||
+                      _stackMode == StackMode.MINIMISE_MODE))
               ? "Group"
               : "Swap"),
           backgroundColor: Colors.blue,
           foregroundColor: Colors.black,
           heroTag: "swapped",
           onPressed: () {
-            if (_stackMode == StackMode.SWAP_MODE) {
+            if (_stackMode == StackMode.SWAP_MODE ||
+                _stackMode == StackMode.MINIMISE_MODE) {
               _groupMode ? group() : swap();
               //setState(() {});
             } else if (_stackMode == StackMode.REPLACE_MODE) {
@@ -181,7 +195,7 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
           heroTag: "togglemode",
           onPressed: () {
             _groupMode = !_groupMode;
-            _toggleText = _groupMode ? "G" : "N";
+            _toggleText = _groupMode ? "G" : "S";
             _snackBar();
             setState(() {});
           },
@@ -253,9 +267,27 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   Widget _getPopCard(int card) {
     List<Widget> wl = List.empty(growable: true);
     //the pop up card
-    wl.add(PlayingCard(PACK[card]));
+    wl.add(
+      _newCardTook
+          ? PlayingCard(PACK[card])
+          : GestureDetector(
+              child: PlayingCard(PACK[card]),
+              onDoubleTap: () {
+                var action = RummyUserAction(rUserAction: RUserAction.MINIMISE);
+                widget.onUserAction(action);
+              },
+            ),
+    );
+
     //not a proper way but it works
     if (!_newCardTook) {
+      ++_in_cards;
+      if (_in_cards < 4) {
+        wl.add(Positioned(
+          child: TimerMessage(time: 2, message: "Double Tap to minimize card"),
+          top: 0,
+        ));
+      }
       _clickList.clear();
       _showSwapButton = false;
       wl.add(Positioned(
@@ -340,7 +372,8 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
         onTap: () {
           //rprint(card);
           //rprint(index);
-          if (_stackMode == StackMode.SWAP_MODE) {
+          if (_stackMode == StackMode.SWAP_MODE ||
+              _stackMode == StackMode.MINIMISE_MODE) {
             if (!_clickList.contains(index)) {
               _clickList.add(index);
             } else {
@@ -436,15 +469,37 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
       SnackBar(
         content: Text(_groupMode ? "Group Mode" : "Swap Mode"),
         duration: const Duration(seconds: 1),
-        width: 100.0, // Width of the SnackBar.
+        width: 100.0,
+        // Width of the SnackBar.
         padding: const EdgeInsets.symmetric(
-          horizontal: 8.0, // Inner padding for SnackBar content.
+          horizontal: 10.0, // Inner padding for SnackBar content.
         ),
+
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
     );
+  }
+
+  Widget _getMinimiseCard(int card) {
+    return AnimatedPositioned(
+        bottom: 5,
+        right: 5,
+        duration: Duration(seconds: 2),
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: Stack(children: [
+            GestureDetector(
+              onTap: () {
+                var action = RummyUserAction(rUserAction: RUserAction.MAXIMISE);
+                widget.onUserAction(action);
+              },
+              child: getTinyPlayCard(PACK[card]),
+            ),
+            //TimerButton(onEnd: () {}, time: 20),
+          ]),
+        ));
   }
 }

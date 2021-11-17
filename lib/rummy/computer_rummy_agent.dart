@@ -88,7 +88,7 @@ class ComputerRummyAgent {
     if (_t.isActive) {
       _t.cancel();
     }
-    _t = Timer(Duration(seconds: random(10, 20)), () {
+    _t = Timer(Duration(seconds: random(5, 8)), () {
       _handleUserAction(rummyUserAction);
       //rprint("after replace $_meld");
       //rprint(_tournamentData.cards);

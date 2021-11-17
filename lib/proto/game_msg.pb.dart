@@ -1096,6 +1096,7 @@ class StartTournament extends $pb.GeneratedMessage {
     ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'yourId', $pb.PbFieldType.O3, protoName: 'yourId')
     ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextCard', $pb.PbFieldType.O3, protoName: 'nextCard')
     ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tournamentId', $pb.PbFieldType.O3, protoName: 'tournamentId')
+    ..e<ARPAction>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arpAction', $pb.PbFieldType.OE, protoName: 'arpAction', defaultOrMaker: ARPAction.DRAW_CARD, valueOf: ARPAction.valueOf, enumValues: ARPAction.values)
     ..hasRequiredFields = false
   ;
 
@@ -1111,6 +1112,7 @@ class StartTournament extends $pb.GeneratedMessage {
     $core.int? yourId,
     $core.int? nextCard,
     $core.int? tournamentId,
+    ARPAction? arpAction,
   }) {
     final _result = create();
     if (playerMap != null) {
@@ -1142,6 +1144,9 @@ class StartTournament extends $pb.GeneratedMessage {
     }
     if (tournamentId != null) {
       _result.tournamentId = tournamentId;
+    }
+    if (arpAction != null) {
+      _result.arpAction = arpAction;
     }
     return _result;
   }
@@ -1243,6 +1248,15 @@ class StartTournament extends $pb.GeneratedMessage {
   $core.bool hasTournamentId() => $_has(9);
   @$pb.TagNumber(10)
   void clearTournamentId() => clearField(10);
+
+  @$pb.TagNumber(11)
+  ARPAction get arpAction => $_getN(10);
+  @$pb.TagNumber(11)
+  set arpAction(ARPAction v) { setField(11, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasArpAction() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearArpAction() => clearField(11);
 }
 
 enum GameServerUpdate_Update {

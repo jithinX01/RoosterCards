@@ -170,6 +170,7 @@ class _RummyPlayState extends State<RummyPlay> {
     //rprint(activeRummyPlayerStat.nextCard);
     _tournamentData.youStart = true;
     _tournamentData.nextCard = activeRummyPlayerStat.nextCard;
+    _tournamentData.arpAction = activeRummyPlayerStat.arpAction;
     _mode = StackMode.REPLACE_MODE;
     _wl.clear();
     _wl.add(_getPlayingCards());
@@ -348,6 +349,20 @@ class _RummyPlayState extends State<RummyPlay> {
         _tournamentData.cards.addAll(rummyUserAction.cards);
         //rprint("Normal Swap");
         break;
+      case RUserAction.MAXIMISE:
+        _mode = StackMode.REPLACE_MODE;
+        _wl.clear();
+        _wl.add(_getPlayingCards());
+        _wl.add(_getStatusButton(true));
+        setState(() {});
+        break;
+      case RUserAction.MINIMISE:
+        _mode = StackMode.MINIMISE_MODE;
+        _wl.clear();
+        _wl.add(_getPlayingCards());
+        _wl.add(_getStatusButton(true));
+        setState(() {});
+        break;
       case RUserAction.REPLACE:
         _mode = StackMode.SWAP_MODE;
         _tournamentData.cards.clear();
@@ -432,7 +447,7 @@ class _RummyPlayState extends State<RummyPlay> {
       top: 20,
       child: Align(
         alignment: Alignment.topCenter,
-        child: TimerMessage(time: 2, message: message),
+        child: TimerMessage(time: 3, message: message),
       ),
     );
   }

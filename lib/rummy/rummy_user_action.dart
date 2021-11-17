@@ -2,6 +2,8 @@ enum RUserAction {
   NORMAL_SWAP,
   REPLACE,
   DISCARD,
+  MAXIMISE,
+  MINIMISE,
 }
 
 class RummyUserAction {

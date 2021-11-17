@@ -235,3 +235,41 @@ class PlayingCard extends StatelessWidget {
     return _getNormalCard();
   }
 }
+
+Widget getTinyPlayCard(PCardInfo pCardInfo) {
+  return Container(
+    width: 90,
+    height: 120,
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      shape: BoxShape.rectangle,
+      borderRadius: BorderRadius.circular(7.0),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.blue,
+          blurRadius: 10.0,
+        ),
+      ],
+    ),
+    child: Stack(
+      children: [
+        Positioned(
+            child: Text(pCardInfo.val,
+                style: TextStyle(
+                  fontSize: 32,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.bold,
+                  color: getColor(pCardInfo.suit),
+                ))),
+        Positioned(
+            child: Align(
+                child: Text(pCardInfo.strUtf,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold,
+                    )))),
+      ],
+    ),
+  );
+}
