@@ -8,6 +8,7 @@ import 'package:rooster_cards/utilities/global_user_data_info.dart';
 import 'package:rooster_cards/utilities/init_login.dart';
 import 'package:rooster_cards/utilities/rooster_splash.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:rooster_cards/vault/coin_card.dart';
 
 class InitApp extends StatefulWidget {
   final UserData userData;
@@ -27,18 +28,56 @@ class _InitAppState extends State<InitApp> {
 
   Widget _getWidget(BuildContext context) {
     if (widget.userData.initDone && widget.userData.hasLastLogin()) {
-      return UserDataInfo(
-          userInfo: widget.userData,
-          child: AppHomePage(
-            title: "Rooster Cards",
-          ));
+      if (_moreThanDay(DateTime.parse(widget.userData.lastLogin))) {
+        return _getBonusWidget();
+      } else {
+        return UserDataInfo(
+            userInfo: widget.userData,
+            child: AppHomePage(
+              title: "Rooster Cards",
+            ));
+      }
     } else {
       return InitLogin(onDone: (userData) {
         widget.userData.name = userData.name;
         widget.userData.initDone = true;
+        widget.userData.coins = userData.coins;
+        widget.userData.lastLogin = userData.lastLogin;
         setState(() {});
       });
     }
+  }
+
+  bool _moreThanDay(DateTime dateTime) {
+    return dateTime.difference(DateTime.now()).inHours.abs() > 24;
+  }
+
+  Widget _getBonusWidget() {
+    widget.userData.coins += 100;
+    widget.userData.lastLogin = DateTime.now().toString();
+    saveUserData(widget.userData);
+    return Scaffold(
+        body: Container(
+      child: Stack(children: [
+        CoindCard(
+          coins: 100,
+          msg: "Daily Bonus",
+        ),
+        _closeButton(),
+      ]),
+    ));
+  }
+
+  Widget _closeButton() {
+    return Container(
+        padding: EdgeInsets.all(16.0),
+        child: Align(
+            alignment: Alignment.bottomCenter,
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  setState(() {});
+                },
+                label: Text("OK"))));
   }
 }
 
