@@ -43,7 +43,10 @@ class PlayerCardStack extends StatefulWidget {
   _PlayerCardStackState createState() => _PlayerCardStackState();
 }
 
-class _PlayerCardStackState extends State<PlayerCardStack> {
+class _PlayerCardStackState extends State<PlayerCardStack>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+
   late List<int> _clickList = List.empty(growable: true);
   //late List<int> _cards;
   bool _showSwapButton = false;
@@ -53,17 +56,22 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   bool _groupMode = false;
   String _toggleText = "S";
   int _in_cards = 0;
-
+  late Size biggest;
   StackMode _stackMode = StackMode.SWAP_MODE;
-  /*
+
   @override
   void initState() {
     super.initState();
-    _stackMode = widget.mode;
-   //rprint("Inited");
-    _cards = List.from(widget.cards);
+    _controller =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    _controller.repeat(reverse: true);
   }
-  */
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +88,12 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
     } else {
       _fromInside = false;
     }
-    return _getScreen();
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      biggest = constraints.biggest;
+
+      return _getScreen();
+    });
   }
 
   Widget _getScreen() {
@@ -484,10 +497,34 @@ class _PlayerCardStackState extends State<PlayerCardStack> {
   }
 
   Widget _getMinimiseCard(int card) {
-    return AnimatedPositioned(
-        bottom: 5,
-        right: 5,
-        duration: Duration(seconds: 2),
+    const double smallLogo = 200;
+    const double bigLogo = 200;
+    print(biggest);
+
+    return PositionedTransition(
+        //return AnimatedPositioned(
+        rect: RelativeRectTween(
+          begin: RelativeRect.fromSize(
+              Rect.fromLTWH(
+                  (biggest.width - bigLogo) / 2, 210, smallLogo, smallLogo),
+              biggest),
+          /*
+          end: RelativeRect.fromSize(
+              Rect.fromLTWH(biggest.width - bigLogo, biggest.height - bigLogo,
+                  bigLogo, bigLogo),
+              biggest),
+          */
+          end: RelativeRect.fromSize(
+              Rect.fromLTWH(
+                  (biggest.width - bigLogo) / 2, 200, bigLogo, bigLogo),
+              biggest),
+        ).animate(CurvedAnimation(
+          parent: _controller,
+          curve: Curves.elasticInOut,
+        )),
+        //bottom: 5,
+        //right: 5,
+        //duration: Duration(seconds: 2),
         child: Align(
           alignment: Alignment.bottomRight,
           child: Stack(children: [
