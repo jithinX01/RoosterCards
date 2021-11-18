@@ -6,11 +6,12 @@ class TournamentWinnersCard extends StatefulWidget {
   final String tournamentName;
   final bool sharedTrophy;
   final List<String> wonPlayers;
-
+  final int trophyId;
   final Color c;
   final IconData icon;
   const TournamentWinnersCard({
     Key? key,
+    this.trophyId = 1,
     this.tournamentName = "",
     this.c = Colors.green,
     this.icon = Icons.emoji_events,
@@ -91,6 +92,15 @@ class _TournamentWinnersCardState extends State<TournamentWinnersCard> {
     );
   }
 
+  String _getTrophy(int trophyId) {
+    switch (trophyId) {
+      case 1:
+        return 'images/trophy.png';
+      default:
+        return 'images/trophy.png';
+    }
+  }
+
   List<Widget> _getWidgets() {
     List<Widget> wl = [
       /*
@@ -100,7 +110,7 @@ class _TournamentWinnersCardState extends State<TournamentWinnersCard> {
       ),
       */
       Image.asset(
-        'images/trophy.png',
+        _getTrophy(widget.trophyId),
         scale: 1,
       ),
       Text(

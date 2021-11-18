@@ -133,12 +133,14 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
     GameMessageClient gmc = GameMessageClient();
     InitStart initStart = InitStart();
     initStart.gameType = GameType.RUMMY;
-    initStart.tournamentName = "System Fight";
+    initStart.tournamentName = "Robo Match";
+    initStart.trophyId = 2;
     //initStart.playerName = "SomePlayer";
     initStart.playerName = UserDataInfo.of(context).userInfo.name;
     initStart.noOfDeck = 1;
     initStart.noOfPlayers = 2;
     initStart.noOfRounds = 1;
+    initStart.coins = 10;
     gmc.initStart = initStart;
     return gmc;
   }

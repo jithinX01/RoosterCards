@@ -244,6 +244,20 @@ class _RummyPlayState extends State<RummyPlay> {
 
   void _handleTournamentOver(TournamentOver tournamentOver) {
     _tournamentOver = true;
+
+    //save the info for trophy
+    if (tournamentOver.youWon) {
+      saveTrophy(
+          UserDataInfo.of(context).userInfo.trophyDir,
+          TrophyData(
+            tournamentName: _tournamentData.tournamentName,
+            trophyId: _tournamentData.trophyId,
+            trophyWinners: tournamentOver.trophyWinners,
+            shared: tournamentOver.sharedTrophy,
+          ));
+    }
+    UserDataInfo.of(context).userInfo.coins += tournamentOver.coinTransaction;
+    saveUserData(UserDataInfo.of(context).userInfo);
     if (widget.withComputer) {
       /*
       _t = Timer(Duration(seconds: 25), () {
@@ -252,19 +266,6 @@ class _RummyPlayState extends State<RummyPlay> {
       */
       return;
     }
-    //save the info for trophy
-    if (tournamentOver.youWon) {
-      saveTrophy(
-          UserDataInfo.of(context).userInfo.trophyDir,
-          TrophyData(
-            tournamentName: _tournamentData.tournamentName,
-            trophyId: _tournamentData.tournamentId,
-            trophyWinners: tournamentOver.trophyWinners,
-            shared: tournamentOver.sharedTrophy,
-          ));
-    }
-    UserDataInfo.of(context).userInfo.coins += tournamentOver.coinTransaction;
-    saveUserData(UserDataInfo.of(context).userInfo);
     _t = Timer(Duration(seconds: 25), () {
       setState(() {
         _wl.clear();

@@ -15,8 +15,8 @@ class RummyLocalClient {
       _initDiscovery();
     } else {
       //to test locally
-      //connectToServer("0.0.0.0", "8080");
-      connectToServer("10.0.2.2", "8080");
+      connectToServer("0.0.0.0", "8080");
+      //connectToServer("10.0.2.2", "8080");
 
       //onConnected(true);
     }

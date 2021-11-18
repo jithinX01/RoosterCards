@@ -11,7 +11,7 @@ class TrophyCard extends StatelessWidget {
   const TrophyCard({
     Key? key,
     this.tournamentName = "",
-    this.c = Colors.green,
+    this.c = Colors.blueGrey,
     this.icon = Icons.emoji_events,
     this.sharedTrophy = false,
     this.trophyId = 0,
@@ -20,7 +20,7 @@ class TrophyCard extends StatelessWidget {
 
   Decoration _getDecoration({Color c = Colors.grey}) {
     return BoxDecoration(
-      color: c,
+      color: _getColor(trophyId),
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(7.0),
       boxShadow: [
@@ -48,6 +48,17 @@ class TrophyCard extends StatelessWidget {
     );
   }
 
+  Color _getColor(int trophyId) {
+    switch (trophyId) {
+      case 1:
+        return Colors.green;
+      case 2:
+        return Colors.blueGrey.shade600;
+      default:
+        return Colors.green;
+    }
+  }
+
   Widget _getCard(String tournamentName, Color c, IconData icon) {
     return Container(
       width: 300,
@@ -62,6 +73,17 @@ class TrophyCard extends StatelessWidget {
     );
   }
 
+  String _getTrophy(int trophyId) {
+    switch (trophyId) {
+      case 1:
+        return 'images/trophy.png';
+      case 2:
+        return 'images/trophy2.png';
+      default:
+        return 'images/trophy.png';
+    }
+  }
+
   List<Widget> _getWidgets() {
     List<Widget> wl = [
       /*
@@ -71,7 +93,7 @@ class TrophyCard extends StatelessWidget {
       ),
       */
       Image.asset(
-        'images/trophy.png',
+        _getTrophy(trophyId),
         scale: 1,
       ),
       Text(
