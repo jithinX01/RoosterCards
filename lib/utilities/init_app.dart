@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/app_home_page.dart';
 import 'package:rooster_cards/proto/user_data.pbserver.dart';
@@ -82,20 +82,37 @@ class _InitAppState extends State<InitApp> {
 }
 
 Future<UserData> loadUserData() async {
+  /*
   var rfs = RoosterFileStorage("user.data");
+  */
+
   UserData userData = UserData();
+
+  userData = await readUserData();
   await Future.delayed(Duration(seconds: 2));
+  /*
   if (await rfs.fileExist) {
     var data = rfs.readFile();
     userData = UserData.fromBuffer(data);
     //print(userData);
     //return userData;
   }
-  var dirPath = await rfs.localPath;
+  */
+  var dir = await getApplicationDocumentsDirectory();
+  var dirPath = dir.path;
   if (!Directory('$dirPath/trophy').existsSync()) {
     Directory('$dirPath/trophy').createSync();
   }
   userData.trophyDir = '$dirPath/trophy';
+  /*
+  //just to overrite some nuisance of old releases.
+  bool oldRelease = await beforeCurrentRelease();
+  if (oldRelease) {
+    //userData.initDone = false;
+    print("old release ");
+    print("coins ${userData.coins}");
+  }
+  */
 /*
   var list = Directory('$dirPath/trophy').listSync();
   //rprint("files $dirPath");

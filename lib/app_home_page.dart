@@ -73,7 +73,7 @@ class _AppHomePageState extends State<AppHomePage> {
                     child: VaultHomePage()),
                 title: "Vault",
                 c: Colors.orange,
-                icon: Icons.cabin),
+                icon: Icons.account_balance),
             NavigationCard(
                 w: UserDataInfo(
                     userInfo: UserDataInfo.of(context).userInfo,

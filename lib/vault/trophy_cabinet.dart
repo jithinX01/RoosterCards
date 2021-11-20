@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:rooster_cards/proto/user_data.pbserver.dart';
+import 'package:rooster_cards/utilities/file_storage.dart';
 import 'package:rooster_cards/vault/trophy_card.dart';
 import 'package:rooster_cards/utilities/global_user_data_info.dart';
 
@@ -31,7 +30,7 @@ class _TrophyCabinetState extends State<TrophyCabinet> {
 
   @override
   Widget build(BuildContext context) {
-    _trophyList = _getTrophyData();
+    _trophyList = getTrophyData(UserDataInfo.of(context).userInfo.trophyDir);
     return Scaffold(
       body: Container(
         child: _trophyList.length > 0
@@ -65,18 +64,5 @@ class _TrophyCabinetState extends State<TrophyCabinet> {
       padding: EdgeInsets.all(16.0),
       child: Text("No Trophy, Play Tournament to Win One"),
     );
-  }
-
-  List<TrophyData> _getTrophyData() {
-    List<TrophyData> trophyList = [];
-    var dirPath = UserDataInfo.of(context).userInfo.trophyDir;
-    var list = Directory('$dirPath').listSync();
-    list.forEach((entity) {
-      if (entity is File) {
-        var data = entity.readAsBytesSync();
-        trophyList.add(TrophyData.fromBuffer(data));
-      }
-    });
-    return trophyList;
   }
 }

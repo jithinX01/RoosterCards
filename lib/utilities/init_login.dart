@@ -75,7 +75,7 @@ class _InitLoginState extends State<InitLogin> {
                   TextFormField(
                     decoration: const InputDecoration(
                       icon: Icon(Icons.person),
-                      hintText: 'What do people call you?',
+                      hintText: 'What do you like to be called?',
                       labelText: 'Name',
                       border: const OutlineInputBorder(),
                     ),

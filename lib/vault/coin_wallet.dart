@@ -47,9 +47,12 @@ class _CoinWalletState extends State<CoinWallet> {
   }
 
   Future<void> _readCoinsCount() async {
+    /*
     var rfs = RoosterFileStorage("user.data");
     await rfs.fileExist;
     UserData userData = UserData.fromBuffer(rfs.readFile());
+    */
+    UserData userData = await readUserData();
     _cointCount = userData.coins;
     _readCoinCount = true;
   }
