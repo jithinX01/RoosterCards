@@ -58,8 +58,9 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
 
   void _initSettings() {
     _rummyLocalServer = RummyLocalServer();
-
-    //Timer t = Timer(Duration(seconds: 1), () {
+    _rummyLocalServer!.init().then((v)
+    //_t = Timer(Duration(milliseconds: 300), () 
+    {
     _rummyLocalClient = RummyLocalClient(
         initDiscovery: false,
         onConnected: (val) {
@@ -74,7 +75,7 @@ class _ComputerRummyPageState extends State<ComputerRummyPage> {
         });
     _computerRummyAgent.init();
     _t = Timer(Duration(seconds: 1), _callBack);
-    //});
+    });
   }
 
   void _callBack() {

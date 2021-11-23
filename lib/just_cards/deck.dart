@@ -24,7 +24,7 @@ class _DeckState extends State<Deck> {
 
   @override
   void initState() {
-    //print("Deck Made Init");
+    //rprint("Deck Made Init");
     dealer = Dealer(
       count: widget.count,
       shuffle: widget.shuffle,

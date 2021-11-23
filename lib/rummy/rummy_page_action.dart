@@ -75,8 +75,8 @@ class _RummyPageActionState extends State<RummyPageAction> {
   void dispose() {
     if (_rummyState.index >= RummyState.WAITING.index)
       _streamSubscription.cancel();
-    _rummyLocalClient?.dispose();
-    if (widget.rummyAction == RummyAction.START) _rummyLocalServer?.dispose();
+    _rummyLocalClient!.dispose();
+    if (widget.rummyAction == RummyAction.START) _rummyLocalServer!.dispose();
     super.dispose();
     //rprint("dispose");
   }
@@ -87,36 +87,21 @@ class _RummyPageActionState extends State<RummyPageAction> {
         return RummyInit(onChanged: (val) {
           //print("count $val");
           _ts = val;
-          _ts.logInfo();
+          //_ts.logInfo();
 
           _initLocalServer();
-          _rummyLocalClient = RummyLocalClient(
-              //initDiscovery: false,
-              onConnected: (val) {
-            _rummyState = RummyState.WAITING;
-            setState(() {});
-            /*
-            _rummyLocalClient
-                .sendMessage(_getGameInitMessage().writeToBuffer());
-            */
+          _rummyLocalServer!.init().then((val){
+            _connectToServer(initDiscovery: false);
           });
+          
         });
       case RummyState.JOIN:
         return RummyJoin(onChanged: (val) {
           //rprint("count $val");
           _code = val;
-
-          _rummyLocalClient = RummyLocalClient(
-              initDiscovery: false,
-              onConnected: (val) {
-                //rprint(val);
-                //print(_rummyLocalClient);
-                _rummyState = RummyState.WAITING;
-
-                //_rummyLocalClient
-                //    .sendMessage(_getGameJoinMessage().writeToBuffer());
-                setState(() {});
-              });
+          //for testing with emulator enable this.
+          //_connectToServer(initDiscovery: false);
+          _connectToServer();
         });
       case RummyState.WAITING:
         _rummyLocalClient!.sendMessage(_getMessage().writeToBuffer());
@@ -143,6 +128,14 @@ class _RummyPageActionState extends State<RummyPageAction> {
 
   void _initLocalServer() {
     _rummyLocalServer = RummyLocalServer();
+  }
+  void _connectToServer({bool initDiscovery=true}) {
+    _rummyLocalClient = RummyLocalClient(
+              initDiscovery: initDiscovery,
+              onConnected: (val) {
+                _rummyState = RummyState.WAITING;
+                setState(() {});
+              });
   }
 
   GameMessageClient _getMessage() {

@@ -129,11 +129,11 @@ class Tournament {
   }
 
   void handleWSDisconnect(WebSocketChannel wc) {
-    print("handleWSDisconnect");
+    //rprint("handleWSDisconnect");
     for (var item in _playerConnections.entries) {
       if (item.value == wc) {
         var player = _data.players[item.key];
-        print("$player disconnected");
+        //rprint("$player disconnected");
         //playerConnections.remove(item.key);
       }
     }

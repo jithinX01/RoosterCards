@@ -55,7 +55,7 @@ class _PlayerCardStackState extends State<PlayerCardStack>
   bool _fromInside = false;
   bool _groupMode = false;
   String _toggleText = "S";
-  int _in_cards = 0;
+  int _inCards = 0;
   late Size biggest;
   StackMode _stackMode = StackMode.SWAP_MODE;
 
@@ -294,8 +294,8 @@ class _PlayerCardStackState extends State<PlayerCardStack>
 
     //not a proper way but it works
     if (!_newCardTook) {
-      ++_in_cards;
-      if (_in_cards < 4) {
+      ++_inCards;
+      if (_inCards < 4) {
         wl.add(Positioned(
           child: TimerMessage(time: 2, message: "Double Tap to minimize card"),
           top: 0,
@@ -499,14 +499,13 @@ class _PlayerCardStackState extends State<PlayerCardStack>
   Widget _getMinimiseCard(int card) {
     const double smallLogo = 200;
     const double bigLogo = 200;
-    print(biggest);
 
     return PositionedTransition(
         //return AnimatedPositioned(
         rect: RelativeRectTween(
           begin: RelativeRect.fromSize(
               Rect.fromLTWH(
-                  (biggest.width - bigLogo) / 2, 210, smallLogo, smallLogo),
+                  (biggest.width - bigLogo) / 2, 185, smallLogo, smallLogo),
               biggest),
           /*
           end: RelativeRect.fromSize(

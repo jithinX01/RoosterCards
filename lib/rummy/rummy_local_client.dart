@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:bonsoir/bonsoir.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,11 @@ class RummyLocalClient {
     } else {
       //to test locally
       connectToServer("0.0.0.0", "8080");
+      //for testing with emulators.
+      //telnet localhost 5554
+      //auth <token>
+      //redir add tcp:8080:8080
+      //uncomment below.
       //connectToServer("10.0.2.2", "8080");
 
       //onConnected(true);
@@ -47,10 +54,18 @@ class RummyLocalClient {
 
   void connectToServer(String host, String port) {
     //rprint("connecting $host:$port");
+    HttpOverrides.runWithHttpOverrides((){
+      _channel = WebSocketChannel.connect(
+      Uri.parse('wss://' + host + ':' + port),
+      //Uri.parse('ws://localhost:8080'),
+      );
+    }, MyHttpOverrides());
+    /*
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://' + host + ':' + port),
+      Uri.parse('wss://' + host + ':' + port),
       //Uri.parse('ws://localhost:8080'),
     );
+    */
 
     //rprint(_channel);
     onConnected(true);
@@ -66,3 +81,22 @@ class RummyLocalClient {
     _channel.sink.add(data);
   }
 }
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port){
+            /* 
+            print("Bad Cert $host");
+            print(cert.subject);
+            print(cert.issuer);
+            print(cert.sha1.toString());
+            */
+            return cert.subject.contains("CN=rooster.local") && cert.issuer.contains("CN=rooster.local"); 
+            }; // add your localhost detection logic here if you want
+  }
+}
+
+

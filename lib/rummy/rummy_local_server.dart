@@ -1,6 +1,7 @@
 import 'dart:io';
 
 //import 'package:rooster_cards/rummy/tournament_settings.dart';
+import 'package:flutter/services.dart';
 import 'package:rooster_cards/game_handler/game_handler.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -31,11 +32,13 @@ class RummyLocalServer {
   List<WebSocketChannel> _clients = [];
 
   RummyLocalServer() {
+    /*
     _initServer();
     _startDiscovery();
+    */
   }
 
-  void _startDiscovery() async {
+  Future<void> _startDiscovery() async {
     _broadcast = BonsoirBroadcast(service: _service);
     await _broadcast.ready;
     await _broadcast.start();
@@ -45,8 +48,12 @@ class RummyLocalServer {
     await _broadcast.stop();
     await _server.close();
   }
-
-  void _initServer() async {
+  Future<void> init() async
+  {
+    await _initServer();
+    await _startDiscovery();
+  }
+  Future<void> _initServer() async {
     var handler = webSocketHandler((webSocket) {
       //rprint(webSocket.hashCode);
       //print(webSocket.closeCode);
@@ -62,15 +69,20 @@ class RummyLocalServer {
         _gameHandler.handleWSDone(webSocket);
         //rprint("websocket closed");
       }, onError: (error) {
-        print("Error");
+        //rprint("Error");
       });
     });
 
     _handler = handler;
+    SecurityContext context = SecurityContext.defaultContext;
+    var cert = await rootBundle.load("ssl/server.cert");
+    var key =  await rootBundle.load("ssl/server.key");
+    context.useCertificateChainBytes(cert.buffer.asInt8List());
+    context.usePrivateKeyBytes(key.buffer.asInt8List());
     //rprint("Starting Server");
-    await shelf_io.serve(_handler, '0.0.0.0', 8080).then((server) {
+    await shelf_io.serve(_handler, '0.0.0.0', 8080, securityContext: context).then((server) {
       _server = server;
-      //rprint('Serving at ws://${server.address.host}:${server.port}');
+      //rprint('Serving at wss://${server.address.host}:${server.port}');
     });
   }
 }

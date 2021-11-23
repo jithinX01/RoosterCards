@@ -68,7 +68,7 @@ class _RummyPlayState extends State<RummyPlay> {
       DeviceOrientation.portraitUp,
     ]);
 
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     if (_t != null && _t!.isActive) _t?.cancel();
 
     super.dispose();
@@ -82,7 +82,8 @@ class _RummyPlayState extends State<RummyPlay> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    //SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     return WillPopScope(
       child: Scaffold(
