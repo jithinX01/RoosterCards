@@ -123,7 +123,7 @@ Future<UserData> loadUserData() async {
     list.forEach((element) {});
   }
   */
-  await _initGoogleMobileAds();
+  _initGoogleMobileAds();
   return userData;
 }
 
