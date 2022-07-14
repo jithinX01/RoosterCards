@@ -32,6 +32,7 @@ enum GameType {
     ACE_FLUSH = 1;
     POKER = 2;
     MEMORY_GAME = 3;
+    GIN_RUMMY = 4;
 }
 
 message InitStart {

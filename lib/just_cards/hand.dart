@@ -2,7 +2,6 @@ import 'dart:math';
 
 //import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
 import 'package:rooster_cards/cards/playing_card.dart';
 

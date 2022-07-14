@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rooster_cards/proto/game_msg.pb.dart';
 import 'package:rooster_cards/rummy/computer_rummy_agent.dart';
 import 'package:rooster_cards/rummy/rummy_local_client.dart';

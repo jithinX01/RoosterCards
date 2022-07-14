@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:rooster_cards/ads/ad_helper.dart';
 import 'package:rooster_cards/cards/boxofcards.dart';
