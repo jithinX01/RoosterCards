@@ -248,7 +248,7 @@ class RummyTournament extends Tournament {
         i < NO_OF_RUMMY_CARDS * _data.noOfPlayers;
         i = i + _data.noOfPlayers) {
       for (var j = 0; j < _data.noOfPlayers; j++) {
-        _data.playerCards[playerids[j]]?.cards.add(stack[i + j]);
+        _data.playerCards[playerids[j]]!.cards.add(stack[i + j]);
       }
     }
 
